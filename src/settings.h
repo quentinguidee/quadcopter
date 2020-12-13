@@ -4,12 +4,12 @@
 /**
  * ESC Motor A Pin (front left)
  */
-constexpr uint8_t ESC_MOTOR_A_PIN = 5;
+constexpr uint8_t ESC_MOTOR_A_PIN = 6;
 
 /**
  * ESC Motor B Pin (front right)
  */
-constexpr uint8_t ESC_MOTOR_B_PIN = 6;
+constexpr uint8_t ESC_MOTOR_B_PIN = 5;
 
 /**
  * ESC Motor C Pin (rear left)
