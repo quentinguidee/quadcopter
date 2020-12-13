@@ -31,3 +31,8 @@ void Drone::tick()
         motors[i].tick();
     }
 }
+
+Motor& Drone::getMotor(Motor::Position position)
+{
+    return motors[(int)position];
+}

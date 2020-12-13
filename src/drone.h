@@ -24,6 +24,8 @@ public:
     void shutdown();
 
     void tick();
+
+    Motor& getMotor(Motor::Position position);
 };
 
 #endif /* DRONE_H */
