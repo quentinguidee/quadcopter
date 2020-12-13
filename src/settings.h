@@ -4,22 +4,22 @@
 /**
  * ESC Motor A Pin
  */
-constexpr uint8_t ESC_MOTOR_A_PIN = A0;
+constexpr uint8_t ESC_MOTOR_A_PIN = 5;
 
 /**
  * ESC Motor B Pin
  */
-constexpr uint8_t ESC_MOTOR_B_PIN = A1;
+constexpr uint8_t ESC_MOTOR_B_PIN = 6;
 
 /**
  * ESC Motor C Pin
  */
-constexpr uint8_t ESC_MOTOR_C_PIN = A2;
+constexpr uint8_t ESC_MOTOR_C_PIN = 10;
 
 /**
  * ESC Motor D Pin
  */
-constexpr uint8_t ESC_MOTOR_D_PIN = A3;
+constexpr uint8_t ESC_MOTOR_D_PIN = 11;
 
 /**
  * Pulse width corresponding to 0°
