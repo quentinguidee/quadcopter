@@ -13,17 +13,17 @@ Motor::~Motor()
 {
 }
 
-void Motor::loop()
-{
-    esc.write(value);
-}
-
 void Motor::startup()
 {
 }
 
 void Motor::shutdown()
 {
+}
+
+void Motor::tick()
+{
+    esc.write(value);
 }
 
 void Motor::setSpeed()

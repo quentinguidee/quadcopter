@@ -23,3 +23,11 @@ void Drone::shutdown()
         motors[i].shutdown();
     }
 }
+
+void Drone::tick()
+{
+    for (byte i = 0; i < MOTORS_COUNT; i++)
+    {
+        motors[i].tick();
+    }
+}

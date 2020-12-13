@@ -22,6 +22,8 @@ public:
 
     void startup();
     void shutdown();
+
+    void tick();
 };
 
 #endif /* DRONE_H */

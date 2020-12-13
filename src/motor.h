@@ -15,10 +15,11 @@ public:
     Motor(uint8_t pin);
     ~Motor();
 
-    void loop();
-
     void startup();
     void shutdown();
+
+    void tick();
+
     void setSpeed();
 };
 
