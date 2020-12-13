@@ -8,7 +8,7 @@ class Motor
 {
 private:
     uint8_t pin;
-    int value;
+    int speed;
     Servo esc;
 
 public:
@@ -28,7 +28,7 @@ public:
 
     void tick();
 
-    void setSpeed();
+    void setSpeed(uint16_t speed);
 };
 
 #endif /* MOTOR_H */
