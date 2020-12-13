@@ -2,22 +2,22 @@
 #define SETTINGS_H
 
 /**
- * ESC Motor A Pin
+ * ESC Motor A Pin (front left)
  */
 constexpr uint8_t ESC_MOTOR_A_PIN = 5;
 
 /**
- * ESC Motor B Pin
+ * ESC Motor B Pin (front right)
  */
 constexpr uint8_t ESC_MOTOR_B_PIN = 6;
 
 /**
- * ESC Motor C Pin
+ * ESC Motor C Pin (rear left)
  */
 constexpr uint8_t ESC_MOTOR_C_PIN = 10;
 
 /**
- * ESC Motor D Pin
+ * ESC Motor D Pin (rear right)
  */
 constexpr uint8_t ESC_MOTOR_D_PIN = 11;
 
