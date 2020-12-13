@@ -15,6 +15,7 @@ Motor::~Motor()
 
 void Motor::loop()
 {
+    esc.write(value);
 }
 
 void Motor::startup()
