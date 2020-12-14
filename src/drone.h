@@ -26,6 +26,7 @@ public:
     void tick();
 
     Motor& getMotor(Motor::Position position);
+    Motor& getMotor(int8_t index);
 };
 
 #endif /* DRONE_H */
