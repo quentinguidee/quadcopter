@@ -23,12 +23,14 @@ void StaticFireTest::tick()
             case State::stopped:
                 startup(currentMotor);
                 period = 5000;
+                startTimer = currentTimer;
                 break;
 
             case State::running:
                 shutdown(currentMotor);
                 period = 3000;
                 currentMotor++;
+                startTimer = currentTimer;
                 break;
 
             default: break;
