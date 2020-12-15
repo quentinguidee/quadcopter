@@ -7,3 +7,7 @@ For each motor:
 - Wait 5s
 - Shutdown motor
 - Wait 3s
+
+## Accelerometer
+
+Print accelerometer values.

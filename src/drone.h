@@ -29,6 +29,7 @@ public:
 
     Motor& getMotor(Motor::Position position);
     Motor& getMotor(int8_t index);
+    Accelerometer getAccelerometer() { return accelerometer; }
 };
 
 #endif /* DRONE_H */
