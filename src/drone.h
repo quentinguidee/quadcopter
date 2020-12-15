@@ -2,6 +2,7 @@
 #define DRONE_H
 
 #include "motor.h"
+#include "sensors/accelerometer.h"
 #include "settings.h"
 
 #define MOTORS_COUNT 4
@@ -15,6 +16,7 @@ private:
         Motor((uint8_t)ESC_MOTOR_C_PIN),
         Motor((uint8_t)ESC_MOTOR_D_PIN),
     };
+    Accelerometer accelerometer;
 
 public:
     Drone();

@@ -2,7 +2,8 @@
 
 #include "sensors/accelerometer.h"
 
-Drone::Drone()
+Drone::Drone() :
+    accelerometer(Accelerometer())
 {
 }
 
@@ -12,7 +13,7 @@ Drone::~Drone()
 
 void Drone::startup()
 {
-    Accelerometer::setup();
+    accelerometer.setup();
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].startup();
@@ -29,7 +30,7 @@ void Drone::shutdown()
 
 void Drone::tick()
 {
-    Accelerometer::tick();
+    accelerometer.tick();
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].tick();
