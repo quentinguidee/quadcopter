@@ -13,7 +13,7 @@ Drone::~Drone()
 void Drone::startup()
 {
     Accelerometer::setup();
-    for (byte i = 0; i < MOTORS_COUNT; i++)
+    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].startup();
     }
@@ -21,7 +21,7 @@ void Drone::startup()
 
 void Drone::shutdown()
 {
-    for (byte i = 0; i < MOTORS_COUNT; i++)
+    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].shutdown();
     }
@@ -30,7 +30,7 @@ void Drone::shutdown()
 void Drone::tick()
 {
     Accelerometer::tick();
-    for (byte i = 0; i < MOTORS_COUNT; i++)
+    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].tick();
     }
