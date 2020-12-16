@@ -10,11 +10,12 @@ void setup()
     drone = new Drone();
     test = new StaticFireTest(*drone);
 
-    drone->startup();
+    drone->setup();
+    // drone->startup();
 }
 
 void loop()
 {
-    drone->tick();
+    // drone->tick();
     test->tick();
 }

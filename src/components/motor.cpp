@@ -13,12 +13,19 @@ Motor::~Motor()
 {
 }
 
+void Motor::setup()
+{
+    if (led != nullptr) led->setup();
+}
+
 void Motor::startup()
 {
+    if (led != nullptr) led->on();
 }
 
 void Motor::shutdown()
 {
+    if (led != nullptr) led->off();
 }
 
 void Motor::tick()
@@ -32,4 +39,9 @@ void Motor::tick()
 void Motor::setSpeed(uint16_t speed)
 {
     this->speed = map(speed, 0, 1000, 0, 180);
+}
+
+void Motor::registerLed(Led* led)
+{
+    this->led = led;
 }

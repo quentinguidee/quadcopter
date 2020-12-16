@@ -11,9 +11,18 @@ Drone::~Drone()
 {
 }
 
-void Drone::startup()
+void Drone::setup()
 {
     accelerometer.setup();
+    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
+    {
+        motors[i].registerLed(&leds[i]);
+        motors[i].setup();
+    }
+}
+
+void Drone::startup()
+{
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].startup();
