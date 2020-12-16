@@ -33,7 +33,7 @@ constexpr int16_t MIN_ESC_PULSE_WIDTH = 1000;
 /**
  * Pulse width corresponding to 180°
  */
-constexpr int32_t MAX_ESC_PULSE_WIDTH = 2000;
+constexpr int16_t MAX_ESC_PULSE_WIDTH = 2000;
 
 /////////////////
 // === LED === //
