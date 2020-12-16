@@ -1,6 +1,6 @@
 #include "motor.h"
 
-#include "settings.h"
+#include "../settings.h"
 
 Motor::Motor(uint8_t pin) :
     pin(pin),

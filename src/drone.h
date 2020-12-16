@@ -1,7 +1,7 @@
 #ifndef DRONE_H
 #define DRONE_H
 
-#include "motor.h"
+#include "components/motor.h"
 #include "sensors/accelerometer.h"
 #include "settings.h"
 
