@@ -59,4 +59,10 @@ constexpr uint8_t LED_MOTOR_C_PIN = 8;
  */
 constexpr uint8_t LED_MOTOR_D_PIN = 12;
 
+///////////////////
+// === PIEZO === //
+///////////////////
+
+constexpr uint8_t PIEZO_PIN = 4;
+
 #endif /* SETTINGS_H */

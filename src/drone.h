@@ -3,6 +3,7 @@
 
 #include "components/led.h"
 #include "components/motor.h"
+#include "components/piezo.h"
 #include "sensors/accelerometer.h"
 #include "settings.h"
 
@@ -24,6 +25,7 @@ private:
         Led((uint8_t)LED_MOTOR_C_PIN),
         Led((uint8_t)LED_MOTOR_D_PIN),
     };
+    Piezo piezo;
 
 public:
     Drone();
@@ -37,7 +39,8 @@ public:
 
     Motor& getMotor(Motor::Position position);
     Motor& getMotor(int8_t index);
-    Accelerometer getAccelerometer() { return accelerometer; }
+    Accelerometer& getAccelerometer() { return accelerometer; }
+    Piezo& getPiezo() { return piezo; }
 };
 
 #endif /* DRONE_H */

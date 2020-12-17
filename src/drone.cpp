@@ -3,7 +3,8 @@
 #include "sensors/accelerometer.h"
 
 Drone::Drone() :
-    accelerometer(Accelerometer())
+    accelerometer(Accelerometer()),
+    piezo(Piezo((uint8_t)PIEZO_PIN))
 {
 }
 
