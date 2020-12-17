@@ -8,8 +8,9 @@ StaticFireTest* test = nullptr;
 void setup()
 {
     drone = new Drone();
-    test = new StaticFireTest(*drone);
+    test = new StaticFireTest();
 
+    Serial.begin(9600);
     drone->setup();
     // drone->startup();
 }

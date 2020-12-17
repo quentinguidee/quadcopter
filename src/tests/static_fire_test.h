@@ -12,8 +12,6 @@ private:
         stopped
     };
 
-    Drone &drone;
-
     unsigned long currentTimer;
     unsigned long startTimer;
     unsigned long period;
@@ -22,7 +20,7 @@ private:
     State currentState;
 
 public:
-    StaticFireTest(Drone &drone);
+    StaticFireTest();
     ~StaticFireTest() {}
 
     void tick();

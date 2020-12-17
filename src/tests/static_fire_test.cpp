@@ -1,7 +1,8 @@
 #include "static_fire_test.h"
 
-StaticFireTest::StaticFireTest(Drone &drone) :
-    drone(drone),
+#include "../interface/interface.h"
+
+StaticFireTest::StaticFireTest() :
     currentTimer(0),
     startTimer(0),
     period(3000),
@@ -40,12 +41,18 @@ void StaticFireTest::tick()
 
 void StaticFireTest::startup(int8_t currentMotor)
 {
-    drone.getMotor(currentMotor).startup();
+    String command = String("M1") + currentMotor;
+    Interface::execute(command);
+    Serial.print("[TEST] Execute ");
+    Serial.println(command);
     currentState = State::running;
 }
 
 void StaticFireTest::shutdown(int8_t currentMotor)
 {
-    drone.getMotor(currentMotor).shutdown();
+    String command = String("M0") + currentMotor;
+    Interface::execute(command);
+    Serial.print("[TEST] Execute ");
+    Serial.println(command);
     currentState = State::stopped;
 }
