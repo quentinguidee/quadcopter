@@ -77,4 +77,14 @@ constexpr uint8_t LED_MOTOR_D_PIN = 12;
  */
 constexpr uint8_t PIEZO_PIN = 4;
 
+/**
+ * Number of frequencies for the startup ring.
+ */
+constexpr uint8_t STARTUP_FREQUENCIES_COUNT = 5;
+
+/**
+ * Frequencies for the startup ring.
+ */
+constexpr int STARTUP_FREQUENCIES[STARTUP_FREQUENCIES_COUNT] = {220, 330, 440, 880, 660};
+
 #endif /* SETTINGS_H */

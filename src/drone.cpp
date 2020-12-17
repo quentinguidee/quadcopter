@@ -18,6 +18,7 @@ Drone::~Drone()
 void Drone::setup()
 {
     accelerometer.setup();
+    piezo.setup();
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].registerLed(&leds[i]);
@@ -44,6 +45,7 @@ void Drone::shutdown()
 void Drone::tick()
 {
     accelerometer.tick();
+    piezo.tick();
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].tick();
