@@ -1,5 +1,6 @@
 #include "drone.h"
 
+#include "interface/interface.h"
 #include "sensors/accelerometer.h"
 
 Drone::Drone() :
@@ -7,6 +8,7 @@ Drone::Drone() :
     piezo(Piezo((uint8_t)PIEZO_PIN)),
     bluetooth(Bluetooth())
 {
+    Interface::setup(this);
 }
 
 Drone::~Drone()

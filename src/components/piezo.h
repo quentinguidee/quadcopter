@@ -1,6 +1,8 @@
 #ifndef PIEZO_H
 #define PIEZO_H
 
+#include <Arduino.h>
+
 class Piezo
 {
 private:

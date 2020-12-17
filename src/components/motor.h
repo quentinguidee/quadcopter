@@ -35,6 +35,8 @@ public:
     void setSpeed(uint16_t speed);
 
     void registerLed(Led* led);
+
+    Led* getLed() { return led; }
 };
 
 #endif /* MOTOR_H */

@@ -6,12 +6,12 @@ Allows to communicate between the computer and the drone. The messages are horri
 
 ### Movement
 
-- X axis
-- Y axis
-- Z axis
-- Rotation
+- X axis (0 to 99)
+- Y axis (0 to 99)
+- Z axis (0 to 99)
+- Rotation (0 to 99)
 
-Format: `x,y,z,r`
+Format: `CXXYYZZRR`
 
 ### Commands
 
