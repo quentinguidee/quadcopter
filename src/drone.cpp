@@ -4,7 +4,8 @@
 
 Drone::Drone() :
     accelerometer(Accelerometer()),
-    piezo(Piezo((uint8_t)PIEZO_PIN))
+    piezo(Piezo((uint8_t)PIEZO_PIN)),
+    bluetooth(Bluetooth())
 {
 }
 

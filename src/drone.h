@@ -4,6 +4,7 @@
 #include "components/led.h"
 #include "components/motor.h"
 #include "components/piezo.h"
+#include "interface/bluetooth.h"
 #include "sensors/accelerometer.h"
 #include "settings.h"
 
@@ -26,6 +27,7 @@ private:
         Led((uint8_t)LED_MOTOR_D_PIN),
     };
     Piezo piezo;
+    Bluetooth bluetooth;
 
 public:
     Drone();
@@ -41,6 +43,7 @@ public:
     Motor& getMotor(int8_t index);
     Accelerometer& getAccelerometer() { return accelerometer; }
     Piezo& getPiezo() { return piezo; }
+    Bluetooth& getBluetooth() { return bluetooth; }
 };
 
 #endif /* DRONE_H */
