@@ -1,5 +1,6 @@
 #include "accelerometer.h"
 
+#include <RunningMedian.h>
 #include <Wire.h>
 
 void Accelerometer::setup()
@@ -51,37 +52,24 @@ void Accelerometer::calibrate()
 {
     updateAngles();
 
-    float angleSpeedXmin = this->angleSpeedX;
-    float angleSpeedXmax = this->angleSpeedX;
+    RunningMedian anglesX = RunningMedian(100);
+    RunningMedian anglesY = RunningMedian(100);
+    RunningMedian anglesZ = RunningMedian(100);
 
-    float angleSpeedYmin = this->angleSpeedY;
-    float angleSpeedYmax = this->angleSpeedY;
-
-    float angleSpeedZmin = this->angleSpeedZ;
-    float angleSpeedZmax = this->angleSpeedZ;
-
-    for (uint8_t i = 0; i < 20; i++)
+    for (uint8_t i = 0; i < 100; i++)
     {
         updateAngles();
 
-        if (angleSpeedX < angleSpeedXmin) angleSpeedXmin = angleSpeedX;
-        if (angleSpeedX > angleSpeedXmax) angleSpeedXmax = angleSpeedX;
+        anglesX.add(angleSpeedX);
+        anglesY.add(angleSpeedY);
+        anglesZ.add(angleSpeedZ);
 
-        if (angleSpeedY < angleSpeedYmin) angleSpeedYmin = angleSpeedY;
-        if (angleSpeedY > angleSpeedYmax) angleSpeedYmax = angleSpeedY;
-
-        if (angleSpeedZ < angleSpeedZmin) angleSpeedZmin = angleSpeedZ;
-        if (angleSpeedZ > angleSpeedZmax) angleSpeedZmax = angleSpeedZ;
-
-        delay(50);
+        delay(10);
     }
 
-    // TODO: Enhance this. This algorithm doesn't take into account
-    // the fact that an extreme value couldn't be accurate.
-    // Example: take the median.
-    angleSpeedXoffset = (angleSpeedXmax + angleSpeedXmin) / 2;
-    angleSpeedYoffset = (angleSpeedYmax + angleSpeedYmin) / 2;
-    angleSpeedZoffset = (angleSpeedZmax + angleSpeedZmin) / 2;
+    angleSpeedXoffset = anglesX.getMedian();
+    angleSpeedYoffset = anglesY.getMedian();
+    angleSpeedZoffset = anglesZ.getMedian();
 
     // sensor.magXOffset = -(MAG_X_MAX + MAG_X_MIN) / 2;
     // sensor.magYOffset = -(MAG_Y_MAX + MAG_Y_MIN) / 2;
