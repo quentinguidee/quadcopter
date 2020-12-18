@@ -6,7 +6,8 @@
 Drone::Drone() :
     accelerometer(Accelerometer()),
     piezo(Piezo((uint8_t)PIEZO_PIN)),
-    bluetooth(Bluetooth())
+    bluetooth(Bluetooth()),
+    position(Position(accelerometer))
 {
     Interface::setup(this);
 }
@@ -45,6 +46,7 @@ void Drone::shutdown()
 void Drone::tick()
 {
     accelerometer.tick();
+    position.update();
     piezo.tick();
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {

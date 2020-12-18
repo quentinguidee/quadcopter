@@ -1,49 +1,23 @@
 #include "position.h"
 
-float Position::getX()
+Position::Position(Accelerometer& sensor) :
+    sensor(sensor),
+    angleX(0),
+    angleY(0),
+    angleZ(0),
+    timer(0)
 {
 }
 
-float Position::getY()
+void Position::update()
 {
-}
-
-float Position::getZ()
-{
-}
-
-float Position::getAngleX()
-{
-}
-
-float Position::getAngleY()
-{
-}
-
-float Position::getAngleZ()
-{
-}
-
-float Position::getAccelerationX()
-{
-}
-
-float Position::getAccelerationY()
-{
-}
-
-float Position::getAccelerationZ()
-{
-}
-
-float Position::getAngleAccelerationX()
-{
-}
-
-float Position::getAngleAccelerationY()
-{
-}
-
-float Position::getAngleAccelerationZ()
-{
+    unsigned long now = micros();
+    if (timer != 0)
+    {
+        float deltaTime = (now - timer) / 1000000.0;
+        angleX += sensor.getAngleSpeedX() * deltaTime;
+        angleY += sensor.getAngleSpeedY() * deltaTime;
+        angleZ += sensor.getAngleSpeedZ() * deltaTime;
+    }
+    timer = now;
 }

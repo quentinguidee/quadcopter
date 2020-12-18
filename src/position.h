@@ -1,28 +1,31 @@
 #ifndef POSITION_H
 #define POSITION_H
 
+#include "sensors/accelerometer.h"
+
 class Position
 {
 private:
+    Accelerometer& sensor;
+
+    float x, y, z;
+    float angleX, angleY, angleZ;
+
+    unsigned long timer;
+
 public:
-    Position() {}
+    Position(Accelerometer& sensor);
     ~Position() {}
 
-    float getX();
-    float getY();
-    float getZ();
+    void update();
 
-    float getAngleX();
-    float getAngleY();
-    float getAngleZ();
+    float getX() { return x; }
+    float getY() { return y; }
+    float getZ() { return z; }
 
-    float getAccelerationX();
-    float getAccelerationY();
-    float getAccelerationZ();
-
-    float getAngleAccelerationX();
-    float getAngleAccelerationY();
-    float getAngleAccelerationZ();
+    float getAngleX() { return angleX; }
+    float getAngleY() { return angleY; }
+    float getAngleZ() { return angleZ; }
 };
 
 #endif /* POSITION_H */

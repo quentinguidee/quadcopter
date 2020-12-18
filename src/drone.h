@@ -5,6 +5,7 @@
 #include "components/motor.h"
 #include "components/piezo.h"
 #include "interface/bluetooth.h"
+#include "position.h"
 #include "sensors/accelerometer.h"
 #include "settings.h"
 
@@ -29,6 +30,8 @@ private:
     Piezo piezo;
     Bluetooth bluetooth;
 
+    Position position;
+
 public:
     Drone();
     ~Drone();
@@ -44,6 +47,7 @@ public:
     Accelerometer& getAccelerometer() { return accelerometer; }
     Piezo& getPiezo() { return piezo; }
     Bluetooth& getBluetooth() { return bluetooth; }
+    Position& getPosition() { return position; }
 };
 
 #endif /* DRONE_H */
