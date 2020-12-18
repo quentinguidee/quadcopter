@@ -85,6 +85,6 @@ constexpr uint8_t STARTUP_FREQUENCIES_COUNT = 5;
 /**
  * Frequencies for the startup ring.
  */
-constexpr int STARTUP_FREQUENCIES[STARTUP_FREQUENCIES_COUNT] = {220, 330, 440, 880, 660};
+constexpr int STARTUP_FREQUENCIES[STARTUP_FREQUENCIES_COUNT] = {523, 887, 887, 523, 1046};
 
 #endif /* SETTINGS_H */
