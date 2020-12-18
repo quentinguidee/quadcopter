@@ -17,6 +17,10 @@ private:
     float angleY;
     float angleZ;
 
+    float angleXoffset;
+    float angleYoffset;
+    float angleZoffset;
+
     float magneticFieldX;
     float magneticFieldY;
     float magneticFieldZ;
@@ -29,14 +33,20 @@ public:
     void setup();
     void tick();
 
+    void updateAccelerations();
+    void updateAngles();
+    void updateMagneticFields();
+
+    void calibrate();
+
     float getAccelerationX() { return accelerationX; }
     float getAccelerationY() { return accelerationY; }
     float getAccelerationZ() { return accelerationZ; }
     float getAcceleration() { return acceleration; }
 
-    float getAngleX() { return angleX; }
-    float getAngleY() { return angleY; }
-    float getAngleZ() { return angleZ; }
+    float getAngleX() { return angleX - angleXoffset; }
+    float getAngleY() { return angleY - angleYoffset; }
+    float getAngleZ() { return angleZ - angleZoffset; }
 
     float getMagneticFieldX() { return magneticFieldX; }
     float getMagneticFieldY() { return magneticFieldY; }

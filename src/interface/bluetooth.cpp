@@ -2,7 +2,6 @@
 
 void Bluetooth::setup()
 {
-    Serial.begin(9600);
 }
 
 void Bluetooth::tick()

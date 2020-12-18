@@ -1,29 +1,21 @@
 #include "accelerometer_test.h"
 
-AccelerometerTest::AccelerometerTest(Drone &drone) :
+AccelerometerTest::AccelerometerTest(Drone& drone) :
     drone(drone)
 {
 }
 
 void AccelerometerTest::setup()
 {
-    Serial.begin(115200);
 }
 
 void AccelerometerTest::tick()
 {
-    Serial.println("== Accelerations ==");
-    Serial.println(drone.getAccelerometer().getAccelerationX());
-    Serial.println(drone.getAccelerometer().getAccelerationY());
-    Serial.println(drone.getAccelerometer().getAccelerationZ());
+    Accelerometer& accelerometer = drone.getAccelerometer();
 
-    Serial.println("== Angles ==");
-    Serial.println(drone.getAccelerometer().getAngleX());
-    Serial.println(drone.getAccelerometer().getAngleY());
-    Serial.println(drone.getAccelerometer().getAngleZ());
+    String accelerations = String() + accelerometer.getAccelerationX() + '\t' + accelerometer.getAccelerationY() + '\t' + accelerometer.getAccelerationZ() + '\t' + accelerometer.getAcceleration();
+    String angles = String() + accelerometer.getAngleX() + '\t' + accelerometer.getAngleY() + '\t' + accelerometer.getAngleZ();
+    String magneticFields = String() + accelerometer.getMagneticFieldX() + '\t' + accelerometer.getMagneticFieldY() + '\t' + accelerometer.getMagneticFieldZ() + '\t' + accelerometer.getHorizonDirection();
 
-    Serial.println("== Magnetic field ==");
-    Serial.println(drone.getAccelerometer().getMagneticFieldX());
-    Serial.println(drone.getAccelerometer().getMagneticFieldY());
-    Serial.println(drone.getAccelerometer().getMagneticFieldZ());
+    Serial.println(accelerations + '\t' + angles + '\t' + magneticFields);
 }
