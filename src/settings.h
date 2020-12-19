@@ -102,4 +102,10 @@ constexpr uint8_t STARTUP_FREQUENCIES_COUNT = 5;
  */
 constexpr int STARTUP_FREQUENCIES[STARTUP_FREQUENCIES_COUNT] = {523, 887, 887, 523, 1046};
 
+////////////////////
+// === BUTTON === //
+////////////////////
+
+constexpr uint8_t POWER_TOGGLE_BUTTON_PIN = 52;
+
 #endif /* SETTINGS_H */

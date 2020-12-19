@@ -37,7 +37,7 @@ public:
     Accelerometer() {}
     ~Accelerometer() {}
 
-    void setup();
+    void startup();
     void tick();
 
     void updateAccelerations();

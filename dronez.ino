@@ -15,12 +15,11 @@ void setup()
 
     Serial.begin(38400);
     drone->setup();
-    drone->startup();
-    test->setup();
+    // test->setup();
 }
 
 void loop()
 {
     drone->tick();
-    test->tick();
+    // test->tick();
 }

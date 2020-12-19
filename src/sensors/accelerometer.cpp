@@ -3,7 +3,7 @@
 #include <RunningMedian.h>
 #include <Wire.h>
 
-void Accelerometer::setup()
+void Accelerometer::startup()
 {
     Wire.begin();
     sensor.setWire(&Wire);

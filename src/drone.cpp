@@ -8,7 +8,8 @@ Drone::Drone() :
     piezo(Piezo((uint8_t)PIEZO_PIN)),
     bluetooth(Bluetooth()),
     position(Position(accelerometer)),
-    statusLed(RGBLed((uint8_t)STATUS_LED_RED_PIN, (uint8_t)STATUS_LED_GREEN_PIN, (uint8_t)STATUS_LED_BLUE_PIN))
+    statusLed(RGBLed((uint8_t)STATUS_LED_RED_PIN, (uint8_t)STATUS_LED_GREEN_PIN, (uint8_t)STATUS_LED_BLUE_PIN)),
+    onOffButton(ToggleButton((uint8_t)POWER_TOGGLE_BUTTON_PIN))
 {
     Interface::setup(this);
 }
@@ -19,42 +20,58 @@ Drone::~Drone()
 
 void Drone::setup()
 {
-    statusLed.setup();
-    statusLed.setColor(255, 0, 0);
-    accelerometer.setup();
-    piezo.setup();
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].registerLed(&leds[i]);
         motors[i].setup();
     }
-    statusLed.setColor(0, 255, 0);
+    onOffButton.setup();
+    statusLed.setup();
+    statusLed.setColor(255, 0, 0);
 }
 
 void Drone::startup()
 {
+    statusLed.setColor(255, 255, 0);
+    accelerometer.startup();
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].startup();
     }
+    piezo.setup();
+    statusLed.setColor(0, 255, 0);
 }
 
 void Drone::shutdown()
 {
+    statusLed.setColor(255, 255, 0);
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].shutdown();
     }
+    statusLed.setColor(255, 0, 0);
 }
 
 void Drone::tick()
 {
-    accelerometer.tick();
-    position.update();
-    piezo.tick();
-    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
+    onOffButton.tick();
+    if (onOffButton.getHasChanged())
     {
-        motors[i].tick();
+        onOffButton.isOn() ? startup() : shutdown();
+    }
+    else if (onOffButton.isOn())
+    {
+        accelerometer.tick();
+        position.update();
+        piezo.tick();
+        for (uint8_t i = 0; i < MOTORS_COUNT; i++)
+        {
+            motors[i].tick();
+        }
+    }
+    else
+    {
+        delay(100);
     }
 }
 
