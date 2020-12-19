@@ -4,6 +4,7 @@
 #include "components/led.h"
 #include "components/motor.h"
 #include "components/piezo.h"
+#include "components/rgb_led.h"
 #include "interface/bluetooth.h"
 #include "position.h"
 #include "sensors/accelerometer.h"
@@ -29,6 +30,7 @@ private:
     };
     Piezo piezo;
     Bluetooth bluetooth;
+    RGBLed statusLed;
 
     Position position;
 

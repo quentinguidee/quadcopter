@@ -15,7 +15,7 @@ void setup()
 
     Serial.begin(38400);
     drone->setup();
-    // drone->startup();
+    drone->startup();
     test->setup();
 }
 

@@ -7,7 +7,8 @@ Drone::Drone() :
     accelerometer(Accelerometer()),
     piezo(Piezo((uint8_t)PIEZO_PIN)),
     bluetooth(Bluetooth()),
-    position(Position(accelerometer))
+    position(Position(accelerometer)),
+    statusLed(RGBLed((uint8_t)STATUS_LED_RED_PIN, (uint8_t)STATUS_LED_GREEN_PIN, (uint8_t)STATUS_LED_BLUE_PIN))
 {
     Interface::setup(this);
 }
@@ -18,6 +19,8 @@ Drone::~Drone()
 
 void Drone::setup()
 {
+    statusLed.setup();
+    statusLed.setColor(255, 0, 0);
     accelerometer.setup();
     piezo.setup();
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
@@ -25,6 +28,7 @@ void Drone::setup()
         motors[i].registerLed(&leds[i]);
         motors[i].setup();
     }
+    statusLed.setColor(0, 255, 0);
 }
 
 void Drone::startup()
