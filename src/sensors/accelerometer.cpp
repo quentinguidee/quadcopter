@@ -19,6 +19,7 @@ void Accelerometer::tick()
 {
     updateAccelerations();
     updateAngles();
+    updateAccelerationAngles();
     updateMagneticFields();
 }
 
@@ -37,6 +38,15 @@ void Accelerometer::updateAngles()
     angleSpeedX = sensor.gyroX();
     angleSpeedY = sensor.gyroY();
     angleSpeedZ = sensor.gyroZ();
+}
+
+/**
+ * Accelerations have to be updated before.
+ */
+void Accelerometer::updateAccelerationAngles()
+{
+    accelerationAngleX = atan2(getAccelerationY(), getAccelerationZ()) * RAD_TO_DEG;
+    accelerationAngleY = atan2(-getAccelerationX(), sqrt(pow(getAccelerationY(), 2) + pow(getAccelerationZ(), 2))) * RAD_TO_DEG;
 }
 
 void Accelerometer::updateMagneticFields()
