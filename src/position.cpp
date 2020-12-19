@@ -15,8 +15,8 @@ void Position::update()
     if (timer != 0)
     {
         float deltaTime = (now - timer) / 1000000.0;
-        angleX += sensor.getAngleSpeedX() * deltaTime;
-        angleY += sensor.getAngleSpeedY() * deltaTime;
+        angleX = 0.995 * (angleX + (sensor.getAngleSpeedX() * deltaTime)) + (0.005 * sensor.getAccelerationAngleX());
+        angleY = 0.995 * (angleY + (sensor.getAngleSpeedY() * deltaTime)) + (0.005 * sensor.getAccelerationAngleY());
         angleZ += sensor.getAngleSpeedZ() * deltaTime;
     }
     timer = now;

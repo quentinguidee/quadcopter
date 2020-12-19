@@ -45,7 +45,7 @@ void Accelerometer::updateAngles()
  */
 void Accelerometer::updateAccelerationAngles()
 {
-    accelerationAngleX = atan2(getAccelerationY(), getAccelerationZ()) * RAD_TO_DEG;
+    accelerationAngleX = atan2(getAccelerationY(), sqrt(pow(getAccelerationX(), 2) + pow(getAccelerationZ(), 2))) * RAD_TO_DEG;
     accelerationAngleY = atan2(-getAccelerationX(), sqrt(pow(getAccelerationY(), 2) + pow(getAccelerationZ(), 2))) * RAD_TO_DEG;
 }
 
@@ -60,8 +60,6 @@ void Accelerometer::updateMagneticFields()
 
 void Accelerometer::calibrate()
 {
-    updateAngles();
-
     RunningMedian accelerationsX = RunningMedian(100);
     RunningMedian accelerationsY = RunningMedian(100);
     RunningMedian accelerationsZ = RunningMedian(100);
