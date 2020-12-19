@@ -52,20 +52,33 @@ void Accelerometer::calibrate()
 {
     updateAngles();
 
+    RunningMedian accelerationsX = RunningMedian(100);
+    RunningMedian accelerationsY = RunningMedian(100);
+    RunningMedian accelerationsZ = RunningMedian(100);
+
     RunningMedian anglesX = RunningMedian(100);
     RunningMedian anglesY = RunningMedian(100);
     RunningMedian anglesZ = RunningMedian(100);
 
     for (uint8_t i = 0; i < 100; i++)
     {
+        updateAccelerations();
         updateAngles();
 
         anglesX.add(angleSpeedX);
         anglesY.add(angleSpeedY);
         anglesZ.add(angleSpeedZ);
 
+        accelerationsX.add(accelerationX);
+        accelerationsY.add(accelerationY);
+        accelerationsZ.add(accelerationZ);
+
         delay(10);
     }
+
+    accelerationXoffset = accelerationsX.getMedian();
+    accelerationYoffset = accelerationsY.getMedian();
+    accelerationZoffset = accelerationsZ.getMedian() + 1;
 
     angleSpeedXoffset = anglesX.getMedian();
     angleSpeedYoffset = anglesY.getMedian();

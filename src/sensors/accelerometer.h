@@ -13,6 +13,10 @@ private:
     float accelerationZ;
     float acceleration;
 
+    float accelerationXoffset;
+    float accelerationYoffset;
+    float accelerationZoffset;
+
     float angleSpeedX;
     float angleSpeedY;
     float angleSpeedZ;
@@ -39,9 +43,9 @@ public:
 
     void calibrate();
 
-    float getAccelerationX() { return accelerationX; }
-    float getAccelerationY() { return accelerationY; }
-    float getAccelerationZ() { return accelerationZ; }
+    float getAccelerationX() { return accelerationX - accelerationXoffset; }
+    float getAccelerationY() { return accelerationY - accelerationYoffset; }
+    float getAccelerationZ() { return accelerationZ - accelerationZoffset; }
     float getAcceleration() { return acceleration; }
 
     float getAngleSpeedX() { return angleSpeedX - angleSpeedXoffset; }
