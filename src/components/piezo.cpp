@@ -49,13 +49,18 @@ void Piezo::tick()
         else
         {
             duration = 0;
+            delete[] frequencies;
         }
     }
 }
 
 void Piezo::on(int frequencies[], int duration, uint8_t count, bool force)
 {
-    if (isOn() && !force) return;
+    if (isOn() && !force)
+    {
+        delete[] frequencies;
+        return;
+    }
 
     this->startTimer = millis();
     this->frequencies = frequencies;
