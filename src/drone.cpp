@@ -80,7 +80,7 @@ void Drone::checkSecurity()
 {
     if (position.getAngleX() > 60 || position.getAngleX() < -60 || position.getAngleY() > 60 || position.getAngleY() < -60)
     {
-        piezo.on(880, 500);
+        piezo.on(1000, 100);
     }
 }
 
