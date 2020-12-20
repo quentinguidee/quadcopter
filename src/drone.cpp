@@ -63,6 +63,7 @@ void Drone::tick()
     {
         accelerometer.tick();
         position.update();
+        checkSecurity();
         piezo.tick();
         for (uint8_t i = 0; i < MOTORS_COUNT; i++)
         {
@@ -72,6 +73,14 @@ void Drone::tick()
     else
     {
         delay(100);
+    }
+}
+
+void Drone::checkSecurity()
+{
+    if (position.getAngleX() > 60 || position.getAngleX() < -60 || position.getAngleY() > 60 || position.getAngleY() < -60)
+    {
+        piezo.on(880, 500);
     }
 }
 

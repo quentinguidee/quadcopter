@@ -45,6 +45,7 @@ public:
     void shutdown();
 
     void tick();
+    void checkSecurity();
 
     Motor& getMotor(Motor::Position position);
     Motor& getMotor(int8_t index);
