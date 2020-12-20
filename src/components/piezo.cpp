@@ -12,11 +12,8 @@ void Piezo::startup()
     frequency = 440;
     pause = 0;
     inStartup = true;
-    frequency = STARTUP_FREQUENCIES[0];
-    startTimer = millis();
     currentTimer = 0;
-    period = 100;
-    repeat = STARTUP_FREQUENCIES_COUNT;
+    on(STARTUP_FREQUENCIES[0], 100, STARTUP_FREQUENCIES_COUNT);
 }
 
 void Piezo::shutdown()
@@ -41,11 +38,11 @@ void Piezo::tick()
     }
     else if (period > deltaTime)
     {
-        tone(PIEZO_PIN, frequency);
+        tone(pin, frequency);
     }
     else if (period <= deltaTime)
     {
-        noTone(PIEZO_PIN);
+        noTone(pin);
         repeat--;
         if (repeat > 0)
         {
