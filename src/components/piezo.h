@@ -14,7 +14,7 @@ private:
 
     int pause = 0;
 
-    int *frequencies;
+    int *frequencies = nullptr;
     int frequencyIndex;
     uint8_t frequenciesCount;
 
@@ -27,6 +27,8 @@ public:
     void tick();
 
     void on(int frequencies[], int duration, uint8_t count, bool force = false);
+
+    void deleteFrequencies();
 
     bool isOn();
 };

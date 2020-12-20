@@ -92,16 +92,6 @@ constexpr uint8_t STATUS_LED_GREEN_PIN = 6;
  */
 constexpr uint8_t PIEZO_PIN = 53;
 
-/**
- * Number of frequencies for the startup ring.
- */
-constexpr uint8_t STARTUP_FREQUENCIES_COUNT = 5;
-
-/**
- * Frequencies for the startup ring.
- */
-constexpr int STARTUP_FREQUENCIES[STARTUP_FREQUENCIES_COUNT] = {523, 887, 887, 523, 1046};
-
 ////////////////////
 // === BUTTON === //
 ////////////////////

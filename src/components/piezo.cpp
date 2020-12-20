@@ -9,18 +9,25 @@ Piezo::Piezo(uint8_t pin) :
 
 void Piezo::startup()
 {
-    on((int*)STARTUP_FREQUENCIES, 100, STARTUP_FREQUENCIES_COUNT);
+    deleteFrequencies();
+    on(new int[5]{523, 887, 887, 523, 1046}, 100, 5);
 }
 
 void Piezo::shutdown()
 {
     noTone(pin);
     duration = 0;
+    pause = 0;
+    deleteFrequencies();
 }
 
 void Piezo::tick()
 {
-    if (!isOn()) return;
+    if (!isOn())
+    {
+        noTone(pin);
+        return;
+    }
 
     currentTimer = millis();
     unsigned long deltaTime = currentTimer - startTimer;
@@ -49,7 +56,7 @@ void Piezo::tick()
         else
         {
             duration = 0;
-            delete[] frequencies;
+            deleteFrequencies();
         }
     }
 }
@@ -62,12 +69,23 @@ void Piezo::on(int frequencies[], int duration, uint8_t count, bool force)
         return;
     }
 
+    if (force) deleteFrequencies();
+
     this->startTimer = millis();
     this->frequencies = frequencies;
     this->frequenciesCount = count;
     this->pause = 0;
     this->frequencyIndex = 0;
     this->duration = duration;
+}
+
+void Piezo::deleteFrequencies()
+{
+    if (frequencies != nullptr)
+    {
+        delete[] frequencies;
+        frequencies = nullptr;
+    }
 }
 
 bool Piezo::isOn()
