@@ -38,7 +38,7 @@ void Drone::startup()
     {
         motors[i].startup();
     }
-    piezo.setup();
+    piezo.startup();
     statusLed.setColor(0, 255, 0);
 }
 
@@ -49,6 +49,7 @@ void Drone::shutdown()
     {
         motors[i].shutdown();
     }
+    piezo.shutdown();
     statusLed.setColor(255, 0, 0);
 }
 

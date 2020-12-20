@@ -23,7 +23,8 @@ public:
     Piezo(uint8_t pin);
     ~Piezo() {}
 
-    void setup();
+    void startup();
+    void shutdown();
     void tick();
 
     void on(int frequency, int duration, int repeat = 1);

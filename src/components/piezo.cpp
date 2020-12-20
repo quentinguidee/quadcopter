@@ -7,13 +7,21 @@ Piezo::Piezo(uint8_t pin) :
 {
 }
 
-void Piezo::setup()
+void Piezo::startup()
 {
+    frequency = 440;
+    pause = 0;
     inStartup = true;
     frequency = STARTUP_FREQUENCIES[0];
     startTimer = millis();
+    currentTimer = 0;
     period = 100;
     repeat = STARTUP_FREQUENCIES_COUNT;
+}
+
+void Piezo::shutdown()
+{
+    noTone(pin);
 }
 
 void Piezo::tick()
