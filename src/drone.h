@@ -51,6 +51,9 @@ public:
     Accelerometer& getAccelerometer() { return accelerometer; }
     Piezo& getPiezo() { return piezo; }
     Bluetooth& getBluetooth() { return bluetooth; }
+    RGBLed& getStatusLed() { return statusLed; }
+    ToggleButton& getOnOffButton() { return onOffButton; }
+
     Position& getPosition() { return position; }
 };
 
