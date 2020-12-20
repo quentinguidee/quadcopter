@@ -9,21 +9,18 @@ Piezo::Piezo(uint8_t pin) :
 
 void Piezo::startup()
 {
-    frequency = 440;
-    pause = 0;
-    inStartup = true;
-    currentTimer = 0;
-    on(STARTUP_FREQUENCIES[0], 100, STARTUP_FREQUENCIES_COUNT);
+    on((int*)STARTUP_FREQUENCIES, 100, STARTUP_FREQUENCIES_COUNT);
 }
 
 void Piezo::shutdown()
 {
     noTone(pin);
+    duration = 0;
 }
 
 void Piezo::tick()
 {
-    if (period == 0) return;
+    if (!isOn()) return;
 
     currentTimer = millis();
     unsigned long deltaTime = currentTimer - startTimer;
@@ -36,32 +33,39 @@ void Piezo::tick()
             startTimer = millis();
         }
     }
-    else if (period > deltaTime)
+    else if (duration > deltaTime)
     {
-        tone(pin, frequency);
+        tone(pin, frequencies[frequencyIndex]);
     }
-    else if (period <= deltaTime)
+    else if (duration <= deltaTime)
     {
         noTone(pin);
-        repeat--;
-        if (repeat > 0)
+        frequencyIndex++;
+        if (frequencyIndex < frequenciesCount)
         {
             pause = 50;
             startTimer = millis();
-            if (inStartup) frequency = STARTUP_FREQUENCIES[STARTUP_FREQUENCIES_COUNT - repeat];
         }
         else
         {
-            period = 0;
-            inStartup = false;
+            duration = 0;
         }
     }
 }
 
-void Piezo::on(int frequency, int duration, int repeat)
+void Piezo::on(int frequencies[], int duration, uint8_t count, bool force)
 {
+    if (isOn() && !force) return;
+
     this->startTimer = millis();
-    this->frequency = frequency;
-    this->period = duration;
-    this->repeat = repeat;
+    this->frequencies = frequencies;
+    this->frequenciesCount = count;
+    this->pause = 0;
+    this->frequencyIndex = 0;
+    this->duration = duration;
+}
+
+bool Piezo::isOn()
+{
+    return duration != 0;
 }

@@ -10,14 +10,13 @@ private:
 
     unsigned long currentTimer;
     unsigned long startTimer;
-    unsigned long period;
+    unsigned long duration = 0;
 
-    int repeat;
     int pause = 0;
 
-    int frequency = 440;
-
-    bool inStartup = false;
+    int *frequencies;
+    int frequencyIndex;
+    uint8_t frequenciesCount;
 
 public:
     Piezo(uint8_t pin);
@@ -27,7 +26,9 @@ public:
     void shutdown();
     void tick();
 
-    void on(int frequency, int duration, int repeat = 1);
+    void on(int frequencies[], int duration, uint8_t count, bool force = false);
+
+    bool isOn();
 };
 
 #endif /* PIEZO_H */
