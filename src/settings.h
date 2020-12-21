@@ -96,6 +96,10 @@ constexpr uint8_t PIEZO_PIN = 53;
 // === BUTTON === //
 ////////////////////
 
+/**
+ * Toggle button pin (turns on/off the drone)
+ * Pin type: D
+ */
 constexpr uint8_t POWER_TOGGLE_BUTTON_PIN = 52;
 
 #endif /* SETTINGS_H */
