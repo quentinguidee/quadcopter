@@ -19,7 +19,7 @@ void Accelerometer::tick()
 {
     updateAccelerations();
     updateAngles();
-    updateAccelerationAngles();
+    updateAnglesFromAccelerations();
     updateMagneticFields();
 }
 
@@ -43,10 +43,10 @@ void Accelerometer::updateAngles()
 /**
  * Accelerations have to be updated before.
  */
-void Accelerometer::updateAccelerationAngles()
+void Accelerometer::updateAnglesFromAccelerations()
 {
-    accelerationAngleX = atan2(getAccelerationY(), sqrt(pow(getAccelerationX(), 2) + pow(getAccelerationZ(), 2))) * RAD_TO_DEG;
-    accelerationAngleY = atan2(-getAccelerationX(), sqrt(pow(getAccelerationY(), 2) + pow(getAccelerationZ(), 2))) * RAD_TO_DEG;
+    angleXFromAcceleration = atan2(getAccelerationY(), sqrt(pow(getAccelerationX(), 2) + pow(getAccelerationZ(), 2))) * RAD_TO_DEG;
+    angleYFromAcceleration = atan2(-getAccelerationX(), sqrt(pow(getAccelerationY(), 2) + pow(getAccelerationZ(), 2))) * RAD_TO_DEG;
 }
 
 void Accelerometer::updateMagneticFields()
