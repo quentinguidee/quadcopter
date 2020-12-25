@@ -6,6 +6,7 @@ all:
 install:
 	arduino-cli core install arduino:avr
 	arduino-cli lib install MPU9250_asukiaaa
+	arduino-cli lib install RunningMedian
 
 upload:
 	arduino-cli -b ${BOARD} -p /dev/ttyACM0 upload
