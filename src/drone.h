@@ -6,6 +6,7 @@
 #include "components/piezo.h"
 #include "components/rgb_led.h"
 #include "components/toggle_button.h"
+#include "flight_controller.h"
 #include "interface/bluetooth.h"
 #include "position.h"
 #include "sensors/accelerometer.h"
@@ -35,6 +36,7 @@ private:
     ToggleButton onOffButton;
 
     Position position;
+    FlightController flightController;
 
 public:
     Drone();

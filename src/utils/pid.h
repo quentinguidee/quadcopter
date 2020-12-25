@@ -20,6 +20,7 @@ public:
     PID(float Kp, float Ki, float Kd);
     ~PID() {}
 
+    void startup();
     void tick(float desired, float measured);
 
     float getOutput();

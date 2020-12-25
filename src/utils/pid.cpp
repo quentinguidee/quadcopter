@@ -10,6 +10,15 @@ PID::PID(float Kp, float Ki, float Kd) :
 {
 }
 
+void PID::startup()
+{
+    previousError = 0;
+    integral = 0;
+    derivative = 0;
+    output = 0;
+    timer = millis();
+}
+
 void PID::tick(float desired, float measured)
 {
     unsigned long deltaTime = micros() - timer;
