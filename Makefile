@@ -1,4 +1,5 @@
 BOARD=arduino:avr:mega:cpu=atmega2560
+ARDUINO_CLI=arduino-cli
 
 OS := $(shell uname)
 ifeq ($(OS), Darwin)
@@ -8,12 +9,12 @@ PORT=/dev/ttyACM0
 endif
 
 all:
-	arduino-cli -b ${BOARD} compile
+	${ARDUINO_CLI} -b ${BOARD} compile
 
 install:
-	arduino-cli core install arduino:avr
-	arduino-cli lib install MPU9250_asukiaaa
-	arduino-cli lib install RunningMedian
+	${ARDUINO_CLI} core install arduino:avr
+	${ARDUINO_CLI} lib install MPU9250_asukiaaa
+	${ARDUINO_CLI} lib install RunningMedian
 
 upload:
-	arduino-cli -b ${BOARD} -p ${PORT} upload
+	${ARDUINO_CLI} -b ${BOARD} -p ${PORT} upload
