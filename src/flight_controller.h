@@ -8,11 +8,8 @@
 class FlightController
 {
 private:
-    PID pidAngleX;
-    PID pidAngleY;
-
-    PID pidAngleRateX;
-    PID pidAngleRateY;
+    PID pidAngleX, pidAngleY;
+    PID pidAngleRateX, pidAngleRateY;
 
 public:
     FlightController();
