@@ -71,8 +71,10 @@ void Drone::tick()
         flightController.tick(
             position.getAngleX(),
             position.getAngleY(),
+            position.getAngleZ(),
             accelerometer.getAngleSpeedX(),
-            accelerometer.getAngleSpeedY());
+            accelerometer.getAngleSpeedY(),
+            accelerometer.getAngleSpeedZ());
 
         checkSecurity();
         piezo.tick();

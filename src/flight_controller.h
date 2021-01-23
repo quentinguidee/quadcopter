@@ -8,8 +8,8 @@
 class FlightController
 {
 private:
-    PID pidAngleX, pidAngleY;
-    PID pidAngleRateX, pidAngleRateY;
+    PID pidAngleX, pidAngleY, pidAngleZ;
+    PID pidAngleRateX, pidAngleRateY, pidAngleRateZ;
 
 public:
     FlightController();
@@ -19,8 +19,10 @@ public:
     void tick(
         float angleX,
         float angleY,
+        float angleZ,
         float angleRateX,
-        float angleRateY);
+        float angleRateY,
+        float angleRateZ);
 };
 
 #endif /* FLIGHT_CONTROLLER_H */
