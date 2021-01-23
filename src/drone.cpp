@@ -10,7 +10,8 @@ Drone::Drone() :
     statusLed(RGBLed((uint8_t)STATUS_LED_RED_PIN, (uint8_t)STATUS_LED_GREEN_PIN, (uint8_t)STATUS_LED_BLUE_PIN)),
     onOffButton(ToggleButton((uint8_t)POWER_TOGGLE_BUTTON_PIN)),
     position(Position(accelerometer)),
-    flightController(FlightController())
+    flightController(FlightController()),
+    status(Status::off)
 {
     Interface::setup(this);
 }
@@ -28,12 +29,12 @@ void Drone::setup()
     }
     onOffButton.setup();
     statusLed.setup();
-    statusLed.setColor(255, 0, 0);
+    setStatus(Status::off);
 }
 
 void Drone::startup()
 {
-    statusLed.setColor(255, 255, 0);
+    setStatus(Status::inStartup);
     accelerometer.startup();
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
@@ -41,18 +42,18 @@ void Drone::startup()
     }
     flightController.startup();
     piezo.startup();
-    statusLed.setColor(0, 255, 0);
+    setStatus(Status::on);
 }
 
 void Drone::shutdown()
 {
-    statusLed.setColor(255, 255, 0);
+    setStatus(Status::inShutdown);
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].shutdown();
     }
     piezo.shutdown();
-    statusLed.setColor(255, 0, 0);
+    setStatus(Status::off);
 }
 
 void Drone::tick()
@@ -101,4 +102,30 @@ Motor& Drone::getMotor(Motor::Position position)
 Motor& Drone::getMotor(int8_t index)
 {
     return motors[index];
+}
+
+void Drone::setStatus(Status status)
+{
+    this->status = status;
+    switch (status)
+    {
+        case off:
+            statusLed.setColor(255, 0, 0);
+            break;
+
+        case inStartup:
+            statusLed.setColor(255, 255, 0);
+            break;
+
+        case on:
+            statusLed.setColor(0, 255, 0);
+            break;
+
+        case inShutdown:
+            statusLed.setColor(255, 255, 0);
+            break;
+
+        default:
+            Serial.println("[WARNING] Unhandled status case");
+    }
 }

@@ -16,6 +16,15 @@
 
 class Drone
 {
+public:
+    enum Status
+    {
+        off,
+        inStartup,
+        on,
+        inShutdown
+    };
+
 private:
     Motor motors[MOTORS_COUNT] = {
         Motor((uint8_t)ESC_MOTOR_A_PIN),
@@ -38,6 +47,8 @@ private:
     Position position;
     FlightController flightController;
 
+    Status status;
+
 public:
     Drone();
     ~Drone();
@@ -58,6 +69,14 @@ public:
     ToggleButton& getOnOffButton() { return onOffButton; }
 
     Position& getPosition() { return position; }
+
+    // Status
+    void setStatus(Status status);
+    Status getStatus() { return status; }
+    bool isOn() { return status == Status::on; }
+    bool isInStartup() { return status == Status::inStartup; }
+    bool isOff() { return status == Status::off; }
+    bool isShutdown() { return status == Status::inShutdown; }
 };
 
 #endif /* DRONE_H */
