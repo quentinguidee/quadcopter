@@ -63,7 +63,8 @@ void Drone::tick()
     {
         onOffButton.isOn() ? startup() : shutdown();
     }
-    else if (onOffButton.isOn())
+
+    if (onOffButton.isOn())
     {
         accelerometer.tick();
         position.update();
