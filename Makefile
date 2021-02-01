@@ -15,6 +15,7 @@ install:
 	${ARDUINO_CLI} core install arduino:avr
 	${ARDUINO_CLI} lib install MPU9250_asukiaaa
 	${ARDUINO_CLI} lib install RunningMedian
+	${ARDUINO_CLI} lib install "Adafruit NeoPixel"
 
 upload:
 	${ARDUINO_CLI} -b ${BOARD} -p ${PORT} upload

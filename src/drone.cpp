@@ -7,7 +7,7 @@ Drone::Drone() :
     accelerometer(Accelerometer()),
     piezo(Piezo((uint8_t)PIEZO_PIN)),
     bluetooth(Bluetooth()),
-    statusLed(RGBLed((uint8_t)STATUS_LED_RED_PIN, (uint8_t)STATUS_LED_GREEN_PIN, (uint8_t)STATUS_LED_BLUE_PIN)),
+    statusLed(JewelLed((uint8_t)JEWEL_LED_PIN)),
     onOffButton(ToggleButton((uint8_t)POWER_TOGGLE_BUTTON_PIN)),
     position(Position(accelerometer)),
     flightController(FlightController()),
@@ -113,19 +113,19 @@ void Drone::setStatus(Status status)
     switch (status)
     {
         case off:
-            statusLed.setColor(255, 0, 0);
+            statusLed.on(0, RED);
             break;
 
         case inStartup:
-            statusLed.setColor(255, 255, 0);
+            statusLed.on(0, ORANGE);
             break;
 
         case on:
-            statusLed.setColor(0, 255, 0);
+            statusLed.on(0, GREEN);
             break;
 
         case inShutdown:
-            statusLed.setColor(255, 255, 0);
+            statusLed.on(0, ORANGE);
             break;
 
         default:

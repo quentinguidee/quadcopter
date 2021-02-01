@@ -1,10 +1,10 @@
 #ifndef DRONE_H
 #define DRONE_H
 
+#include "components/jewel_led.h"
 #include "components/led.h"
 #include "components/motor.h"
 #include "components/piezo.h"
-#include "components/rgb_led.h"
 #include "components/toggle_button.h"
 #include "flight_controller.h"
 #include "interface/bluetooth.h"
@@ -41,7 +41,7 @@ private:
     };
     Piezo piezo;
     Bluetooth bluetooth;
-    RGBLed statusLed;
+    JewelLed statusLed;
     ToggleButton onOffButton;
 
     Position position;
@@ -65,7 +65,7 @@ public:
     Accelerometer& getAccelerometer() { return accelerometer; }
     Piezo& getPiezo() { return piezo; }
     Bluetooth& getBluetooth() { return bluetooth; }
-    RGBLed& getStatusLed() { return statusLed; }
+    JewelLed& getStatusLed() { return statusLed; }
     ToggleButton& getOnOffButton() { return onOffButton; }
 
     Position& getPosition() { return position; }

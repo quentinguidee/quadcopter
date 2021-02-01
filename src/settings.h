@@ -70,17 +70,17 @@ constexpr uint8_t LED_MOTOR_D_PIN = 25;
 /**
  * Status LED (blue component)
  */
-constexpr uint8_t STATUS_LED_RED_PIN = 8;
+// constexpr uint8_t STATUS_LED_RED_PIN = 8;
 
 /**
  * Status LED (red component)
  */
-constexpr uint8_t STATUS_LED_BLUE_PIN = 7;
+// constexpr uint8_t STATUS_LED_BLUE_PIN = 7;
 
 /**
  * Status LED (green component)
  */
-constexpr uint8_t STATUS_LED_GREEN_PIN = 6;
+// constexpr uint8_t STATUS_LED_GREEN_PIN = 6;
 
 ///////////////////
 // === PIEZO === //
@@ -101,5 +101,15 @@ constexpr uint8_t PIEZO_PIN = 53;
  * Pin type: D
  */
 constexpr uint8_t POWER_TOGGLE_BUTTON_PIN = 52;
+
+///////////////////////
+// === JEWEL LED === //
+///////////////////////
+
+/**
+ * Jewel LED Pin
+ * Pin type: D~
+ */
+constexpr uint8_t JEWEL_LED_PIN = 8;
 
 #endif /* SETTINGS_H */
