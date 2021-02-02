@@ -22,6 +22,11 @@ Drone::~Drone()
 
 void Drone::setup()
 {
+    statusLed.setup();
+    motors[1].registerJewelLed(&statusLed, 1);
+    motors[2].registerJewelLed(&statusLed, 2);
+    motors[3].registerJewelLed(&statusLed, 4);
+    motors[4].registerJewelLed(&statusLed, 5);
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].registerLed(&leds[i]);
@@ -110,25 +115,4 @@ Motor& Drone::getMotor(int8_t index)
 void Drone::setStatus(Status status)
 {
     this->status = status;
-    switch (status)
-    {
-        case off:
-            statusLed.on(0, RED);
-            break;
-
-        case inStartup:
-            statusLed.on(0, ORANGE);
-            break;
-
-        case on:
-            statusLed.on(0, GREEN);
-            break;
-
-        case inShutdown:
-            statusLed.on(0, ORANGE);
-            break;
-
-        default:
-            Serial.println("[WARNING] Unhandled status case");
-    }
 }
