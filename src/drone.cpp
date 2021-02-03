@@ -6,7 +6,7 @@
 Drone::Drone() :
     accelerometer(Accelerometer()),
     piezo(Piezo((uint8_t)PIEZO_PIN)),
-    bluetooth(Bluetooth()),
+    wifi(Wifi()),
     statusLed(JewelLed((uint8_t)JEWEL_LED_PIN)),
     onOffButton(ToggleButton((uint8_t)POWER_TOGGLE_BUTTON_PIN)),
     position(Position(accelerometer)),
@@ -23,17 +23,16 @@ Drone::~Drone()
 void Drone::setup()
 {
     statusLed.setup();
-    motors[1].registerJewelLed(&statusLed, 1);
-    motors[2].registerJewelLed(&statusLed, 2);
-    motors[3].registerJewelLed(&statusLed, 4);
-    motors[4].registerJewelLed(&statusLed, 5);
+    motors[0].registerJewelLed(&statusLed, 1);
+    motors[1].registerJewelLed(&statusLed, 2);
+    motors[2].registerJewelLed(&statusLed, 4);
+    motors[3].registerJewelLed(&statusLed, 5);
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].registerLed(&leds[i]);
         motors[i].setup();
     }
     onOffButton.setup();
-    statusLed.setup();
     setStatus(Status::off);
 }
 

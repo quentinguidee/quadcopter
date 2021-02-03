@@ -3,14 +3,9 @@
 
 #include <Adafruit_NeoPixel.h>
 
-#define N_PIXELS 7
+#include "../utils/color.h"
 
-#define BLACK 0x000000
-#define WHITE 0xffffff
-#define RED 0xbe2d2d
-#define ORANGE 0xbe722d
-#define GREEN 0x61be2d
-#define BLUE 0x2d70be
+#define N_PIXELS 7
 
 class JewelLed
 {
@@ -23,7 +18,7 @@ public:
 
     void setup();
 
-    void on(uint8_t led, uint32_t color);
+    void on(uint8_t led, Color color);
     void off(uint8_t led);
     void off();
 };

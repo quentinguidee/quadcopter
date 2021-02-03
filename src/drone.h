@@ -6,8 +6,8 @@
 #include "components/motor.h"
 #include "components/piezo.h"
 #include "components/toggle_button.h"
+#include "components/wifi.h"
 #include "flight_controller.h"
-#include "interface/bluetooth.h"
 #include "position.h"
 #include "sensors/accelerometer.h"
 #include "settings.h"
@@ -40,7 +40,7 @@ private:
         Led((uint8_t)LED_MOTOR_D_PIN),
     };
     Piezo piezo;
-    Bluetooth bluetooth;
+    Wifi wifi;
     JewelLed statusLed;
     ToggleButton onOffButton;
 
@@ -64,7 +64,7 @@ public:
     Motor& getMotor(int8_t index);
     Accelerometer& getAccelerometer() { return accelerometer; }
     Piezo& getPiezo() { return piezo; }
-    Bluetooth& getBluetooth() { return bluetooth; }
+    Wifi& getWifi() { return wifi; }
     JewelLed& getStatusLed() { return statusLed; }
     ToggleButton& getOnOffButton() { return onOffButton; }
 

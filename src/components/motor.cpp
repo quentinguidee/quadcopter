@@ -1,6 +1,7 @@
 #include "motor.h"
 
 #include "../settings.h"
+#include "../utils/color.h"
 
 Motor::Motor(uint8_t pin) :
     pin(pin),
@@ -37,7 +38,7 @@ void Motor::shutdown()
     {
         led->off();
     }
-    setStatus(Status::inShutdown);
+    setStatus(Status::off);
 }
 
 void Motor::tick()
@@ -73,23 +74,23 @@ void Motor::setStatus(Status status)
         switch (status)
         {
             case off:
-                statusLed->on(statusLedID, RED);
+                statusLed->on(statusLedID, Color::red);
                 break;
 
             case inStartup:
-                statusLed->on(statusLedID, ORANGE);
+                statusLed->on(statusLedID, Color::orange);
                 break;
 
             case on:
-                statusLed->on(statusLedID, GREEN);
+                statusLed->on(statusLedID, Color::green);
                 break;
 
             case inShutdown:
-                statusLed->on(statusLedID, ORANGE);
+                statusLed->on(statusLedID, Color::orange);
                 break;
 
             case failure:
-                statusLed->on(statusLedID, BLUE);
+                statusLed->on(statusLedID, Color::blue);
                 break;
 
             default: Serial.println("[WARNING|Motor] Unhandled status case");
