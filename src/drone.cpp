@@ -33,6 +33,7 @@ void Drone::setup()
         motors[i].setup();
     }
     onOffButton.setup();
+    wifi.setup();
     setStatus(Status::off);
 }
 

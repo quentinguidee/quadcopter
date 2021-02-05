@@ -12,11 +12,13 @@ all:
 	${ARDUINO_CLI} -b ${BOARD} compile
 
 install:
+	${ARDUINO_CLI} core update-index
 	${ARDUINO_CLI} core install arduino:avr
-	${ARDUINO_CLI} core install esp8266:esp8266 --additional-urls https://arduino.esp8266.com/stable/package_esp8266com_index.json
+	${ARDUINO_CLI} core install esp8266:esp8266
 	${ARDUINO_CLI} lib install MPU9250_asukiaaa
 	${ARDUINO_CLI} lib install RunningMedian
 	${ARDUINO_CLI} lib install "Adafruit NeoPixel"
+	${ARDUINO_CLI} lib install WiFiEsp
 
 upload:
 	${ARDUINO_CLI} -b ${BOARD} -p ${PORT} upload
