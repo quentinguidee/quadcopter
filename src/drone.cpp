@@ -95,11 +95,6 @@ void Drone::checkSecurity()
 {
 }
 
-Motor& Drone::getMotor(Motor::Position position)
-{
-    return motors[(int)position];
-}
-
 Motor& Drone::getMotor(int8_t index)
 {
     return motors[index];

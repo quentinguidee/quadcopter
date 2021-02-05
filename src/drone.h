@@ -51,7 +51,6 @@ public:
     void tick();
     void checkSecurity();
 
-    Motor& getMotor(Motor::Position position);
     Motor& getMotor(int8_t index);
     Accelerometer& getAccelerometer() { return accelerometer; }
     Wifi& getWifi() { return wifi; }

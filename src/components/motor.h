@@ -28,14 +28,6 @@ private:
     Status status = Status::off;
 
 public:
-    enum Position
-    {
-        frontLeft,
-        frontRight,
-        rearLeft,
-        rearRight
-    };
-
     Motor(uint8_t id, uint8_t pin);
     ~Motor();
 
