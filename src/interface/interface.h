@@ -29,9 +29,6 @@ public:
     static void turnOnMotor(uint8_t motor);
     static void turnOffMotor(uint8_t motor);
 
-    static void turnOnMotorLed(uint8_t motor);
-    static void turnOffMotorLed(uint8_t motor);
-
     static void turnOnPiezo();
     static void turnOffPiezo();
 };

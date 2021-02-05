@@ -49,19 +49,6 @@ void Interface::execute(String code)
             Interface::turnOnMotor(motor);
         }
     }
-    else if (category == 'L')
-    {
-        char action = code[1];
-        char motor = atoi(&code[2]);
-        if (action == '0')
-        {
-            Interface::turnOffMotorLed(motor);
-        }
-        else if (action == '1')
-        {
-            Interface::turnOnMotorLed(motor);
-        }
-    }
     else if (category == 'P')
     {
         char action = code[1];
@@ -115,16 +102,6 @@ void Interface::turnOnMotor(uint8_t motor)
 void Interface::turnOffMotor(uint8_t motor)
 {
     drone->getMotor(motor).shutdown();
-}
-
-void Interface::turnOnMotorLed(uint8_t motor)
-{
-    drone->getMotor(motor).getLed()->on();
-}
-
-void Interface::turnOffMotorLed(uint8_t motor)
-{
-    drone->getMotor(motor).getLed()->off();
 }
 
 void Interface::turnOnPiezo()

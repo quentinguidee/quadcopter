@@ -23,18 +23,17 @@ Drone::~Drone()
 void Drone::setup()
 {
     statusLed.setup();
-    motors[0].registerJewelLed(&statusLed, 1);
-    motors[1].registerJewelLed(&statusLed, 2);
-    motors[2].registerJewelLed(&statusLed, 4);
-    motors[3].registerJewelLed(&statusLed, 5);
+    onOffButton.setup();
+    setStatus(Wifi::init);
+    wifi.setup();
+    setStatus(wifi.getStatus());
+    setStatus(Status::off);
+
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
-        motors[i].registerLed(&leds[i]);
         motors[i].setup();
+        setStatus(motors[i].getStatus(), i);
     }
-    onOffButton.setup();
-    wifi.setup();
-    setStatus(Status::off);
 }
 
 void Drone::startup()
@@ -44,6 +43,7 @@ void Drone::startup()
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].startup();
+        setStatus(motors[i].getStatus(), i);
     }
     flightController.startup();
     piezo.startup();
@@ -56,6 +56,7 @@ void Drone::shutdown()
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].shutdown();
+        setStatus(motors[i].getStatus(), i);
     }
     piezo.shutdown();
     setStatus(Status::off);
@@ -115,4 +116,66 @@ Motor& Drone::getMotor(int8_t index)
 void Drone::setStatus(Status status)
 {
     this->status = status;
+}
+
+void Drone::setStatus(Wifi::Status status)
+{
+    switch (status)
+    {
+        case Wifi::Status::off:
+            statusLed.off(0);
+            break;
+
+        case Wifi::Status::init:
+            statusLed.on(0, Color::red);
+            break;
+
+        case Wifi::Status::connected:
+            statusLed.off(0);
+            break;
+
+        case Wifi::Status::error:
+            // TODO: Red blinking
+            statusLed.on(0, Color::blue);
+            break;
+    }
+}
+
+void Drone::setStatus(Motor::Status status, uint8_t motorID)
+{
+    uint8_t statusLedID = 0;
+    if (motorID <= 1)
+    {
+        statusLedID = motorID + 1;
+    }
+    else
+    {
+        statusLedID = motorID + 2;
+    }
+
+    switch (status)
+    {
+        case Motor::off:
+            statusLed.on(statusLedID, Color::red);
+            break;
+
+        case Motor::inStartup:
+            statusLed.on(statusLedID, Color::orange);
+            break;
+
+        case Motor::on:
+            statusLed.on(statusLedID, Color::green);
+            break;
+
+        case Motor::inShutdown:
+            statusLed.on(statusLedID, Color::orange);
+            break;
+
+        case Motor::failure:
+            // TODO: Red blinking
+            statusLed.on(statusLedID, Color::blue);
+            break;
+
+        default: Serial.println("[WARNING|Motor] Unhandled status case");
+    }
 }

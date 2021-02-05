@@ -9,17 +9,23 @@ class Wifi
 public:
     enum Status
     {
-        reset,
-        waitingConnection,
+        off,
+        init,
+        connected,
+        error,
     };
 
 private:
+    Status status;
+
 public:
     Wifi();
     ~Wifi() {}
 
     void setup();
     void tick();
+
+    Status getStatus() { return status; }
 };
 
 #endif /* WIFI_H */

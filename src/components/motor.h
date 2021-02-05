@@ -21,12 +21,9 @@ public:
 
 private:
     uint8_t pin;
+    uint8_t id;
     int speed;
     Servo esc;
-
-    Led* led = nullptr;
-    JewelLed* statusLed = nullptr;
-    uint8_t statusLedID;
 
     Status status = Status::off;
 
@@ -39,7 +36,7 @@ public:
         rearRight
     };
 
-    Motor(uint8_t pin);
+    Motor(uint8_t id, uint8_t pin);
     ~Motor();
 
     void setup();
@@ -50,12 +47,8 @@ public:
 
     void setSpeed(uint16_t speed);
 
-    void registerLed(Led* led);
-    void registerJewelLed(JewelLed* statusLed, uint8_t statusLedID);
-
-    Led* getLed() { return led; }
-
     void setStatus(Status status);
+    Status getStatus() { return status; }
 };
 
 #endif /* MOTOR_H */

@@ -32,13 +32,6 @@ Format: `CXXYYZZRR`
 | TODO   | M0X    | Turn off motor X            |
 | TODO   | M1X    | Turn on motor X (low speed) |
 
-#### Motors LED
-
-| Status | Format | Name                   |
-| ------ | ------ | ---------------------- |
-| TODO   | L0X    | Turn off motor X's LED |
-| TODO   | L1X    | Turn on motor X's LED  |
-
 #### Piezo
 
 | Status | Format | Name           |
