@@ -31,10 +31,3 @@ Format: `CXXYYZZRR`
 | ------ | ------ | --------------------------- |
 | TODO   | M0X    | Turn off motor X            |
 | TODO   | M1X    | Turn on motor X (low speed) |
-
-#### Piezo
-
-| Status | Format | Name           |
-| ------ | ------ | -------------- |
-| TODO   | P0     | Turn off piezo |
-| TODO   | P1     | Turn on piezo  |

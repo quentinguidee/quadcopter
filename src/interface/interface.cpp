@@ -49,18 +49,6 @@ void Interface::execute(String code)
             Interface::turnOnMotor(motor);
         }
     }
-    else if (category == 'P')
-    {
-        char action = code[1];
-        if (action == '0')
-        {
-            Interface::turnOffPiezo();
-        }
-        else if (action == '1')
-        {
-            Interface::turnOnPiezo();
-        }
-    }
 }
 
 void Interface::setup(Drone* drone)
@@ -102,14 +90,4 @@ void Interface::turnOnMotor(uint8_t motor)
 void Interface::turnOffMotor(uint8_t motor)
 {
     drone->getMotor(motor).shutdown();
-}
-
-void Interface::turnOnPiezo()
-{
-    // TODO
-}
-
-void Interface::turnOffPiezo()
-{
-    // TODO
 }

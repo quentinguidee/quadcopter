@@ -3,7 +3,6 @@
 
 #include "components/jewel_led.h"
 #include "components/motor.h"
-#include "components/piezo.h"
 #include "components/toggle_button.h"
 #include "components/wifi.h"
 #include "flight_controller.h"
@@ -32,7 +31,6 @@ private:
         Motor(3, (uint8_t)ESC_MOTOR_D_PIN),
     };
     Accelerometer accelerometer;
-    Piezo piezo;
     Wifi wifi;
     JewelLed statusLed;
     ToggleButton onOffButton;
@@ -56,7 +54,6 @@ public:
     Motor& getMotor(Motor::Position position);
     Motor& getMotor(int8_t index);
     Accelerometer& getAccelerometer() { return accelerometer; }
-    Piezo& getPiezo() { return piezo; }
     Wifi& getWifi() { return wifi; }
     JewelLed& getStatusLed() { return statusLed; }
     ToggleButton& getOnOffButton() { return onOffButton; }

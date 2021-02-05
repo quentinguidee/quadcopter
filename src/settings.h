@@ -82,16 +82,6 @@ constexpr uint8_t LED_MOTOR_D_PIN = 25;
  */
 // constexpr uint8_t STATUS_LED_GREEN_PIN = 6;
 
-///////////////////
-// === PIEZO === //
-///////////////////
-
-/**
- * Piezo Pin
- * Pin type: D
- */
-constexpr uint8_t PIEZO_PIN = 53;
-
 ////////////////////
 // === BUTTON === //
 ////////////////////
