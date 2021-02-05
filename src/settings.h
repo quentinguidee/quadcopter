@@ -67,21 +67,6 @@ constexpr uint8_t LED_MOTOR_C_PIN = 24;
  */
 constexpr uint8_t LED_MOTOR_D_PIN = 25;
 
-/**
- * Status LED (blue component)
- */
-// constexpr uint8_t STATUS_LED_RED_PIN = 8;
-
-/**
- * Status LED (red component)
- */
-// constexpr uint8_t STATUS_LED_BLUE_PIN = 7;
-
-/**
- * Status LED (green component)
- */
-// constexpr uint8_t STATUS_LED_GREEN_PIN = 6;
-
 ////////////////////
 // === BUTTON === //
 ////////////////////
