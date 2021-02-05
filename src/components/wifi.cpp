@@ -1,5 +1,7 @@
 #include "wifi.h"
 
+#include "../utils/log.h"
+
 Wifi::Wifi() :
     status(off)
 {
@@ -9,7 +11,7 @@ void Wifi::setup()
 {
     this->status = init;
 
-    Serial.println("[INFO|WiFi] WiFi serial init.");
+    Log::info(TAG_WIFI, "Serial init.");
 
     Serial1.begin(115200);
     Serial1.println("AT+RST");
@@ -17,14 +19,12 @@ void Wifi::setup()
 
     if (WiFi.status() == WL_NO_SHIELD)
     {
-        Serial.println("[FATAL_ERROR|WiFi] No WiFi card installed.");
+        Log::error(TAG_WIFI, "No WiFi card installed.");
         this->status = error;
     }
     else
     {
-        Serial.println("[INFO|WiFi] WiFi serial init done.");
-        Serial.print("[INFO|WiFi] - IP: ");
-        Serial.println(WiFi.localIP());
+        Log::info(TAG_WIFI, "WiFi serial init done.");
         this->status = connected;
     }
 }

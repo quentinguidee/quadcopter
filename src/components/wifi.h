@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <WiFiEsp.h>
 
+#define TAG_WIFI "WiFi"
+
 class Wifi
 {
 public:
