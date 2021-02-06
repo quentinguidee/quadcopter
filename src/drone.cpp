@@ -133,11 +133,11 @@ void Drone::setStatus(Motor::Status status, uint8_t motorID)
     uint8_t statusLedID = 0;
     if (motorID <= 1)
     {
-        statusLedID = motorID + 1;
+        statusLedID = motorID + 2;
     }
     else
     {
-        statusLedID = motorID + 2;
+        statusLedID = motorID + 3;
     }
 
     switch (status)
