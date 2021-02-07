@@ -3,7 +3,9 @@
 #include "../utils/log.h"
 
 Wifi::Wifi() :
-    status(off)
+    status(off),
+    server(WiFiEspServer(80)),
+    buffer(RingBuffer(8))
 {
 }
 
@@ -14,8 +16,8 @@ void Wifi::setup()
     Log::info(TAG_WIFI, "Serial init.");
 
     Serial1.begin(115200);
-    Serial1.println("AT+RST");
     WiFi.init(&Serial1);
+    WiFi.reset();
 
     if (WiFi.status() == WL_NO_SHIELD)
     {
@@ -25,10 +27,27 @@ void Wifi::setup()
     else
     {
         Log::info(TAG_WIFI, "WiFi serial init done.");
-        this->status = connected;
+        WiFi.configAP(IPAddress(192, 168, 1, 1));
+        WiFi.beginAP(ssid);
+        server.begin();
+        this->status = ready;
     }
 }
 
 void Wifi::tick()
 {
+    WiFiEspClient client = server.available();
+    if (client)
+    {
+        char
+    }
+}
+
+void Wifi::sendResponse(WiFiEspClient client)
+{
+    client.print(
+        "HTTP/1.1 200 OK\r\n"
+        "Content-Type: text/plain\r\n"
+        "\r\n");
+    client.print("Drone connected!\r\n");
 }

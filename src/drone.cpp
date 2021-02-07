@@ -61,6 +61,10 @@ void Drone::shutdown()
 
 void Drone::tick()
 {
+    wifi.tick();
+    setStatus(wifi.getStatus());
+    if (wifi.getStatus() != Wifi::connected) return;
+
     onOffButton.tick();
     if (onOffButton.getHasChanged())
     {
@@ -115,6 +119,10 @@ void Drone::setStatus(Wifi::Status status)
 
         case Wifi::Status::init:
             statusLed.on(0, Color::red);
+            break;
+
+        case Wifi::Status::ready:
+            statusLed.on(0, Color::orange);
             break;
 
         case Wifi::Status::connected:

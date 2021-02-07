@@ -13,6 +13,7 @@ public:
     {
         off,
         init,
+        ready,
         connected,
         error,
     };
@@ -20,14 +21,22 @@ public:
 private:
     Status status;
 
+    char ssid[6] = "Drone";
+
+    WiFiEspServer server;
+    RingBuffer buffer;
+
 public:
     Wifi();
     ~Wifi() {}
 
     void setup();
+    void tickSearch();
     void tick();
 
     Status getStatus() { return status; }
+
+    void sendResponse(WiFiEspClient client);
 };
 
 #endif /* WIFI_H */
