@@ -1,4 +1,3 @@
-BOARD=arduino:avr:mega:cpu=atmega2560
 ARDUINO_CLI=arduino-cli
 
 OS := $(shell uname)
@@ -8,8 +7,23 @@ else
 PORT=/dev/ttyACM0
 endif
 
-all:
-	${ARDUINO_CLI} -b ${BOARD} compile
+ifndef TARGET
+TARGET=arduino
+endif
+
+ifeq ($(TARGET), arduino)
+BOARD=arduino:avr:mega:cpu=atmega2560
+FILE=dronez.ino
+else
+BOARD=esp8266:esp8266:generic
+FILE=src/esp8266/esp8266.ino
+endif
+
+
+all: compile-arduino compile-esp8266 upload-arduino upload-esp8266
+
+compile:
+	${ARDUINO_CLI} -b ${BOARD} compile ${FILE}
 
 install:
 	${ARDUINO_CLI} core update-index
@@ -18,7 +32,6 @@ install:
 	${ARDUINO_CLI} lib install MPU9250_asukiaaa
 	${ARDUINO_CLI} lib install RunningMedian
 	${ARDUINO_CLI} lib install "Adafruit NeoPixel"
-	${ARDUINO_CLI} lib install WiFiEsp
 
 upload:
-	${ARDUINO_CLI} -b ${BOARD} -p ${PORT} upload
+	${ARDUINO_CLI} -b ${BOARD} -p ${PORT} upload ${FILE}

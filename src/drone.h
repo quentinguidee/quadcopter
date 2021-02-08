@@ -4,7 +4,6 @@
 #include "components/jewel_led.h"
 #include "components/motor.h"
 #include "components/toggle_button.h"
-#include "components/wifi.h"
 #include "flight_controller.h"
 #include "position.h"
 #include "sensors/accelerometer.h"
@@ -31,7 +30,6 @@ private:
         Motor(3, (uint8_t)ESC_MOTOR_D_PIN),
     };
     Accelerometer accelerometer;
-    Wifi wifi;
     JewelLed statusLed;
     ToggleButton onOffButton;
 
@@ -53,7 +51,7 @@ public:
 
     Motor& getMotor(int8_t index);
     Accelerometer& getAccelerometer() { return accelerometer; }
-    Wifi& getWifi() { return wifi; }
+    // Wifi& getWifi() { return wifi; }
     JewelLed& getStatusLed() { return statusLed; }
     ToggleButton& getOnOffButton() { return onOffButton; }
 
@@ -67,7 +65,7 @@ public:
     bool isOff() { return status == Status::off; }
     bool isShutdown() { return status == Status::inShutdown; }
 
-    void setStatus(Wifi::Status status);
+    // void setStatus(Wifi::Status status);
     void setStatus(Motor::Status status, uint8_t motorID);
 };
 
