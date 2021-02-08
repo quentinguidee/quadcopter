@@ -32,6 +32,8 @@ install:
 	${ARDUINO_CLI} lib install MPU9250_asukiaaa
 	${ARDUINO_CLI} lib install RunningMedian
 	${ARDUINO_CLI} lib install "Adafruit NeoPixel"
+	${ARDUINO_CLI} lib install --git-url https://github.com/me-no-dev/ESPAsyncTCP.git
+	${ARDUINO_CLI} lib install --git-url https://github.com/me-no-dev/ESPAsyncWebServer.git
 
 upload:
 	${ARDUINO_CLI} -b ${BOARD} -p ${PORT} upload ${FILE}
