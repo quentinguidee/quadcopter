@@ -20,8 +20,6 @@ FILE=src/esp8266/esp8266.ino
 endif
 
 
-all: compile-arduino compile-esp8266 upload-arduino upload-esp8266
-
 compile:
 	${ARDUINO_CLI} -b ${BOARD} compile ${FILE}
 
