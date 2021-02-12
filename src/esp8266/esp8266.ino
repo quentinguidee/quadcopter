@@ -1,15 +1,16 @@
 #include <ESP8266WiFi.h>
 
+#include "wifi.h"
+
+Wifi* wifi;
+
 void setup()
 {
-    pinMode(2, OUTPUT);
+    wifi = new Wifi();
+    wifi->setup();
 }
 
 void loop()
 {
-    digitalWrite(2, HIGH);
-    delay(500);
-
-    digitalWrite(2, LOW);
-    delay(500);
+    wifi->tick();
 }
