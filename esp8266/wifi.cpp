@@ -50,6 +50,23 @@ void Wifi::setup()
         Serial.println(String("$M") + (action == "on" ? "1" : "0") + motorID);
     });
 
+    server.on("/drone", HTTP_POST, [](AsyncWebServerRequest *request) {
+        String action;
+
+        if (request->hasParam("action", true))
+        {
+            action = request->getParam("action", true)->value();
+        }
+        else
+        {
+            action = "ERR";
+        }
+
+        request->send(200, "application/json", String("{\"action\":\"") + action + String("\"}"));
+
+        Serial.println(String("$D") + action);
+    });
+
     server.onNotFound([](AsyncWebServerRequest *request) {
         request->send(404, "text/plain", "Not found");
     });
