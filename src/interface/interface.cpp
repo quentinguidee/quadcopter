@@ -1,5 +1,7 @@
 #include "interface.h"
 
+#include "../utils/log.h"
+
 void Interface::execute(char code[])
 {
     Interface::execute(String(code));
@@ -7,6 +9,7 @@ void Interface::execute(char code[])
 
 void Interface::execute(String code)
 {
+    Log::info("INTERFACE", code);
     char category = code[1];
     if (category == 'C')
     {
@@ -64,12 +67,14 @@ void Interface::move(int x, int y, int z, int r)
 void Interface::turnOn()
 {
     drone->startup();
+    drone->getOnOffButton().on();
 }
 
 void Interface::turnOff()
 {
     // TODO: Check if landed first...
     drone->shutdown();
+    drone->getOnOffButton().off();
 }
 
 void Interface::liftOff(int height)

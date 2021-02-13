@@ -37,6 +37,16 @@ bool ToggleButton::isOff()
     return !state;
 }
 
+void ToggleButton::on()
+{
+    state = true;
+}
+
+void ToggleButton::off()
+{
+    state = false;
+}
+
 bool ToggleButton::getHasChanged()
 {
     return hasChanged;

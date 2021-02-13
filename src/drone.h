@@ -38,6 +38,8 @@ private:
 
     Status status;
 
+    String serialResponseBuffer;
+
 public:
     Drone();
     ~Drone();

@@ -23,6 +23,8 @@ public:
 
     bool isOn();
     bool isOff();
+    void on();
+    void off();
     bool getHasChanged();
 };
 

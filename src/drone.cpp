@@ -2,6 +2,7 @@
 
 #include "interface/interface.h"
 #include "sensors/accelerometer.h"
+#include "utils/log.h"
 
 Drone::Drone() :
     accelerometer(Accelerometer()),
@@ -9,7 +10,8 @@ Drone::Drone() :
     onOffButton(ToggleButton((uint8_t)POWER_TOGGLE_BUTTON_PIN)),
     position(Position(accelerometer)),
     flightController(FlightController()),
-    status(Status::off)
+    status(Status::off),
+    serialResponseBuffer("")
 {
     Interface::setup(this);
 }
@@ -61,21 +63,22 @@ void Drone::shutdown()
 
 void Drone::tick()
 {
-    String response = "";
     while (Serial1.available())
     {
         char c = Serial1.read();
-        if (c == '\n') break;
-        response += c;
-        delay(2);
-    }
-
-    if (response != "")
-    {
-        if (response[0] == '$')
+        if (c == '\n' && serialResponseBuffer != "")
         {
-            Interface::execute(response);
+            if (serialResponseBuffer[0] == '$')
+            {
+                Interface::execute(serialResponseBuffer);
+            }
+            serialResponseBuffer = "";
         }
+        else
+        {
+            serialResponseBuffer += c;
+        }
+        delay(2);
     }
 
     // setStatus(wifi.getStatus());

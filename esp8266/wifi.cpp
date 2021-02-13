@@ -12,7 +12,7 @@ void Wifi::setup()
     pinMode(2, OUTPUT);
     digitalWrite(2, LOW);
 
-    Serial.begin(115200);
+    Serial.begin(38400);
 
     Serial.println("LOADING…");
     WiFi.mode(WIFI_AP);
