@@ -23,6 +23,33 @@ void Wifi::setup()
         request->send(200, "text/plain", "Hello, world");
     });
 
+    server.on("/motors", HTTP_POST, [](AsyncWebServerRequest *request) {
+        String motorID;
+        String action;
+
+        if (request->hasParam("id", true))
+        {
+            motorID = request->getParam("id", true)->value();
+        }
+        else
+        {
+            motorID = "ERR";
+        }
+
+        if (request->hasParam("action", true))
+        {
+            action = request->getParam("action", true)->value();
+        }
+        else
+        {
+            action = "ERR";
+        }
+
+        request->send(200, "application/json", String("{\"id\":\"") + motorID + String("\",\"action\":\"") + action + String("\"}"));
+
+        Serial.println(String("$M") + (action == "on" ? "1" : "0") + motorID);
+    });
+
     server.onNotFound([](AsyncWebServerRequest *request) {
         request->send(404, "text/plain", "Not found");
     });
