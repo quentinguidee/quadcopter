@@ -16,7 +16,7 @@ BOARD=arduino:avr:mega:cpu=atmega2560
 FILE=dronez.ino
 else
 BOARD=esp8266:esp8266:generic
-FILE=src/esp8266/esp8266.ino
+FILE=esp8266/esp8266.ino
 endif
 
 

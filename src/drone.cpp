@@ -32,6 +32,7 @@ void Drone::setup()
         motors[i].setup();
         setStatus(motors[i].getStatus(), i);
     }
+    Serial.println("START");
 }
 
 void Drone::startup()
@@ -60,7 +61,23 @@ void Drone::shutdown()
 
 void Drone::tick()
 {
-    // wifi.tick();
+    String response = "";
+    while (Serial1.available())
+    {
+        char c = Serial1.read();
+        if (c == '\n') break;
+        response += c;
+        delay(2);
+    }
+
+    if (response != "")
+    {
+        if (response[0] == '$')
+        {
+            Interface::execute(response);
+        }
+    }
+
     // setStatus(wifi.getStatus());
     // if (wifi.getStatus() != Wifi::connected) return;
 
@@ -86,11 +103,8 @@ void Drone::tick()
         for (uint8_t i = 0; i < MOTORS_COUNT; i++)
         {
             motors[i].tick();
+            setStatus(motors[i].getStatus(), i);
         }
-    }
-    else
-    {
-        delay(100);
     }
 }
 

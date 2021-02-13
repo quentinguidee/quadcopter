@@ -7,18 +7,18 @@ void Interface::execute(char code[])
 
 void Interface::execute(String code)
 {
-    char category = code[0];
+    char category = code[1];
     if (category == 'C')
     {
         Interface::move(
-            code.substring(1, 2).toInt(),
-            code.substring(3, 2).toInt(),
-            code.substring(5, 2).toInt(),
-            code.substring(7, 2).toInt());
+            code.substring(2, 2).toInt(),
+            code.substring(4, 2).toInt(),
+            code.substring(6, 2).toInt(),
+            code.substring(8, 2).toInt());
     }
     else if (category == 'D')
     {
-        char action = code[1];
+        char action = code[2];
         if (action == '0')
         {
             Interface::turnOff();
@@ -38,8 +38,8 @@ void Interface::execute(String code)
     }
     else if (category == 'M')
     {
-        char action = code[1];
-        char motor = atoi(&code[2]);
+        char action = code[2];
+        char motor = atoi(&code[3]);
         if (action == '0')
         {
             Interface::turnOffMotor(motor);

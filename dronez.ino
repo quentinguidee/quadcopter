@@ -14,6 +14,8 @@ void setup()
     test = new AccelerometerTest(*drone);
 
     Serial.begin(38400);
+    Serial1.begin(115200);
+
     drone->setup();
     // test->setup();
 }
