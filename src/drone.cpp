@@ -77,7 +77,6 @@ void Drone::tick()
         {
             serialResponseBuffer += c;
         }
-        delay(2);
     }
 
     if (millis() - lastPingTimestamp > 2000)
