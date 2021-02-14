@@ -46,7 +46,6 @@ void Drone::startup()
         setStatus(motors[i].getStatus(), i);
     }
     flightController.startup();
-    lastPingTimestamp = millis();
     setStatus(Status::on);
 }
 
@@ -90,6 +89,12 @@ void Drone::tick()
         setStatus(Wifi::connected);
     }
 
+    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
+    {
+        motors[i].tick();
+        setStatus(motors[i].getStatus(), i);
+    }
+
     onOffButton.tick();
     if (onOffButton.getHasChanged())
     {
@@ -109,11 +114,6 @@ void Drone::tick()
             accelerometer.getAngleSpeedZ());
 
         checkSecurity();
-        for (uint8_t i = 0; i < MOTORS_COUNT; i++)
-        {
-            motors[i].tick();
-            setStatus(motors[i].getStatus(), i);
-        }
     }
 }
 
