@@ -52,6 +52,14 @@ void Interface::execute(String code)
             Interface::turnOnMotor(motor);
         }
     }
+    else if (category == 'W')
+    {
+        char action = code[2];
+        if (action == 'P')
+        {
+            Interface::ping();
+        }
+    }
 }
 
 void Interface::setup(Drone* drone)
@@ -85,6 +93,11 @@ void Interface::liftOff(int height)
 void Interface::land()
 {
     // TODO
+}
+
+void Interface::ping()
+{
+    drone->ping();
 }
 
 void Interface::turnOnMotor(uint8_t motor)

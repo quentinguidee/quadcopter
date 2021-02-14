@@ -25,6 +25,13 @@ Format: `CXXYYZZRR`
 | TODO   | D2X    | Lift off of X cm |
 | TODO   | D3     | Land             |
 
+#### Wifi
+
+| Status | Format | Name |
+| ------ | ------ | ---- |
+| TODO   | WP     | Ping |
+| TODO   | WP     | Ping |
+
 #### Motors
 
 | Status | Format | Name                        |

@@ -8,6 +8,7 @@
 #include "position.h"
 #include "sensors/accelerometer.h"
 #include "settings.h"
+#include "utils/wifi.h"
 
 #define MOTORS_COUNT 4
 
@@ -40,6 +41,8 @@ private:
 
     String serialResponseBuffer;
 
+    unsigned long lastPingTimestamp;
+
 public:
     Drone();
     ~Drone();
@@ -50,6 +53,7 @@ public:
 
     void tick();
     void checkSecurity();
+    void ping();
 
     Motor& getMotor(int8_t index);
     Accelerometer& getAccelerometer() { return accelerometer; }
@@ -67,7 +71,7 @@ public:
     bool isOff() { return status == Status::off; }
     bool isShutdown() { return status == Status::inShutdown; }
 
-    // void setStatus(Wifi::Status status);
+    void setStatus(Wifi::Status status);
     void setStatus(Motor::Status status, uint8_t motorID);
 };
 

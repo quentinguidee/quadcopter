@@ -25,6 +25,7 @@ public:
     static void turnOff();
     static void liftOff(int height = 20);
     static void land();
+    static void ping();
 
     static void turnOnMotor(uint8_t motor);
     static void turnOffMotor(uint8_t motor);

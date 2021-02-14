@@ -11,7 +11,8 @@ Drone::Drone() :
     position(Position(accelerometer)),
     flightController(FlightController()),
     status(Status::off),
-    serialResponseBuffer("")
+    serialResponseBuffer(""),
+    lastPingTimestamp(0)
 {
     Interface::setup(this);
 }
@@ -24,9 +25,7 @@ void Drone::setup()
 {
     statusLed.setup();
     onOffButton.setup();
-    // setStatus(Wifi::init);
-    // wifi.setup();
-    // setStatus(wifi.getStatus());
+    setStatus(Wifi::notConnected);
     setStatus(Status::off);
 
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
@@ -47,6 +46,7 @@ void Drone::startup()
         setStatus(motors[i].getStatus(), i);
     }
     flightController.startup();
+    lastPingTimestamp = millis();
     setStatus(Status::on);
 }
 
@@ -81,8 +81,14 @@ void Drone::tick()
         delay(2);
     }
 
-    // setStatus(wifi.getStatus());
-    // if (wifi.getStatus() != Wifi::connected) return;
+    if (millis() - lastPingTimestamp > 2000)
+    {
+        setStatus(Wifi::notConnected);
+    }
+    else
+    {
+        setStatus(Wifi::connected);
+    }
 
     onOffButton.tick();
     if (onOffButton.getHasChanged())
@@ -115,6 +121,11 @@ void Drone::checkSecurity()
 {
 }
 
+void Drone::ping()
+{
+    lastPingTimestamp = millis();
+}
+
 Motor& Drone::getMotor(int8_t index)
 {
     return motors[index];
@@ -125,32 +136,20 @@ void Drone::setStatus(Status status)
     this->status = status;
 }
 
-// void Drone::setStatus(Wifi::Status status)
-// {
-//     switch (status)
-//     {
-//         case Wifi::Status::off:
-//             statusLed.off(0);
-//             break;
-//
-//         case Wifi::Status::init:
-//             statusLed.on(0, Color::red);
-//             break;
-//
-//         case Wifi::Status::ready:
-//             statusLed.on(0, Color::orange);
-//             break;
-//
-//         case Wifi::Status::connected:
-//             statusLed.off(0);
-//             break;
-//
-//         case Wifi::Status::error:
-//             // TODO: Red blinking
-//             statusLed.on(0, Color::blue);
-//             break;
-//     }
-// }
+void Drone::setStatus(Wifi::Status status)
+{
+    switch (status)
+    {
+        case Wifi::Status::connected:
+            statusLed.off(0);
+            break;
+
+        case Wifi::Status::notConnected:
+            // TODO: Red blinking
+            statusLed.on(0, Color::blue);
+            break;
+    }
+}
 
 void Drone::setStatus(Motor::Status status, uint8_t motorID)
 {

@@ -67,6 +67,12 @@ void Wifi::setup()
         Serial.println(String("$D") + action);
     });
 
+    server.on("/wifi/ping", HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(200, "application/json", String("{\"status\":\"") + "unknown" + String("\"}"));
+
+        Serial.println(String("$WP"));
+    });
+
     server.onNotFound([](AsyncWebServerRequest *request) {
         request->send(404, "text/plain", "Not found");
     });
