@@ -12,7 +12,8 @@ Drone::Drone() :
     flightController(FlightController()),
     status(Status::off),
     serialResponseBuffer(""),
-    lastPingTimestamp(0)
+    lastPingTimestamp(0),
+    lastTrackingSending(0)
 {
     Interface::setup(this);
 }
@@ -102,6 +103,15 @@ void Drone::tick()
 
     if (onOffButton.isOn())
     {
+        if (millis() - lastTrackingSending > 200)
+        {
+            // A/B/C = accelerations
+            // D/E/F = anglesSpeed
+            // G/H/I = angles
+            Serial1.println(String("@A") + accelerometer.getAccelerationX() + "B" + accelerometer.getAccelerationY() + "C" + accelerometer.getAccelerationZ() + "D" + accelerometer.getAngleSpeedX() + "E" + accelerometer.getAngleSpeedY() + "F" + accelerometer.getAngleSpeedZ() + "G" + position.getAngleX() + "H" + position.getAngleY() + "I" + position.getAngleZ());
+            lastTrackingSending = millis();
+        }
+
         accelerometer.tick();
         position.update();
         flightController.tick(

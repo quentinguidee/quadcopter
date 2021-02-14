@@ -9,6 +9,8 @@ class Wifi
 {
 private:
     AsyncWebServer server;
+    String tracking;
+    String serialResponseBuffer;
 
 public:
     Wifi();

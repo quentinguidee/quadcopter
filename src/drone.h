@@ -42,6 +42,7 @@ private:
     String serialResponseBuffer;
 
     unsigned long lastPingTimestamp;
+    unsigned long lastTrackingSending;
 
 public:
     Drone();

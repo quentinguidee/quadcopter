@@ -3,7 +3,9 @@
 #include <Arduino.h>
 
 Wifi::Wifi() :
-    server(AsyncWebServer(80))
+    server(AsyncWebServer(80)),
+    tracking(""),
+    serialResponseBuffer("")
 {
 }
 
@@ -73,6 +75,10 @@ void Wifi::setup()
         Serial.println(String("$WP"));
     });
 
+    server.on("/tracking", HTTP_GET, [this](AsyncWebServerRequest *request) {
+        request->send(200, "application/json", String("{\"data\":\"") + tracking + String("\"}"));
+    });
+
     server.onNotFound([](AsyncWebServerRequest *request) {
         request->send(404, "text/plain", "Not found");
     });
@@ -82,4 +88,25 @@ void Wifi::setup()
 
 void Wifi::tick()
 {
+    while (Serial.available())
+    {
+        char c = Serial.read();
+        if (c == '\r')
+        {
+            // nothing
+        }
+        else if (c == '\n' && serialResponseBuffer != "")
+        {
+            if (serialResponseBuffer[0] == '@')
+            {
+                tracking = serialResponseBuffer;
+            }
+            serialResponseBuffer = "";
+            return;
+        }
+        else
+        {
+            serialResponseBuffer += c;
+        }
+    }
 }
