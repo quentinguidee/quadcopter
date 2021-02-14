@@ -19,8 +19,8 @@ Format: `CXXYYZZRR`
 
 | Status | Format | Name             |
 | ------ | ------ | ---------------- |
-| TODO   | D0     | Turn off         |
-| TODO   | D1     | Turn on          |
+| DONE   | D0     | Turn off         |
+| DONE   | D1     | Turn on          |
 | TODO   | D2     | Lift off         |
 | TODO   | D2X    | Lift off of X cm |
 | TODO   | D3     | Land             |
@@ -29,12 +29,11 @@ Format: `CXXYYZZRR`
 
 | Status | Format | Name |
 | ------ | ------ | ---- |
-| TODO   | WP     | Ping |
-| TODO   | WP     | Ping |
+| DONE   | WP     | Ping |
 
 #### Motors
 
 | Status | Format | Name                        |
 | ------ | ------ | --------------------------- |
-| TODO   | M0X    | Turn off motor X            |
-| TODO   | M1X    | Turn on motor X (low speed) |
+| DONE   | M0X    | Turn off motor X            |
+| DONE   | M1X    | Turn on motor X (low speed) |
