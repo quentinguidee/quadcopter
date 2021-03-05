@@ -4,9 +4,6 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-#include "jewel_led.h"
-#include "led.h"
-
 class Motor
 {
 public:
@@ -25,7 +22,7 @@ private:
     int speed;
     Servo esc;
 
-    Status status = Status::off;
+    Status status;
 
 public:
     Motor(uint8_t id, uint8_t pin);

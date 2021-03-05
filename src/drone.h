@@ -1,7 +1,6 @@
 #ifndef DRONE_H
 #define DRONE_H
 
-#include "components/jewel_led.h"
 #include "components/motor.h"
 #include "components/toggle_button.h"
 #include "flight_controller.h"
@@ -31,7 +30,6 @@ private:
         Motor(3, (uint8_t)ESC_MOTOR_D_PIN),
     };
     Accelerometer accelerometer;
-    JewelLed statusLed;
     ToggleButton onOffButton;
 
     Position position;
@@ -58,8 +56,6 @@ public:
 
     Motor& getMotor(int8_t index);
     Accelerometer& getAccelerometer() { return accelerometer; }
-    // Wifi& getWifi() { return wifi; }
-    JewelLed& getStatusLed() { return statusLed; }
     ToggleButton& getOnOffButton() { return onOffButton; }
 
     Position& getPosition() { return position; }
@@ -71,9 +67,6 @@ public:
     bool isInStartup() { return status == Status::inStartup; }
     bool isOff() { return status == Status::off; }
     bool isShutdown() { return status == Status::inShutdown; }
-
-    void setStatus(Wifi::Status status);
-    void setStatus(Motor::Status status, uint8_t motorID);
 };
 
 #endif /* DRONE_H */

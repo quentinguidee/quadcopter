@@ -77,14 +77,4 @@ constexpr uint8_t LED_MOTOR_D_PIN = 25;
  */
 constexpr uint8_t POWER_TOGGLE_BUTTON_PIN = 52;
 
-///////////////////////
-// === JEWEL LED === //
-///////////////////////
-
-/**
- * Jewel LED Pin
- * Pin type: D~
- */
-constexpr uint8_t JEWEL_LED_PIN = 8;
-
 #endif /* SETTINGS_H */

@@ -60,15 +60,17 @@ void Accelerometer::updateMagneticFields()
 
 void Accelerometer::calibrate()
 {
-    RunningMedian accelerationsX = RunningMedian(100);
-    RunningMedian accelerationsY = RunningMedian(100);
-    RunningMedian accelerationsZ = RunningMedian(100);
+    uint16_t nExperiments = 100;
 
-    RunningMedian anglesX = RunningMedian(100);
-    RunningMedian anglesY = RunningMedian(100);
-    RunningMedian anglesZ = RunningMedian(100);
+    RunningMedian accelerationsX = RunningMedian(nExperiments);
+    RunningMedian accelerationsY = RunningMedian(nExperiments);
+    RunningMedian accelerationsZ = RunningMedian(nExperiments);
 
-    for (uint8_t i = 0; i < 100; i++)
+    RunningMedian anglesX = RunningMedian(nExperiments);
+    RunningMedian anglesY = RunningMedian(nExperiments);
+    RunningMedian anglesZ = RunningMedian(nExperiments);
+
+    for (uint8_t i = 0; i < nExperiments; i++)
     {
         updateAccelerations();
         updateAngles();
