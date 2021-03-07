@@ -29,6 +29,8 @@ void Drone::setup()
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].setup();
+        leds[i].setup();
+        leds[i].on();
     }
     Serial.println("START");
 }

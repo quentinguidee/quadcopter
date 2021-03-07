@@ -1,6 +1,7 @@
 #ifndef DRONE_H
 #define DRONE_H
 
+#include "components/led.h"
 #include "components/motor.h"
 #include "components/toggle_button.h"
 #include "flight_controller.h"
@@ -28,6 +29,12 @@ private:
         Motor(1, (uint8_t)ESC_MOTOR_B_PIN),
         Motor(2, (uint8_t)ESC_MOTOR_C_PIN),
         Motor(3, (uint8_t)ESC_MOTOR_D_PIN),
+    };
+    Led leds[MOTORS_COUNT] = {
+        Led((uint8_t)LED_MOTOR_A_PIN),
+        Led((uint8_t)LED_MOTOR_B_PIN),
+        Led((uint8_t)LED_MOTOR_C_PIN),
+        Led((uint8_t)LED_MOTOR_D_PIN),
     };
     Accelerometer accelerometer;
     ToggleButton onOffButton;
