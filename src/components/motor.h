@@ -31,6 +31,7 @@ public:
     void setup();
     void startup();
     void shutdown();
+    void disarm();
 
     void tick();
 

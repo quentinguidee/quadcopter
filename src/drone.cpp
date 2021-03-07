@@ -141,11 +141,18 @@ void Drone::setStatus(Status status)
 
 void Drone::enableSimulatorMode()
 {
-    inSimulatorMode = true;
+    if (status != off)
+    {
+        // Cannot enable sim mode during flight.
+        return;
+    }
+
+    Drone::isInSimMode = true;
     simulatorLed.on();
 
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
+        motors[i].disarm();
         leds[i].off();
     }
 }
