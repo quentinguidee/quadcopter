@@ -20,6 +20,24 @@ void setup() {
        .setCaptionLabel("Enable Sim Mode");
 }
 
+void draw() {
+    while(port.available() > 0) {
+        char character = port.readChar();
+        if (character == '\n' && buffer != "") {
+            if (buffer.charAt(0) == '#') {
+                onCommandReceived(buffer);
+            }
+            buffer = "";
+        } else {
+            buffer += character;
+        }
+    }
+}
+
+void onCommandReceived(String buffer) {
+    
+}
+
 public void enableSimMode(int val) {
     println(val);
     port.write("$S\n");
