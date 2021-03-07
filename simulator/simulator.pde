@@ -14,7 +14,6 @@ void setup() {
     noStroke();
     ui = new ControlP5(this);
     ui.addButton("enableSimMode")
-       .setValue(0)
        .setPosition(0, 0)
        .setSize(200, 26)
        .setCaptionLabel("Enable Sim Mode");
@@ -38,7 +37,6 @@ void onCommandReceived(String buffer) {
     
 }
 
-public void enableSimMode(int val) {
-    println(val);
+public void enableSimMode() {
     port.write("$S\n");
 }
