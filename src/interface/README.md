@@ -37,3 +37,9 @@ Format: `CXXYYZZRR`
 | ------ | ------ | --------------------------- |
 | DONE   | M0X    | Turn off motor X            |
 | DONE   | M1X    | Turn on motor X (low speed) |
+
+### Simulator
+
+| Status | Format | Name                   |
+| ------ | ------ | ---------------------- |
+| DONE   | S      | Enable simulation mode |

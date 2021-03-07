@@ -12,7 +12,8 @@ Drone::Drone() :
     status(Status::off),
     serialResponseBuffer(""),
     lastPingTimestamp(0),
-    lastTrackingSending(0)
+    lastTrackingSending(0),
+    simulatorLed(Led((uint8_t)LED_SIMULATOR_PIN))
 {
     Interface::setup(this);
 }
@@ -24,6 +25,8 @@ Drone::~Drone()
 void Drone::setup()
 {
     onOffButton.setup();
+    simulatorLed.setup();
+
     setStatus(Status::off);
 
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
@@ -59,21 +62,14 @@ void Drone::shutdown()
 
 void Drone::tick()
 {
+    while (Serial.available())
+    {
+        onSerialRead(Serial.read(), serialResponseBuffer);
+    }
+
     while (Serial1.available())
     {
-        char c = Serial1.read();
-        if (c == '\n' && serialResponseBuffer != "")
-        {
-            if (serialResponseBuffer[0] == '$')
-            {
-                Interface::execute(serialResponseBuffer);
-            }
-            serialResponseBuffer = "";
-        }
-        else
-        {
-            serialResponseBuffer += c;
-        }
+        onSerialRead(Serial1.read(), serial1ResponseBuffer);
     }
 
     /*
@@ -141,4 +137,31 @@ Motor& Drone::getMotor(int8_t index)
 void Drone::setStatus(Status status)
 {
     this->status = status;
+}
+
+void Drone::enableSimulatorMode()
+{
+    inSimulatorMode = true;
+    simulatorLed.on();
+
+    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
+    {
+        leds[i].off();
+    }
+}
+
+void Drone::onSerialRead(char character, String& buffer)
+{
+    if (character == '\n' && buffer != "")
+    {
+        if (buffer[0] == '$')
+        {
+            Interface::execute(buffer);
+        }
+        buffer = "";
+    }
+    else
+    {
+        buffer += character;
+    }
 }

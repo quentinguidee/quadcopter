@@ -60,6 +60,10 @@ void Interface::execute(String code)
             Interface::ping();
         }
     }
+    else if (category == 'S')
+    {
+        Interface::enableSimulatorMode();
+    }
 }
 
 void Interface::setup(Drone* drone)
@@ -108,4 +112,9 @@ void Interface::turnOnMotor(uint8_t motor)
 void Interface::turnOffMotor(uint8_t motor)
 {
     drone->getMotor(motor).shutdown();
+}
+
+void Interface::enableSimulatorMode()
+{
+    drone->enableSimulatorMode();
 }

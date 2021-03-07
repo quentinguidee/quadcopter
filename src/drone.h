@@ -36,6 +36,7 @@ private:
         Led((uint8_t)LED_MOTOR_C_PIN),
         Led((uint8_t)LED_MOTOR_D_PIN),
     };
+    Led simulatorLed;
     Accelerometer accelerometer;
     ToggleButton onOffButton;
 
@@ -45,9 +46,14 @@ private:
     Status status;
 
     String serialResponseBuffer;
+    String serial1ResponseBuffer;
 
     unsigned long lastPingTimestamp;
     unsigned long lastTrackingSending;
+
+    bool inSimulatorMode = false;
+
+    void onSerialRead(char character, String& buffer);
 
 public:
     Drone();
@@ -74,6 +80,8 @@ public:
     bool isInStartup() { return status == Status::inStartup; }
     bool isOff() { return status == Status::off; }
     bool isShutdown() { return status == Status::inShutdown; }
+
+    void enableSimulatorMode();
 };
 
 #endif /* DRONE_H */
