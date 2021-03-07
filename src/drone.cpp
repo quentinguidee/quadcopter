@@ -155,6 +155,8 @@ void Drone::enableSimulatorMode()
         motors[i].disarm();
         leds[i].off();
     }
+
+    Serial.println("#SC");
 }
 
 void Drone::onSerialRead(char character, String& buffer)
