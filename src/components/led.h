@@ -3,7 +3,9 @@
 
 #include <Arduino.h>
 
-class Led
+#include "component.h"
+
+class Led : public Component
 {
 private:
     uint8_t pin;
@@ -16,6 +18,8 @@ public:
 
     void on();
     void off();
+
+    void willEnableSimMode();
 };
 
 #endif /* LED_H */

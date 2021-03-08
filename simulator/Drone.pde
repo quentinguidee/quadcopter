@@ -6,6 +6,8 @@ public class Drone {
     
     boolean isOn = false;
     
+    boolean[] ledsState = { false, false, false, false };
+    
     public Drone(Serial port) {
         this.port = port;
     }
@@ -38,7 +40,12 @@ public class Drone {
         char category = buffer.charAt(1);
         if (category == 'S') {
             simModeEnabledCallback();
-            println("|||||||||| (Success) SimMode enabled");
+            println("|||||||||| SimMode enabled");
+        } else if (category == 'L') {
+            int led = Integer.parseInt(str(buffer.charAt(2)));
+            boolean action = boolean(Integer.parseInt(str(buffer.charAt(3))));
+            println("|||||||||| LED " + led + " set to " + action);
+            ledsState[led] = action;
         }
     }
     
@@ -59,42 +66,48 @@ public class Drone {
         box(50, 2, 50);
         popMatrix();
         
-        if (isOn) {
-            drawLEDs();
-        }
+        drawLEDs();
     }
     
     private void drawLEDs() {
-        pushMatrix();
-        translate(width / 2 - 25, height - 100, 0 - 25);
-        rotateY(0);
-        noStroke();
-        fill(0xff0000ff);
-        box(4, 4, 4);
-        popMatrix();
+        if (ledsState[0]) {
+            pushMatrix();
+            translate(width / 2 - 25, height - 100, 0 - 25);
+            rotateY(0);
+            noStroke();
+            fill(0xff0000ff);
+            box(4, 4, 4);
+            popMatrix();
+        }
         
-        pushMatrix();
-        translate(width / 2 + 25, height - 100, 0 - 25);
-        rotateY(0);
-        noStroke();
-        fill(0xff0000ff);
-        box(4, 4, 4);
-        popMatrix();
+        if (ledsState[1]) {
+            pushMatrix();
+            translate(width / 2 + 25, height - 100, 0 - 25);
+            rotateY(0);
+            noStroke();
+            fill(0xff0000ff);
+            box(4, 4, 4);
+            popMatrix();
+        }
         
-        pushMatrix();
-        translate(width / 2 - 25, height - 100, 0 + 25);
-        rotateY(0);
-        noStroke();
-        fill(0xffff0000);
-        box(4, 4, 4);
-        popMatrix();
+        if (ledsState[2]) {
+            pushMatrix();
+            translate(width / 2 - 25, height - 100, 0 + 25);
+            rotateY(0);
+            noStroke();
+            fill(0xffff0000);
+            box(4, 4, 4);
+            popMatrix();
+        }
         
-        pushMatrix();
-        translate(width / 2 + 25, height - 100, 0 + 25);
-        rotateY(0);
-        noStroke();
-        fill(0xffff0000);
-        box(4, 4, 4);
-        popMatrix();
+        if (ledsState[3]) {
+            pushMatrix();
+            translate(width / 2 + 25, height - 100, 0 + 25);
+            rotateY(0);
+            noStroke();
+            fill(0xffff0000);
+            box(4, 4, 4);
+            popMatrix();
+        }
     }
 }

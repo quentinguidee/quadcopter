@@ -1,5 +1,7 @@
 #include "led.h"
 
+#include "../interface/simulator.h"
+
 Led::Led(uint8_t pin) :
     pin(pin)
 {
@@ -12,10 +14,29 @@ void Led::setup()
 
 void Led::on()
 {
-    digitalWrite(pin, HIGH);
+    if (isSimulated())
+    {
+        Simulator::enableLed(pin);
+    }
+    else
+    {
+        digitalWrite(pin, HIGH);
+    }
 }
 
 void Led::off()
 {
-    digitalWrite(pin, LOW);
+    if (isSimulated())
+    {
+        Simulator::disableLed(pin);
+    }
+    else
+    {
+        digitalWrite(pin, LOW);
+    }
+}
+
+void Led::willEnableSimMode()
+{
+    off();
 }
