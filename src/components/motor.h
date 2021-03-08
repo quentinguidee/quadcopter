@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <Servo.h>
 
+#include "component.h"
+
 class Motor : public Component
 {
 public:
