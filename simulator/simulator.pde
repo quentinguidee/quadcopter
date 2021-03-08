@@ -17,43 +17,21 @@ void setup() {
     port = new Serial(this, Serial.list()[3], 38400);
     
     // UI
-    size(1600, 656);
-    noStroke();
+    size(1600, 656, P3D);
+    surface.setTitle("Quadcopter");
+    surface.setResizable(true);
+    
     ui = new ControlP5(this);
+    
+    Group sidebar = ui.addGroup("sidebar")
+       .setPosition(0, 0)
+       .setColorBackground(0xff111111);
+    
     enableSimModeButton = ui.addButton("enableSimMode")
        .setPosition(0, 0)
        .setSize(200, 26)
-       .setCaptionLabel("Enable Sim Mode");
-    
-    ui.addTextlabel("accelerationLabel")
-       .setText("Acceleration")
-       .setPosition(0, 26)
-       .setSize(200, 10);
-    
-    acceleration = ui.addSlider2D("acceleration")
-       .setPosition(0, 36)
-       .setColorBackground(0xff222222)
-       .setSize(200, 200);
-    
-    ui.addTextlabel("angleRateLabel")
-       .setText("Angle Rate")
-       .setPosition(0, 236)
-       .setSize(200, 10);
-    
-    angleRate = ui.addSlider2D("angleRate")
-       .setPosition(0, 246)
-       .setColorBackground(0xff222222)
-       .setSize(200, 200);
-    
-    ui.addTextlabel("angleLabel")
-       .setText("Angle")
-       .setPosition(0, 446)
-       .setSize(200, 10);
-    
-    angle = ui.addSlider2D("angle")
-       .setPosition(0, 456)
-       .setColorBackground(0xff222222)
-       .setSize(200, 200);
+       .setCaptionLabel("Enable Sim Mode")
+       .setGroup(sidebar);
 }
 
 void draw() {
@@ -68,6 +46,16 @@ void draw() {
             buffer += character;
         }
     }
+    
+    background(0);
+    
+    pushMatrix();
+    translate(width / 2, height - 100, 0);
+    rotateY(0);
+    stroke(0xff888888);
+    noFill();
+    box(50, 2, 50);
+    popMatrix();
 }
 
 void onCommandReceived(String buffer) {
