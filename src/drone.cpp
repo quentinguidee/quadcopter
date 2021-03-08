@@ -1,6 +1,7 @@
 #include "drone.h"
 
 #include "interface/interface.h"
+#include "interface/simulator.h"
 #include "sensors/accelerometer.h"
 #include "utils/log.h"
 
@@ -156,7 +157,7 @@ void Drone::enableSimulatorMode()
         leds[i].off();
     }
 
-    Serial.println("#SC");
+    Simulator::callbackSimModeEnabled();
 }
 
 void Drone::onSerialRead(char character, String& buffer)
