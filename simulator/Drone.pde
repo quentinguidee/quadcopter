@@ -4,6 +4,8 @@ public class Drone {
     Serial port;
     String buffer;
     
+    boolean isOn = false;
+    
     public Drone(Serial port) {
         this.port = port;
     }
@@ -43,6 +45,7 @@ public class Drone {
     private void simModeEnabledCallback() {
         enableSimModeButton.setColorBackground(0xff222222);
         enableSimModeButton.setColorActive(0xff222222);
+        isOn = true;
     }
     
     private void draw() {
@@ -56,7 +59,9 @@ public class Drone {
         box(50, 2, 50);
         popMatrix();
         
-        drawLEDs();
+        if (isOn) {
+            drawLEDs();
+        }
     }
     
     private void drawLEDs() {
