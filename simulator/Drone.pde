@@ -46,7 +46,7 @@ public class Drone {
     }
     
     private void draw() {
-        background(0);
+        background(0xff111111);
         
         pushMatrix();
         translate(width / 2, height - 100, 0);
