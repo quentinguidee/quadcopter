@@ -147,7 +147,7 @@ void Drone::enableSimulatorMode()
         return;
     }
 
-    Drone::isInSimMode = true;
+    isInSimMode = true;
     simulatorLed.on();
 
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)

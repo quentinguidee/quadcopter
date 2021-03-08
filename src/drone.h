@@ -51,11 +51,11 @@ private:
     unsigned long lastPingTimestamp;
     unsigned long lastTrackingSending;
 
+    bool isInSimMode = false;
+
     void onSerialRead(char character, String& buffer);
 
 public:
-    inline static bool isInSimMode = false;
-
     Drone();
     ~Drone();
 
