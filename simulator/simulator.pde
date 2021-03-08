@@ -69,6 +69,8 @@ void onCommandReceived(String buffer) {
 
 public void enableSimMode() {
     port.write("$S\n");
+    println("[SENT————] $S");
+    println("|||||||||| Trying to enable SimMode");
 }
 
 public void simModeEnabledCallback() {
