@@ -39,17 +39,9 @@ void Motor::shutdown()
     Log::info(String("MOTOR") + id, "SHUTDOWN on pin " + String(pin));
 }
 
-void Motor::disarm()
-{
-    esc.write(0);
-    esc.detach();
-    Log::info(String("MOTOR") + id, String("Disarmed on pin ") + pin);
-    setStatus(Status::off);
-}
-
 void Motor::tick()
 {
-    if (!Drone::isInSimMode)
+    if (!isSimulated())
     {
         esc.write(speed);
         Log::info(String("MOTOR") + id, String(esc.read()) + " read on pin " + String(pin));
@@ -67,4 +59,12 @@ void Motor::setSpeed(uint16_t speed)
 void Motor::setStatus(Status status)
 {
     this->status = status;
+}
+
+void Motor::willEnableSimMode()
+{
+    esc.write(0);
+    esc.detach();
+    Log::info(String("MOTOR") + id, String("Disarmed on pin ") + pin);
+    setStatus(Status::off);
 }

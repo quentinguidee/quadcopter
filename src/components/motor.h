@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-class Motor
+class Motor : public Component
 {
 public:
     enum Status
@@ -39,6 +39,8 @@ public:
 
     void setStatus(Status status);
     Status getStatus() { return status; }
+
+    void willEnableSimMode();
 };
 
 #endif /* MOTOR_H */

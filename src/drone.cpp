@@ -152,7 +152,7 @@ void Drone::enableSimulatorMode()
 
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
-        motors[i].disarm();
+        motors[i].enableSimMode();
         leds[i].enableSimMode();
         leds[i].on();
     }
