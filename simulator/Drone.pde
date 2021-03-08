@@ -55,5 +55,41 @@ public class Drone {
         noFill();
         box(50, 2, 50);
         popMatrix();
+        
+        drawLEDs();
+    }
+    
+    private void drawLEDs() {
+        pushMatrix();
+        translate(width / 2 - 25, height - 100, 0 - 25);
+        rotateY(0);
+        noStroke();
+        fill(0xff0000ff);
+        box(4, 4, 4);
+        popMatrix();
+        
+        pushMatrix();
+        translate(width / 2 + 25, height - 100, 0 - 25);
+        rotateY(0);
+        noStroke();
+        fill(0xff0000ff);
+        box(4, 4, 4);
+        popMatrix();
+        
+        pushMatrix();
+        translate(width / 2 - 25, height - 100, 0 + 25);
+        rotateY(0);
+        noStroke();
+        fill(0xffff0000);
+        box(4, 4, 4);
+        popMatrix();
+        
+        pushMatrix();
+        translate(width / 2 + 25, height - 100, 0 + 25);
+        rotateY(0);
+        noStroke();
+        fill(0xffff0000);
+        box(4, 4, 4);
+        popMatrix();
     }
 }
