@@ -1,7 +1,7 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-#include "sensors/accelerometer.h"
+#include "components/accelerometer.h"
 
 class Position
 {

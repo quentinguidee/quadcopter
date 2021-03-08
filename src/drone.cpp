@@ -2,7 +2,6 @@
 
 #include "interface/interface.h"
 #include "interface/simulator.h"
-#include "sensors/accelerometer.h"
 #include "utils/log.h"
 
 Drone::Drone() :

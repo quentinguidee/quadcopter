@@ -1,12 +1,12 @@
 #ifndef DRONE_H
 #define DRONE_H
 
+#include "components/accelerometer.h"
 #include "components/led.h"
 #include "components/motor.h"
 #include "components/toggle_button.h"
 #include "flight_controller.h"
 #include "position.h"
-#include "sensors/accelerometer.h"
 #include "settings.h"
 #include "utils/wifi.h"
 
