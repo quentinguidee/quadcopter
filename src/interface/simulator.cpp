@@ -47,3 +47,8 @@ void Simulator::disableLed(uint8_t pin)
 {
     Simulator::setLed(pin, false);
 }
+
+void Simulator::sendMotorSpeed(uint8_t motorID, uint16_t speed)
+{
+    Simulator::send(String("#MS") + motorID + speed);
+}

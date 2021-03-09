@@ -7,7 +7,7 @@ public class Drone {
     boolean isOn = false;
     
     boolean[] ledsState = { false, false, false, false };
-    int[] motorsRate = { 0 ,0 ,0, 0 };
+    float[] motorsRate = { 0 ,0, 0, 0 }; // Between 0 and 1
     float[] position = { 0, 0, 0 }; // left-right/up-down/front-back
     
     int lastUpdate = - 1;
@@ -27,6 +27,7 @@ public class Drone {
     public void tick() {
         readSerial();
         draw();
+        lastUpdate = millis();
     }
     
     private void readSerial() {
@@ -44,7 +45,7 @@ public class Drone {
     }
     
     private void onCommandReceived(String buffer) {
-        println("[RECEIVED] " + buffer);
+        //println("[RECEIVED] " + buffer);
         char category = buffer.charAt(1);
         if (category == 'S') {
             simModeEnabledCallback();
@@ -54,6 +55,12 @@ public class Drone {
             boolean action = boolean(Integer.parseInt(str(buffer.charAt(3))));
             println("|||||||||| LED " + led + " set to " + action);
             ledsState[led] = action;
+        } else if (category == 'M') {
+            if (buffer.charAt(2) == 'S') {
+                println(buffer);
+                int motorID = Integer.valueOf(str(buffer.charAt(3)));
+                motorsRate[motorID] = Float.valueOf(buffer.substring(4, buffer.length() - 1)) / 180.0;
+            }
         }
     }
     
@@ -77,8 +84,6 @@ public class Drone {
         popMatrix();
         
         drawLEDs();
-        
-        lastUpdate = millis();
     }
     
     private void drawLEDs() {
@@ -130,22 +135,33 @@ public class Drone {
         
         int deltaTime = millis() - lastUpdate;
         
-        float thrust = ((1.261 * motorsRate[0]) - 0.339) * GRAVITY;
-        if (thrust <= 0) {
-            thrust = 0;
+        float[] thrustMotors = {0, 0, 0, 0};
+        float thrustY = 0;
+        for (int i = 0; i < 4; ++i) {
+            println(i + " " + motorsRate[i]);
+            float thrust = ((1.261 * motorsRate[i]) - 0.339) * GRAVITY;
+            if (thrust <= 0) {
+                thrust = 0;
+            }
+            thrustMotors[i] = thrust;
+            thrustY += thrust;
+            println(i + " " + thrustMotors[i]);
         }
         
         float gravity = MASS * GRAVITY;
         
-        float accelerationY = (thrust - gravity) / MASS;
+        float accelerationY = (thrustY - gravity) / MASS;
+        println(accelerationY);
         float deltaTimeInSeconds = deltaTime * 0.001;
         
         position[1] += lastSpeed * deltaTimeInSeconds + (accelerationY * pow(deltaTimeInSeconds, 2)) / 2;
         
         if (position[1] <= 0) {
             position[1] = 0;
+            lastSpeed = 0;
+        } else {
+            lastSpeed += accelerationY * deltaTimeInSeconds;
         }
         
-        lastSpeed += accelerationY * deltaTimeInSeconds;
     }
 }

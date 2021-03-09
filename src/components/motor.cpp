@@ -1,6 +1,7 @@
 #include "motor.h"
 
 #include "../drone.h"
+#include "../interface/simulator.h"
 #include "../settings.h"
 #include "../utils/color.h"
 #include "../utils/log.h"
@@ -28,7 +29,7 @@ void Motor::setup()
 void Motor::startup()
 {
     setStatus(Status::on);
-    setSpeed(25);
+    setSpeed(140);
     Log::info(String("MOTOR") + id, "STARTUP on pin " + String(pin));
 }
 
@@ -45,6 +46,10 @@ void Motor::tick()
     {
         esc.write(speed);
         Log::info(String("MOTOR") + id, String(esc.read()) + " read on pin " + String(pin));
+    }
+    else
+    {
+        Simulator::sendMotorSpeed(id, speed);
     }
 }
 

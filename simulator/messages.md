@@ -11,6 +11,7 @@ Allows to communicate between the Arduino and the simulator.
 | SC     | Simulation enabled callback |
 | LX0    | Turn off LED X.             |
 | LX1    | Turn on LED X.              |
+| MSXY   | Motor (id X) is at speed Y  |
 
 ### Output ($)
 
