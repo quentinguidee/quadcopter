@@ -9,6 +9,11 @@ public class Drone {
     boolean[] ledsState = { false, false, false, false };
     float[] motorsRate = { 0 ,0, 0, 0 }; // Between 0 and 1
     float[] position = { 0, 0, 0 }; // left-right/up-down/front-back
+    float[] drawedPosition = { 0, 0, 0 };
+    final int[][] LEDS_POSITIONS = { { - 25, - 25 } , { 25, - 25 } , { - 25, 25 } , { 25, 25 } };
+    
+    final int RED = 0xffff0000;
+    final int BLUE = 0xff0000ff;
     
     int lastUpdate = - 1;
     float lastSpeed = 0;
@@ -73,10 +78,14 @@ public class Drone {
     private void draw() {
         updatePositions();
         
+        for (int i = 0; i < 3; ++i) {
+            drawedPosition[i] = position[i] * 40;
+        }
+        
         background(0xff111111);
         
         pushMatrix();
-        translate(width / 2 - (position[0] * 40), height - 100 - (position[1] * 40), 0 - (position[2] * 40));
+        translate(width / 2 - drawedPosition[0], height - 100 - drawedPosition[1], 0 - drawedPosition[2]);
         rotateY(0);
         stroke(0xff888888);
         noFill();
@@ -87,44 +96,17 @@ public class Drone {
     }
     
     private void drawLEDs() {
-        if (ledsState[0]) {
-            pushMatrix();
-            translate(width / 2 - 25, height - 100, 0 - 25);
-            rotateY(0);
-            noStroke();
-            fill(0xff0000ff);
-            box(4, 4, 4);
-            popMatrix();
-        }
-        
-        if (ledsState[1]) {
-            pushMatrix();
-            translate(width / 2 + 25, height - 100, 0 - 25);
-            rotateY(0);
-            noStroke();
-            fill(0xff0000ff);
-            box(4, 4, 4);
-            popMatrix();
-        }
-        
-        if (ledsState[2]) {
-            pushMatrix();
-            translate(width / 2 - 25, height - 100, 0 + 25);
-            rotateY(0);
-            noStroke();
-            fill(0xffff0000);
-            box(4, 4, 4);
-            popMatrix();
-        }
-        
-        if (ledsState[3]) {
-            pushMatrix();
-            translate(width / 2 + 25, height - 100, 0 + 25);
-            rotateY(0);
-            noStroke();
-            fill(0xffff0000);
-            box(4, 4, 4);
-            popMatrix();
+        for (int i = 0; i < 4; ++i) {
+            if (ledsState[i]) {
+                int[] ledPosition = LEDS_POSITIONS[i];
+                pushMatrix();
+                translate(width / 2 + ledPosition[0] - drawedPosition[0], height - 100 - drawedPosition[1], 0 + ledPosition[1] - drawedPosition[2]);
+                rotateY(0);
+                noStroke();
+                fill(i <= 1 ? BLUE : RED);
+                box(4, 4, 4);
+                popMatrix();
+            }
         }
     }
     
