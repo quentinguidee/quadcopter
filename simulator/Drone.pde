@@ -7,6 +7,14 @@ public class Drone {
     boolean isOn = false;
     
     boolean[] ledsState = { false, false, false, false };
+    int[] motorsRate = { 0 ,0 ,0, 0 };
+    float[] position = { 0, 0, 0 }; // left-right/up-down/front-back
+    
+    int lastUpdate = - 1;
+    float lastSpeed = 0;
+    
+    final float MASS = 2.0; // in kg
+    final float GRAVITY = 9.81; // in m/s^2
     
     public Drone(Serial port) {
         this.port = port;
@@ -56,10 +64,12 @@ public class Drone {
     }
     
     private void draw() {
+        updatePositions();
+        
         background(0xff111111);
         
         pushMatrix();
-        translate(width / 2, height - 100, 0);
+        translate(width / 2 - (position[0] * 40), height - 100 - (position[1] * 40), 0 - (position[2] * 40));
         rotateY(0);
         stroke(0xff888888);
         noFill();
@@ -67,6 +77,8 @@ public class Drone {
         popMatrix();
         
         drawLEDs();
+        
+        lastUpdate = millis();
     }
     
     private void drawLEDs() {
@@ -109,5 +121,31 @@ public class Drone {
             box(4, 4, 4);
             popMatrix();
         }
+    }
+    
+    private void updatePositions() {
+        if (lastUpdate == - 1) {
+            return;
+        }
+        
+        int deltaTime = millis() - lastUpdate;
+        
+        float thrust = ((1.261 * motorsRate[0]) - 0.339) * GRAVITY;
+        if (thrust <= 0) {
+            thrust = 0;
+        }
+        
+        float gravity = MASS * GRAVITY;
+        
+        float accelerationY = (thrust - gravity) / MASS;
+        float deltaTimeInSeconds = deltaTime * 0.001;
+        
+        position[1] += lastSpeed * deltaTimeInSeconds + (accelerationY * pow(deltaTimeInSeconds, 2)) / 2;
+        
+        if (position[1] <= 0) {
+            position[1] = 0;
+        }
+        
+        lastSpeed += accelerationY * deltaTimeInSeconds;
     }
 }
