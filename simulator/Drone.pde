@@ -7,17 +7,19 @@ public class Drone {
     boolean isInSimMode = false;
     boolean isOn = false;
     
-    boolean[] ledsState = { false, false, false, false };
+    Led[] leds = {
+        new Led(-25, -25, Color.BLUE),
+        new Led( 25, -25, Color.BLUE),
+        new Led(-25,  25, Color.RED),
+        new Led( 25,  25, Color.RED)
+    };
+
     float[] motorsRate = { 0 ,0, 0, 0 }; // Between 0 and 1
     float[] position = { 0, 0, 0 }; // left-right/up-down/front-back
     float[] angles = { 0, 0, 0 }; // In rad
     float[] lastSpeed = { 0, 0, 0 };
     float[] lastSpeedMotors = { 0, 0, 0, 0 };
     float[] drawedPosition = { 0, 0, 0 };
-    final int[][] LEDS_POSITIONS = { { - 25, - 25 } , { 25, - 25 } , { - 25, 25 } , { 25, 25 } };
-    
-    final int RED = 0xffff0000;
-    final int BLUE = 0xff0000ff;
     
     int lastUpdate = - 1;
     
@@ -69,9 +71,13 @@ public class Drone {
             println("|||||||||| SimMode enabled");
         } else if (category == 'L') {
             int led = Integer.parseInt(str(buffer.charAt(2)));
-            boolean action = boolean(Integer.parseInt(str(buffer.charAt(3))));
-            println("|||||||||| LED " + led + " set to " + action);
-            ledsState[led] = action;
+            boolean enable = boolean(Integer.parseInt(str(buffer.charAt(3))));
+            println("|||||||||| LED " + led + " set to " + enable);
+            if (enable) {
+                leds[led].on();
+            } else {
+                leds[led].off();
+            }
         } else if (category == 'M') {
             if (buffer.charAt(2) == 'S') {
                 int motorID = Integer.valueOf(str(buffer.charAt(3)));
@@ -111,16 +117,7 @@ public class Drone {
     
     private void drawLEDs() {
         for (int i = 0; i < 4; ++i) {
-            if (ledsState[i]) {
-                int[] ledPosition = LEDS_POSITIONS[i];
-                translate(ledPosition[0], 0, ledPosition[1]);
-                pushMatrix();
-                noStroke();
-                fill(i <= 1 ? BLUE : RED);
-                box(4, 4, 4);
-                popMatrix();
-                translate(-ledPosition[0], 0, -ledPosition[1]);
-            }
+            leds[i].draw();
         }
     }
     
