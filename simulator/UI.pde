@@ -17,17 +17,23 @@ public class UI {
            .setPosition(0, 0)
            .setColorBackground(0xff111111);
         
-        enableSimModeButton = ui.addButton("enableSimMode")
+        ui.addButton("enableSimMode")
            .setPosition(0, 0)
            .setSize(200, 26)
            .setCaptionLabel("Enable Sim Mode")
+           .setGroup(sidebar);
+
+        ui.addButton("toggleDrone")
+           .setPosition(0, 27)
+           .setSize(200, 22)
+           .setCaptionLabel("On/Off")
            .setGroup(sidebar);
         
         motorA = ui.addKnob("motorA")
            .setRange(1000, 2000)
            .setValue(1300)
            .setCaptionLabel("Motor A")
-           .setPosition(15, 40)
+           .setPosition(15, 66)
            .setRadius(40)
            .setNumberOfTickMarks(10)
            .setTickMarkLength(1)
@@ -40,7 +46,7 @@ public class UI {
            .setRange(1000, 2000)
            .setValue(1300)
            .setCaptionLabel("Motor B")
-           .setPosition(110, 40)
+           .setPosition(110, 66)
            .setWidth(1)
            .setRadius(40)
            .setNumberOfTickMarks(10)
@@ -54,7 +60,7 @@ public class UI {
            .setRange(1000, 2000)
            .setValue(1300)
            .setCaptionLabel("Motor C")
-           .setPosition(15, 150)
+           .setPosition(15, 176)
            .setRadius(40)
            .setNumberOfTickMarks(10)
            .setTickMarkLength(1)
@@ -67,7 +73,7 @@ public class UI {
            .setRange(1000, 2000)
            .setValue(1300)
            .setCaptionLabel("Motor D")
-           .setPosition(110, 150)
+           .setPosition(110, 176)
            .setWidth(1)
            .setRadius(40)
            .setNumberOfTickMarks(10)
@@ -80,7 +86,21 @@ public class UI {
 }
 
 void enableSimMode() {
-    drone.port.write("$S\n");
+    drone.getPort().write("$S\n");
     println("[SENT————] $S");
     println("|||||||||| Trying to enable SimMode");
+}
+
+void toggleDrone() {
+   if (drone.isOn()) {
+      drone.getPort().write("$D0\n");
+      println("[SENT————] $D0");
+      println("|||||||||| Shutdown");
+      drone.isOn = false;
+   } else {
+      drone.getPort().write("$D1\n");
+      println("[SENT————] $D1");
+      println("|||||||||| Startup");
+      drone.isOn = true;
+   }
 }

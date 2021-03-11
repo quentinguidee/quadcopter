@@ -5,13 +5,6 @@ import controlP5.*;
 Drone drone;
 UI ui;
 
-// UI
-Button enableSimModeButton;
-
-Slider2D acceleration;
-Slider2D angleRate;
-Slider2D angle;
-
 void setup() {
     Serial port = new Serial(this, Serial.list()[3], 38400);
     drone = new Drone(port);

@@ -4,6 +4,7 @@ public class Drone {
     Serial port;
     String buffer;
     
+    boolean isInSimMode = false;
     boolean isOn = false;
     
     boolean[] ledsState = { false, false, false, false };
@@ -30,6 +31,14 @@ public class Drone {
     
     public Serial getPort() {
         return port;
+    }
+
+    public boolean isOn() {
+        return isOn;
+    }
+
+    public boolean isInSimMode() {
+        return isInSimMode;
     }
     
     public void tick() {
@@ -65,7 +74,6 @@ public class Drone {
             ledsState[led] = action;
         } else if (category == 'M') {
             if (buffer.charAt(2) == 'S') {
-                println(buffer);
                 int motorID = Integer.valueOf(str(buffer.charAt(3)));
                 motorsRate[motorID] = Float.valueOf(buffer.substring(4, buffer.length() - 1)) / 180.0;
             }
@@ -73,9 +81,7 @@ public class Drone {
     }
     
     private void simModeEnabledCallback() {
-        enableSimModeButton.setColorBackground(0xff222222);
-        enableSimModeButton.setColorActive(0xff222222);
-        isOn = true;
+        isInSimMode = true;
     }
     
     private void draw() {
