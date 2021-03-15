@@ -101,14 +101,16 @@ public class Drone {
 
 
         pushMatrix();
-        translate(width / 2 - drawedPosition[0], height - 100 - drawedPosition[1], 0 - drawedPosition[2] - 100);
-
-        rotateX(angles[0]);
-        rotateY(angles[1]);
-        rotateZ(angles[2]);
-
+        translate(width / 2, height - 100, -100);
         stroke(0xff888888);
         noFill();
+        box(500, 0, 500);
+        translate(-drawedPosition[0], -drawedPosition[1], -drawedPosition[2]);
+
+        rotateX(-angles[0]);
+        rotateY(-angles[1]);
+        rotateZ(angles[2]);
+
         box(50, 2, 50);
         drawLEDs();
         
@@ -131,7 +133,7 @@ public class Drone {
         float[] thrustMotors = {0, 0, 0, 0};
         float thrustTotal = 0;
         for (int i = 0; i < 4; ++i) {
-            float thrust = ((1.261 * (motorsRate[i] - random(0, 0.02 * i))) - 0.339) * GRAVITY;
+            float thrust = ((1.261 * (motorsRate[i] - random(0, 0.1 * i))) - 0.339) * GRAVITY;
             if (thrust <= 0) {
                 thrust = 0;
             }
