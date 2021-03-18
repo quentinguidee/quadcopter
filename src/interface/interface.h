@@ -20,6 +20,10 @@ public:
     static void setup(Drone* drone);
 
     static void move(int x, int y, int z, int r);
+    static void forceSetPositionSensor(
+        float z,
+        float accX, float accY, float accZ,
+        float accAngleX, float accAngleY, float accAngleZ);
 
     static void turnOn();
     static void turnOff();

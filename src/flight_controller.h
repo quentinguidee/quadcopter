@@ -8,8 +8,8 @@
 class FlightController
 {
 private:
-    PID pidAngleX, pidAngleY, pidAngleZ;
-    PID pidAngleRateX, pidAngleRateY, pidAngleRateZ;
+    PID pidAngleX, pidAngleY, pidAngleZ, pidAltitude;
+    PID pidAngleRateX, pidAngleRateY, pidAngleRateZ, pidAltitudeRate;
 
 public:
     FlightController();
@@ -20,9 +20,22 @@ public:
         float angleX,
         float angleY,
         float angleZ,
+        float altitude,
+
         float angleRateX,
         float angleRateY,
-        float angleRateZ);
+        float angleRateZ,
+        float altitudeRate);
+
+    PID getPIDAngleX() { return pidAngleX; }
+    PID getPIDAngleY() { return pidAngleY; }
+    PID getPIDAngleZ() { return pidAngleZ; }
+    PID getPIDAltitude() { return pidAltitude; }
+
+    PID getPIDAngleRateX() { return pidAngleRateX; }
+    PID getPIDAngleRateY() { return pidAngleRateY; }
+    PID getPIDAngleRateZ() { return pidAngleRateZ; }
+    PID getPIDAltitudeRate() { return pidAltitudeRate; }
 };
 
 #endif /* FLIGHT_CONTROLLER_H */

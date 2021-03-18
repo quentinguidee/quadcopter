@@ -18,7 +18,12 @@ public:
     static void enableLed(uint8_t pin);
     static void disableLed(uint8_t pin);
 
-    static void sendMotorSpeed(uint8_t motorID, uint16_t speed);
+    static void sendMotorSpeed(
+        uint16_t speedMotorA,
+        uint16_t speedMotorB,
+        uint16_t speedMotorC,
+        uint16_t speedMotorD,
+        int deltaTime);
 };
 
 #endif /* SIMULATOR_H */

@@ -2,6 +2,7 @@
 #define DRONE_H
 
 #include "components/accelerometer.h"
+#include "components/altimeter.h"
 #include "components/led.h"
 #include "components/motor.h"
 #include "components/toggle_button.h"
@@ -38,6 +39,7 @@ private:
     };
     Led simulatorLed;
     Accelerometer accelerometer;
+    Altimeter altimeter;
     ToggleButton onOffButton;
 
     Position position;
@@ -50,10 +52,11 @@ private:
 
     unsigned long lastPingTimestamp;
     unsigned long lastTrackingSending;
+    unsigned long timer;
 
     bool isInSimMode = false;
 
-    void onSerialRead(char character, String& buffer);
+    bool onSerialRead(char character, String& buffer);
 
 public:
     Drone();
@@ -69,6 +72,7 @@ public:
 
     Motor& getMotor(int8_t index);
     Accelerometer& getAccelerometer() { return accelerometer; }
+    Altimeter& getAltimeter() { return altimeter; }
     ToggleButton& getOnOffButton() { return onOffButton; }
 
     Position& getPosition() { return position; }

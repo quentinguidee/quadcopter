@@ -6,6 +6,7 @@ public class Drone {
     
     boolean isInSimMode = false;
     boolean isOn = false;
+    boolean draw = true;
     
     Led[] leds = {
         new Led(-25, -25, Color.BLUE),
@@ -14,23 +15,30 @@ public class Drone {
         new Led( 25,  25, Color.RED)
     };
 
-    float[] motorsRate = { 0 ,0, 0, 0 }; // Between 0 and 1
     float[] position = { 0, 0, 0 }; // left-right/up-down/front-back
     float[] angles = { 0, 0, 0 }; // In rad
+
+    float[] accelerations = { 0, 0, 0 }; // In m/s^2
+    float[] anglesRate = { 0, 0, 0 }; // In rad/s
+
+    float[] motorsRate = { 0 ,0, 0, 0 }; // Between 0 and 1
     float[] lastSpeed = { 0, 0, 0 };
     float[] lastSpeedMotors = { 0, 0, 0, 0 };
+
     float[] drawedPosition = { 0, 0, 0 };
-    
-    int lastUpdate = - 1;
-    
+
+    int[][] MOTORS_COEFF = { { - 1, - 1 } , { 1, - 1 } , { - 1, 1 } , { 1, 1 } };
+
+    float deltaTime = -1;
+
     final float MASS = 2.0; // in kg
     final float GRAVITY = 9.81; // in m/s^2
     final float LENGTH_CENTER_TO_MOTOR = 0.35; // in m
-    
+
     public Drone(Serial port) {
         this.port = port;
     }
-    
+
     public Serial getPort() {
         return port;
     }
@@ -42,29 +50,37 @@ public class Drone {
     public boolean isInSimMode() {
         return isInSimMode;
     }
-    
+
     public void tick() {
         readSerial();
-        draw();
-        lastUpdate = millis();
+        if (draw) {
+            println("draw at " + position[0] + " " + position[1] + " " + position[2]);
+            draw();
+            draw = false;
+        }
     }
-    
+
     private void readSerial() {
-        while(port.available() > 0) {
+        int reads = 0;
+        int MAX_READS = 10;
+        while (port.available() > 0) {
             char character = port.readChar();
             if (character == '\n' && buffer != "") {
+                println(buffer);
                 if (buffer.charAt(0) == '#') {
                     onCommandReceived(buffer);
+                    reads++;
                 }
                 buffer = "";
+                if (reads >= MAX_READS) return;
             } else {
                 buffer += character;
             }
         }
     }
-    
+
     private void onCommandReceived(String buffer) {
-        //println("[RECEIVED] " + buffer);
+        println("[RECEIVED] " + buffer);
         char category = buffer.charAt(1);
         if (category == 'S') {
             simModeEnabledCallback();
@@ -78,27 +94,36 @@ public class Drone {
             } else {
                 leds[led].off();
             }
+            draw = true;
         } else if (category == 'M') {
             if (buffer.charAt(2) == 'S') {
-                int motorID = Integer.valueOf(str(buffer.charAt(3)));
-                motorsRate[motorID] = Float.valueOf(buffer.substring(4, buffer.length() - 1)) / 180.0;
+                String s = buffer.substring(3, buffer.length());
+                String[] speeds = split(s, ',');
+                if (speeds.length == 5) {
+                    for (int i = 0; i < 4; ++i) {
+                        float value = Float.valueOf(speeds[i]);
+                        motorsRate[i] = value / 180.0;
+                        println(motorsRate[i]);
+                        ui.getMotorView(i).setValue(value);
+                    }
+                    deltaTime = Float.valueOf(speeds[4]);
+                }
+                updatePositions();
+                draw = true;
             }
         }
     }
-    
+
     private void simModeEnabledCallback() {
         isInSimMode = true;
     }
-    
+
     private void draw() {
-        updatePositions();
-        
         for (int i = 0; i < 3; ++i) {
             drawedPosition[i] = position[i] * 40;
         }
-        
-        background(0xff111111);
 
+        background(0xff111111);
 
         pushMatrix();
         translate(width / 2, height - 100, -100);
@@ -113,60 +138,63 @@ public class Drone {
 
         box(50, 2, 50);
         drawLEDs();
-        
+
         popMatrix();
     }
-    
+
     private void drawLEDs() {
         for (int i = 0; i < 4; ++i) {
             leds[i].draw();
         }
     }
-    
+
+    private void sendTelemetry() {
+        println("[SEND----] $T0" + position[1] + "," + accelerations[0] + "," + accelerations[2] + "," + accelerations[1] + "," + anglesRate[0] + "," + anglesRate[2] + "," + anglesRate[1] + "\n");
+        port.write("$T0" + position[1] + "," + accelerations[0] + "," + accelerations[2] + "," + accelerations[1] + "," + anglesRate[0] + "," + anglesRate[2] + "," + anglesRate[1] + "\n");
+    }
+
     private void updatePositions() {
-        if (lastUpdate == - 1) {
-            return;
-        }
-        
-        int deltaTime = millis() - lastUpdate;
-        
+        if (deltaTime == -1) return;
+
         float[] thrustMotors = {0, 0, 0, 0};
         float thrustTotal = 0;
         for (int i = 0; i < 4; ++i) {
-            float thrust = ((1.261 * (motorsRate[i] - random(0, 0.1 * i))) - 0.339) * GRAVITY;
-            if (thrust <= 0) {
-                thrust = 0;
-            }
+            float thrust = ((1.261 * (motorsRate[i]/* -random(0, 0.01 * i) */)) - 0.339) * GRAVITY;
+            if (thrust <= 0) thrust = 0;
             thrustMotors[i] = thrust;
             thrustTotal += thrust;
 
             lastSpeedMotors[i] = thrust / MASS;
         }
-        
-        float gravity = MASS * GRAVITY;
-        
+
         float accelerationNormal = thrustTotal / MASS;
         int[] accelerationsCoeff = { 1, 1, 1 };
+
         if (angles[0] < 0) { accelerationsCoeff[0] = -1; }
         if (angles[2] < 0) { accelerationsCoeff[2] = -1; }
-        float[] accelerations = {
-            accelerationNormal * sin(angles[0]) * cos(angles[2]) * accelerationsCoeff[0],
-            accelerationNormal * cos(angles[0]) * cos(angles[2]) - (gravity / MASS),
-            accelerationNormal * cos(angles[0]) * sin(angles[2]) * accelerationsCoeff[2]
-        };
+
+        accelerations[0] = accelerationNormal * sin(angles[0]) * cos(angles[2]) * accelerationsCoeff[0];
+        accelerations[1] = accelerationNormal * cos(angles[0]) * cos(angles[2]) - GRAVITY;
+        accelerations[2] = accelerationNormal * cos(angles[0]) * sin(angles[2]) * accelerationsCoeff[2];
 
         float deltaTimeInSeconds = deltaTime * 0.001;
 
-        int[][] coeff = { { - 1, - 1 } , { 1, - 1 } , { - 1, 1 } , { 1, 1 } };
         for (int i = 0; i < 4; ++i) {
-            angles[0] += coeff[i][0] * (lastSpeedMotors[i] * pow(deltaTimeInSeconds, 2)) / LENGTH_CENTER_TO_MOTOR;
-            angles[2] += coeff[i][1] * (lastSpeedMotors[i] * pow(deltaTimeInSeconds, 2)) / LENGTH_CENTER_TO_MOTOR;
+            float a = lastSpeedMotors[i] / LENGTH_CENTER_TO_MOTOR;
+
+            // ß = (v/r)*t
+            angles[0] += MOTORS_COEFF[i][0] * a * deltaTimeInSeconds;
+            angles[2] += MOTORS_COEFF[i][1] * a * deltaTimeInSeconds;
+
+            // ω = v/r
+            anglesRate[0] += MOTORS_COEFF[i][0] * a;
+            anglesRate[2] += MOTORS_COEFF[i][1] * a;
         }
-        
+
         for (int i = 0; i < 3; ++i) {
             position[i] += lastSpeed[i] * deltaTimeInSeconds + (accelerations[i] * pow(deltaTimeInSeconds, 2)) / 2;
         }
-        
+
         if (position[1] <= 0) {
             for (int i = 0; i < 3; ++i) {
                 position[i] = 0;
@@ -178,5 +206,7 @@ public class Drone {
                 lastSpeed[i] += accelerations[i] * deltaTimeInSeconds;
             }
         }
+
+        sendTelemetry();
     }
 }

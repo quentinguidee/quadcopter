@@ -7,6 +7,7 @@ class PID
 {
 private:
     float Kp, Ki, Kd;
+    float minOutput, maxOutput;
 
     float previousError;
     float integral;
@@ -16,8 +17,10 @@ private:
 
     unsigned long timer;
 
+    void setOutput(float output);
+
 public:
-    PID(float Kp, float Ki, float Kd);
+    PID(float Kp, float Ki, float Kd, float min, float max);
     ~PID() {}
 
     void startup();

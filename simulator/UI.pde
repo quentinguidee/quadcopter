@@ -30,8 +30,8 @@ public class UI {
            .setGroup(sidebar);
         
         motorA = ui.addKnob("motorA")
-           .setRange(1000, 2000)
-           .setValue(1300)
+           .setRange(0, 180)
+           .setValue(0)
            .setCaptionLabel("Motor A")
            .setPosition(15, 66)
            .setRadius(40)
@@ -43,8 +43,8 @@ public class UI {
            .setDragDirection(Knob.ARC);
         
         motorB = ui.addKnob("motorB")
-           .setRange(1000, 2000)
-           .setValue(1300)
+           .setRange(0, 180)
+           .setValue(0)
            .setCaptionLabel("Motor B")
            .setPosition(110, 66)
            .setWidth(1)
@@ -57,8 +57,8 @@ public class UI {
            .setDragDirection(Knob.ARC);
         
         motorC = ui.addKnob("motorC")
-           .setRange(1000, 2000)
-           .setValue(1300)
+           .setRange(0, 180)
+           .setValue(0)
            .setCaptionLabel("Motor C")
            .setPosition(15, 176)
            .setRadius(40)
@@ -70,8 +70,8 @@ public class UI {
            .setDragDirection(Knob.ARC);
         
         motorD = ui.addKnob("motorD")
-           .setRange(1000, 2000)
-           .setValue(1300)
+           .setRange(0, 180)
+           .setValue(0)
            .setCaptionLabel("Motor D")
            .setPosition(110, 176)
            .setWidth(1)
@@ -83,6 +83,21 @@ public class UI {
            .setColorBackground(0xff222222)
            .setDragDirection(Knob.ARC);
     }
+
+    public Knob getMotorView(int motorID) {
+        switch (motorID) {
+            case 0: return motorA;
+            case 1: return motorB;
+            case 2: return motorC;
+            case 3: return motorD;
+        }
+        return null;
+    }
+
+    public Knob getMotorAView() { return motorA; }
+    public Knob getMotorBView() { return motorB; }
+    public Knob getMotorCView() { return motorC; }
+    public Knob getMotorDView() { return motorD; }
 }
 
 void enableSimMode() {
@@ -92,15 +107,15 @@ void enableSimMode() {
 }
 
 void toggleDrone() {
-   if (drone.isOn()) {
-      drone.getPort().write("$D0\n");
-      println("[SENT————] $D0");
-      println("|||||||||| Shutdown");
-      drone.isOn = false;
-   } else {
-      drone.getPort().write("$D1\n");
-      println("[SENT————] $D1");
-      println("|||||||||| Startup");
-      drone.isOn = true;
-   }
+    if (drone.isOn()) {
+        drone.getPort().write("$D0\n");
+        println("[SENT————] $D0");
+        println("|||||||||| Shutdown");
+        drone.isOn = false;
+    } else {
+        drone.getPort().write("$D1\n");
+        println("[SENT————] $D1");
+        println("|||||||||| Startup");
+        drone.isOn = true;
+    }
 }

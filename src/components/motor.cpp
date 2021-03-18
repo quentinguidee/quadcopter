@@ -10,6 +10,7 @@ Motor::Motor(uint8_t id, uint8_t pin) :
     id(id),
     pin(pin),
     speed(0),
+    esc(Servo()),
     status(Status::off)
 {
 }
@@ -29,15 +30,15 @@ void Motor::setup()
 void Motor::startup()
 {
     setStatus(Status::on);
-    setSpeed(140);
-    Log::info(String("MOTOR") + id, "STARTUP on pin " + String(pin));
+    setSpeed(0);
+    Log::info(String("MOTOR") + id, String("STARTUP on pin ") + pin);
 }
 
 void Motor::shutdown()
 {
     setStatus(Status::off);
     setSpeed(0);
-    Log::info(String("MOTOR") + id, "SHUTDOWN on pin " + String(pin));
+    Log::info(String("MOTOR") + id, String("SHUTDOWN on pin ") + pin);
 }
 
 void Motor::tick()
@@ -47,10 +48,6 @@ void Motor::tick()
         esc.write(speed);
         Log::info(String("MOTOR") + id, String(esc.read()) + " read on pin " + String(pin));
     }
-    else
-    {
-        Simulator::sendMotorSpeed(id, speed);
-    }
 }
 
 /**
@@ -58,7 +55,18 @@ void Motor::tick()
  */
 void Motor::setSpeed(uint16_t speed)
 {
-    this->speed = speed;
+    if (speed < 0)
+    {
+        this->speed = 0;
+    }
+    else if (speed > 180)
+    {
+        this->speed = 180;
+    }
+    else
+    {
+        this->speed = speed;
+    }
 }
 
 void Motor::setStatus(Status status)

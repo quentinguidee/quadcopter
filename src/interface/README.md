@@ -43,3 +43,9 @@ Format: `CXXYYZZRR`
 | Status | Format | Name                   |
 | ------ | ------ | ---------------------- |
 | DONE   | S      | Enable simulation mode |
+
+### Telemetry
+
+| Status | Format | Name                     |
+| ------ | ------ | ------------------------ |
+| DONE   | T0     | Force set telemetry data |

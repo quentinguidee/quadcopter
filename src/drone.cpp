@@ -6,6 +6,7 @@
 
 Drone::Drone() :
     accelerometer(Accelerometer()),
+    altimeter(Altimeter()),
     onOffButton(ToggleButton((uint8_t)POWER_TOGGLE_BUTTON_PIN)),
     position(Position(accelerometer)),
     flightController(FlightController()),
@@ -13,6 +14,7 @@ Drone::Drone() :
     serialResponseBuffer(""),
     lastPingTimestamp(0),
     lastTrackingSending(0),
+    timer(millis()),
     simulatorLed(Led((uint8_t)LED_SIMULATOR_PIN))
 {
     Interface::setup(this);
@@ -47,6 +49,7 @@ void Drone::startup()
         motors[i].startup();
     }
     flightController.startup();
+    timer = millis();
     setStatus(Status::on);
 }
 
@@ -62,14 +65,26 @@ void Drone::shutdown()
 
 void Drone::tick()
 {
+    int readCount = 0;
     while (Serial.available())
     {
-        onSerialRead(Serial.read(), serialResponseBuffer);
+        bool endOfCommand = onSerialRead(Serial.read(), serialResponseBuffer);
+        if (endOfCommand)
+        {
+            readCount++;
+            if (readCount > 10) break;
+        }
     }
 
+    readCount = 0;
     while (Serial1.available())
     {
-        onSerialRead(Serial1.read(), serial1ResponseBuffer);
+        bool endOfCommand = onSerialRead(Serial1.read(), serial1ResponseBuffer);
+        if (endOfCommand)
+        {
+            readCount++;
+            if (readCount > 10) break;
+        };
     }
 
     /*
@@ -104,15 +119,39 @@ void Drone::tick()
         }
 
         accelerometer.tick();
+        altimeter.tick();
         position.update();
         flightController.tick(
             position.getAngleX(),
             position.getAngleY(),
             position.getAngleZ(),
+            altimeter.getZ(),
             accelerometer.getAngleSpeedX(),
             accelerometer.getAngleSpeedY(),
-            accelerometer.getAngleSpeedZ());
+            accelerometer.getAngleSpeedZ(),
+            altimeter.getRateZ());
 
+        float altitudeRate = flightController.getPIDAltitudeRate().getOutput();
+        float angleRateX = flightController.getPIDAngleRateX().getOutput();
+        float angleRateY = flightController.getPIDAngleRateY().getOutput();
+        float angleRateZ = flightController.getPIDAngleRateZ().getOutput();
+
+        motors[0].setSpeed(altitudeRate /*  + angleRateX - angleRateY + angleRateZ */);
+        motors[1].setSpeed(altitudeRate /*  - angleRateX - angleRateY - angleRateZ */);
+        motors[2].setSpeed(altitudeRate /* + angleRateX + angleRateY - angleRateZ */);
+        motors[3].setSpeed(altitudeRate /*  - angleRateX + angleRateY + angleRateZ */);
+
+        if (isInSimMode)
+        {
+            Simulator::sendMotorSpeed(
+                motors[0].getSpeed(),
+                motors[1].getSpeed(),
+                motors[2].getSpeed(),
+                motors[3].getSpeed(),
+                millis() - timer);
+        }
+
+        timer = millis();
         checkSecurity();
     }
 
@@ -154,6 +193,9 @@ void Drone::enableSimulatorMode()
     isInSimMode = true;
     simulatorLed.on();
 
+    accelerometer.enableSimMode();
+    altimeter.enableSimMode();
+
     for (uint8_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].enableSimMode();
@@ -164,7 +206,7 @@ void Drone::enableSimulatorMode()
     Simulator::callbackSimModeEnabled();
 }
 
-void Drone::onSerialRead(char character, String& buffer)
+bool Drone::onSerialRead(char character, String& buffer)
 {
     if (character == '\n' && buffer != "")
     {
@@ -173,9 +215,11 @@ void Drone::onSerialRead(char character, String& buffer)
             Interface::execute(buffer);
         }
         buffer = "";
+        return true;
     }
     else
     {
         buffer += character;
+        return false;
     }
 }

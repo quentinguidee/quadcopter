@@ -5,6 +5,12 @@
 
 void Accelerometer::startup()
 {
+    if (isSimulated())
+    {
+        delay(500);
+        return;
+    }
+
     Wire.begin();
     sensor.setWire(&Wire);
 
@@ -17,10 +23,17 @@ void Accelerometer::startup()
 
 void Accelerometer::tick()
 {
-    updateAccelerations();
-    updateAngles();
-    updateAnglesFromAccelerations();
-    updateMagneticFields();
+    if (isSimulated())
+    {
+        updateAnglesFromAccelerations();
+    }
+    else
+    {
+        updateAccelerations();
+        updateAngles();
+        updateAnglesFromAccelerations();
+        updateMagneticFields();
+    }
 }
 
 void Accelerometer::updateAccelerations()
@@ -96,4 +109,23 @@ void Accelerometer::calibrate()
 
     // sensor.magXOffset = -(MAG_X_MAX + MAG_X_MIN) / 2;
     // sensor.magYOffset = -(MAG_Y_MAX + MAG_Y_MIN) / 2;
+}
+
+void Accelerometer::willEnableSimMode()
+{
+    accelerationX = 0;
+    accelerationY = 0;
+    accelerationZ = -1;
+
+    angleSpeedX = 0;
+    angleSpeedY = 0;
+    angleSpeedZ = 0;
+
+    accelerationXoffset = 0;
+    accelerationYoffset = 0;
+    accelerationZoffset = 1;
+
+    angleSpeedXoffset = 0;
+    angleSpeedYoffset = 0;
+    angleSpeedZoffset = 0;
 }

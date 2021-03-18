@@ -21,7 +21,7 @@ public:
 private:
     uint8_t pin;
     uint8_t id;
-    int speed;
+    int16_t speed;
     Servo esc;
 
     Status status;
@@ -38,6 +38,7 @@ public:
     void tick();
 
     void setSpeed(uint16_t speed);
+    int16_t getSpeed() { return speed; }
 
     void setStatus(Status status);
     Status getStatus() { return status; }
