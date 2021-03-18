@@ -103,7 +103,6 @@ public class Drone {
                     for (int i = 0; i < 4; ++i) {
                         float value = Float.valueOf(speeds[i]);
                         motorsRate[i] = value / 180.0;
-                        println(motorsRate[i]);
                         ui.getMotorView(i).setValue(value);
                     }
                     deltaTime = Float.valueOf(speeds[4]);

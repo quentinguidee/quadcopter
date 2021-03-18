@@ -22,7 +22,7 @@ void PID::startup()
 
 void PID::tick(float desired, float measured)
 {
-    unsigned long deltaTime = micros() - timer;
+    unsigned long deltaTime = (micros() - timer) * 0.001;
     float error = desired - measured;
 
     integral += error * deltaTime;

@@ -7,12 +7,12 @@ FlightController::FlightController() :
     pidAngleX(PID(1, 0, 0, -90, 90)),
     pidAngleY(PID(1, 0, 0, -90, 90)),
     pidAngleZ(PID(1, 0, 0, -90, 90)),
-    pidAltitude(PID(4, 1, 1, -5, 10)),
+    pidAltitude(PID(1, 0, 0, -100, 100)),
 
-    pidAngleRateX(PID(1, 0, 0, 0, 180)),
-    pidAngleRateY(PID(1, 0, 0, 0, 180)),
-    pidAngleRateZ(PID(1, 0, 0, 0, 180)),
-    pidAltitudeRate(PID(40, 1, 1, 0, 180))
+    pidAngleRateX(PID(1, 0, 0, -180, 180)),
+    pidAngleRateY(PID(1, 0, 0, -180, 180)),
+    pidAngleRateZ(PID(1, 0, 0, -180, 180)),
+    pidAltitudeRate(PID(10, 0.01, 10, 0, 180))
 {
 }
 
