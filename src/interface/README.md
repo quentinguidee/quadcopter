@@ -49,3 +49,9 @@ Format: `CXXYYZZRR`
 | Status | Format | Name                     |
 | ------ | ------ | ------------------------ |
 | DONE   | T0     | Force set telemetry data |
+
+### PID
+
+| Status | Format | Name                                        |
+| ------ | ------ | ------------------------------------------- |
+| DONE   | PXYV   | Set the Y value of the PID X to the value V |

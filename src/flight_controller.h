@@ -27,15 +27,15 @@ public:
         float angleRateZ,
         float altitudeRate);
 
-    PID getPIDAngleX() { return pidAngleX; }
-    PID getPIDAngleY() { return pidAngleY; }
-    PID getPIDAngleZ() { return pidAngleZ; }
-    PID getPIDAltitude() { return pidAltitude; }
+    PID& getPIDAngleX() { return pidAngleX; }
+    PID& getPIDAngleY() { return pidAngleY; }
+    PID& getPIDAngleZ() { return pidAngleZ; }
+    PID& getPIDAltitude() { return pidAltitude; }
 
-    PID getPIDAngleRateX() { return pidAngleRateX; }
-    PID getPIDAngleRateY() { return pidAngleRateY; }
-    PID getPIDAngleRateZ() { return pidAngleRateZ; }
-    PID getPIDAltitudeRate() { return pidAltitudeRate; }
+    PID& getPIDAngleRateX() { return pidAngleRateX; }
+    PID& getPIDAngleRateY() { return pidAngleRateY; }
+    PID& getPIDAngleRateZ() { return pidAngleRateZ; }
+    PID& getPIDAltitudeRate() { return pidAltitudeRate; }
 };
 
 #endif /* FLIGHT_CONTROLLER_H */

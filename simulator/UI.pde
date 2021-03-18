@@ -88,6 +88,43 @@ public class UI {
            .setColorForeground(0xfff2f2f2)
            .setColorBackground(0xff222222)
            .setDragDirection(Knob.ARC);
+
+        Group pidTuning = ui.addGroup("pidTuning")
+           .setPosition(0, 310)
+           .setColorBackground(0xff111111)
+           .setGroup(sidebar)
+           .hideBar();
+        
+        String[] pids = {
+            "PID Angle X",
+            "PID Angle Y",
+            "PID Angle Z",
+            "PID Altitude",
+            "PID Angle Rate X",
+            "PID Angle Rate Y",
+            "PID Angle Rate Z",
+            "PID Altitude Rate",
+        };
+
+        for (int i = 0; i < 8; ++i) {
+            ui.addTextfield("pid" + i + "kp")
+            .setCaptionLabel(pids[i] + " (KP)")
+            .setPosition(20, i * 40)
+            .setSize(100, 20)
+            .setGroup(pidTuning);
+
+            ui.addTextfield("pid" + i + "ki")
+            .setCaptionLabel(pids[i] + " (KI)")
+            .setPosition(140, i * 40)
+            .setSize(100, 20)
+            .setGroup(pidTuning);
+
+            ui.addTextfield("pid" + i + "kd")
+            .setCaptionLabel(pids[i] + " (KD)")
+            .setPosition(260, i * 40)
+            .setSize(100, 20)
+            .setGroup(pidTuning);
+        }
     }
 
     public Knob getMotorView(int motorID) {
@@ -127,3 +164,35 @@ void toggleDrone() {
 }
 
 void serialConnect() { drone.serialConnect(this); }
+
+void pid0kp(String value) { drone.getPort().write("$P0P" + value + "\n"); }
+void pid0ki(String value) { drone.getPort().write("$P0I" + value + "\n"); }
+void pid0kd(String value) { drone.getPort().write("$P0D" + value + "\n"); }
+
+void pid1kp(String value) { drone.getPort().write("$P1P" + value + "\n"); }
+void pid1ki(String value) { drone.getPort().write("$P1I" + value + "\n"); }
+void pid1kd(String value) { drone.getPort().write("$P1D" + value + "\n"); }
+
+void pid2kp(String value) { drone.getPort().write("$P2P" + value + "\n"); }
+void pid2ki(String value) { drone.getPort().write("$P2I" + value + "\n"); }
+void pid2kd(String value) { drone.getPort().write("$P2D" + value + "\n"); }
+
+void pid3kp(String value) { drone.getPort().write("$P3P" + value + "\n"); }
+void pid3ki(String value) { drone.getPort().write("$P3I" + value + "\n"); }
+void pid3kd(String value) { drone.getPort().write("$P3D" + value + "\n"); }
+
+void pid4kp(String value) { drone.getPort().write("$P4P" + value + "\n"); }
+void pid4ki(String value) { drone.getPort().write("$P4I" + value + "\n"); }
+void pid4kd(String value) { drone.getPort().write("$P4D" + value + "\n"); }
+
+void pid5kp(String value) { drone.getPort().write("$P5P" + value + "\n"); }
+void pid5ki(String value) { drone.getPort().write("$P5I" + value + "\n"); }
+void pid5kd(String value) { drone.getPort().write("$P5D" + value + "\n"); }
+
+void pid6kp(String value) { drone.getPort().write("$P6P" + value + "\n"); }
+void pid6ki(String value) { drone.getPort().write("$P6I" + value + "\n"); }
+void pid6kd(String value) { drone.getPort().write("$P6D" + value + "\n"); }
+
+void pid7kp(String value) { drone.getPort().write("$P7P" + value + "\n"); }
+void pid7ki(String value) { drone.getPort().write("$P7I" + value + "\n"); }
+void pid7kd(String value) { drone.getPort().write("$P7D" + value + "\n"); }

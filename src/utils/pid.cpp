@@ -1,5 +1,7 @@
 #include "pid.h"
 
+#include "log.h"
+
 PID::PID(float Kp, float Ki, float Kd, float min, float max) :
     Kp(Kp), Ki(Ki), Kd(Kd),
     minOutput(min), maxOutput(max),
@@ -37,6 +39,24 @@ void PID::tick(float desired, float measured)
 float PID::getOutput()
 {
     return output;
+}
+
+void PID::setKp(float value)
+{
+    Kp = value;
+    Log::info(String("PID"), String("Set Kp to ") + value);
+}
+
+void PID::setKi(float value)
+{
+    Ki = value;
+    Log::info(String("PID"), String("Set Ki to ") + value);
+}
+
+void PID::setKd(float value)
+{
+    Kd = value;
+    Log::info(String("PID"), String("Set Kd to ") + value);
 }
 
 void PID::setOutput(float output)

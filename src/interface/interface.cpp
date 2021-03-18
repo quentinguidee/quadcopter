@@ -1,6 +1,7 @@
 #include "interface.h"
 
 #include "../utils/log.h"
+#include "../utils/pid.h"
 
 void Interface::execute(char code[])
 {
@@ -85,6 +86,32 @@ void Interface::execute(String code)
             // Serial.println(String("") + z + " " + accX + " " + accY + " " + accZ + " " + accAngleX + " " + accAngleY + " " + accAngleZ);
 
             Interface::forceSetPositionSensor(z, accX, accY, accZ, accAngleX, accAngleY, accAngleZ);
+        }
+    }
+    else if (category == 'P')
+    {
+        char pidID = code[2];
+        char pidConstantKey = code[3];
+        float value = code.substring(4, code.length()).toFloat();
+        PID* pid;
+
+        switch (pidID)
+        {
+            case '0': pid = &drone->getFlightController().getPIDAngleX(); break;
+            case '1': pid = &drone->getFlightController().getPIDAngleY(); break;
+            case '2': pid = &drone->getFlightController().getPIDAngleZ(); break;
+            case '3': pid = &drone->getFlightController().getPIDAltitude(); break;
+            case '4': pid = &drone->getFlightController().getPIDAngleRateX(); break;
+            case '5': pid = &drone->getFlightController().getPIDAngleRateY(); break;
+            case '6': pid = &drone->getFlightController().getPIDAngleRateZ(); break;
+            case '7': pid = &drone->getFlightController().getPIDAltitudeRate(); break;
+        }
+
+        switch (pidConstantKey)
+        {
+            case 'P': pid->setKp(value); break;
+            case 'I': pid->setKi(value); break;
+            case 'D': pid->setKd(value); break;
         }
     }
 }

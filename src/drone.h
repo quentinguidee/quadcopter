@@ -74,6 +74,7 @@ public:
     Accelerometer& getAccelerometer() { return accelerometer; }
     Altimeter& getAltimeter() { return altimeter; }
     ToggleButton& getOnOffButton() { return onOffButton; }
+    FlightController& getFlightController() { return flightController; }
 
     Position& getPosition() { return position; }
 

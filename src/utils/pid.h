@@ -27,6 +27,10 @@ public:
     void tick(float desired, float measured);
 
     float getOutput();
+
+    void setKp(float value);
+    void setKi(float value);
+    void setKd(float value);
 };
 
 #endif /* PID_H */
