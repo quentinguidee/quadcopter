@@ -6,11 +6,11 @@ Drone drone;
 UI ui;
 
 void setup() {
-    Serial port = new Serial(this, Serial.list()[3], 38400);
-    drone = new Drone(port);
-    
+    drone = new Drone();
+
     // UI
     size(1600, 656, P3D);
+    background(0xff111111);
     surface.setTitle("Quadcopter");
     surface.setResizable(true);
     

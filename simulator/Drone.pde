@@ -35,8 +35,10 @@ public class Drone {
     final float GRAVITY = 9.81; // in m/s^2
     final float LENGTH_CENTER_TO_MOTOR = 0.35; // in m
 
-    public Drone(Serial port) {
-        this.port = port;
+    public Drone() {}
+
+    public void serialConnect(PApplet applet) {
+        this.port = new Serial(applet, Serial.list()[3], 38400);
     }
 
     public Serial getPort() {
@@ -52,6 +54,8 @@ public class Drone {
     }
 
     public void tick() {
+        if (port == null) return;
+
         readSerial();
         if (draw) {
             println("draw at " + position[0] + " " + position[1] + " " + position[2]);

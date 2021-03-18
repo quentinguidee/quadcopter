@@ -16,16 +16,22 @@ public class UI {
         Group sidebar = ui.addGroup("sidebar")
            .setPosition(0, 0)
            .setColorBackground(0xff111111);
+
+        ui.addButton("serialConnect")
+           .setPosition(0, 0)
+           .setSize(200, 26)
+           .setCaptionLabel("Serial Connect")
+           .setGroup(sidebar);
         
         ui.addButton("enableSimMode")
-           .setPosition(0, 0)
+           .setPosition(0, 27)
            .setSize(200, 26)
            .setCaptionLabel("Enable Sim Mode")
            .setGroup(sidebar);
 
         ui.addButton("toggleDrone")
-           .setPosition(0, 27)
-           .setSize(200, 22)
+           .setPosition(0, 54)
+           .setSize(200, 26)
            .setCaptionLabel("On/Off")
            .setGroup(sidebar);
         
@@ -33,7 +39,7 @@ public class UI {
            .setRange(0, 180)
            .setValue(0)
            .setCaptionLabel("Motor A")
-           .setPosition(15, 66)
+           .setPosition(15, 93)
            .setRadius(40)
            .setNumberOfTickMarks(10)
            .setTickMarkLength(1)
@@ -46,7 +52,7 @@ public class UI {
            .setRange(0, 180)
            .setValue(0)
            .setCaptionLabel("Motor B")
-           .setPosition(110, 66)
+           .setPosition(110, 93)
            .setWidth(1)
            .setRadius(40)
            .setNumberOfTickMarks(10)
@@ -60,7 +66,7 @@ public class UI {
            .setRange(0, 180)
            .setValue(0)
            .setCaptionLabel("Motor C")
-           .setPosition(15, 176)
+           .setPosition(15, 203)
            .setRadius(40)
            .setNumberOfTickMarks(10)
            .setTickMarkLength(1)
@@ -73,7 +79,7 @@ public class UI {
            .setRange(0, 180)
            .setValue(0)
            .setCaptionLabel("Motor D")
-           .setPosition(110, 176)
+           .setPosition(110, 203)
            .setWidth(1)
            .setRadius(40)
            .setNumberOfTickMarks(10)
@@ -119,3 +125,5 @@ void toggleDrone() {
         drone.isOn = true;
     }
 }
+
+void serialConnect() { drone.serialConnect(this); }
