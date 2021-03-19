@@ -201,9 +201,12 @@ public class Drone {
         if (position[1] <= 0) {
             for (int i = 0; i < 3; ++i) {
                 position[i] = 0;
+                accelerations[i] = 0;
+                anglesRate[i] = 0;
                 lastSpeed[i] = 0;
                 angles[i] = 0;
             }
+            accelerations[1] = -9.81;
         } else {
             for (int i = 0; i < 3; ++i) {
                 lastSpeed[i] += accelerations[i] * deltaTimeInSeconds;

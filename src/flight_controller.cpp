@@ -7,12 +7,12 @@ FlightController::FlightController() :
     pidAngleX(PID(1, 0, 0, -90, 90)),
     pidAngleY(PID(1, 0, 0, -90, 90)),
     pidAngleZ(PID(1, 0, 0, -90, 90)),
-    pidAltitude(PID(1, 0, 0, -100, 100)),
+    pidAltitude(PID(1, 0, 0, -20, 20)),
 
     pidAngleRateX(PID(1, 0, 0, -180, 180)),
     pidAngleRateY(PID(1, 0, 0, -180, 180)),
     pidAngleRateZ(PID(1, 0, 0, -180, 180)),
-    pidAltitudeRate(PID(120, 0.1, 0, 0, 180))
+    pidAltitudeRate(PID(80, 10, 40, 30, 180))
 {
 }
 
@@ -43,7 +43,7 @@ void FlightController::tick(
     pidAngleX.tick(0, angleX);
     pidAngleY.tick(0, angleY);
     pidAngleZ.tick(0, angleZ);
-    pidAltitude.tick(5, altitude);
+    pidAltitude.tick(1.2, altitude);
     Log::info(String("FLIGHT_CONTROLLER"), String("PID RAW: ") + pidAltitude.getOutput() + "/" + pidAngleX.getOutput() + "/" + pidAngleY.getOutput() + "/" + pidAngleZ.getOutput());
 
     pidAngleRateX.tick(pidAngleX.getOutput(), angleRateX);
