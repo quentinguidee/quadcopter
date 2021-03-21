@@ -125,21 +125,25 @@ void Drone::tick()
             position.getAngleX(),
             position.getAngleY(),
             position.getAngleZ(),
-            altimeter.getZ(),
             accelerometer.getAngleSpeedX(),
             accelerometer.getAngleSpeedY(),
             accelerometer.getAngleSpeedZ(),
-            altimeter.getRateZ());
+            altimeter.getZ());
 
-        float altitudeRate = flightController.getPIDAltitudeRate().getOutput();
+        float altitudeRate = flightController.getPIDAltitude().getOutput();
         float angleRateX = flightController.getPIDAngleRateX().getOutput();
         float angleRateY = flightController.getPIDAngleRateY().getOutput();
         float angleRateZ = flightController.getPIDAngleRateZ().getOutput();
 
-        motors[0].setSpeed(altitudeRate /*  + angleRateX - angleRateY + angleRateZ */);
-        motors[1].setSpeed(altitudeRate /*  - angleRateX - angleRateY - angleRateZ */);
-        motors[2].setSpeed(altitudeRate /* + angleRateX + angleRateY - angleRateZ */);
-        motors[3].setSpeed(altitudeRate /*  - angleRateX + angleRateY + angleRateZ */);
+        float motorASpeed = 119 + altitudeRate /* + angleRateX - angleRateY + angleRateZ */;
+        float motorBSpeed = 119 + altitudeRate /* - angleRateX - angleRateY - angleRateZ */;
+        float motorCSpeed = 119 + altitudeRate /* + angleRateX + angleRateY - angleRateZ */;
+        float motorDSpeed = 119 + altitudeRate /* - angleRateX + angleRateY + angleRateZ */;
+
+        motors[0].setSpeed(motorASpeed < 30 ? 30 : motorASpeed);
+        motors[1].setSpeed(motorBSpeed < 30 ? 30 : motorBSpeed);
+        motors[2].setSpeed(motorCSpeed < 30 ? 30 : motorCSpeed);
+        motors[3].setSpeed(motorDSpeed < 30 ? 30 : motorDSpeed);
 
         if (isInSimMode)
         {

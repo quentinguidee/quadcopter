@@ -7,6 +7,7 @@ public class Drone {
     boolean isInSimMode = false;
     boolean isOn = false;
     boolean draw = true;
+    public boolean enableManualMove = false;
     
     Led[] leds = {
         new Led(-25, -25, Color.BLUE),
@@ -156,6 +157,24 @@ public class Drone {
         port.write("$T0" + position[1] + "," + accelerations[0] + "," + accelerations[2] + "," + accelerations[1] + "," + anglesRate[0] + "," + anglesRate[2] + "," + anglesRate[1] + "\n");
     }
 
+    private void moveToDesiredPosition() {
+        if (!enableManualMove) { return; }
+
+        enableManualMove = false;
+
+        println("[SEND----] $C"
+            + (ui.getMovementXYSlider().getArrayValue()[0] - 50) + ","
+            + (ui.getMovementXYSlider().getArrayValue()[1] - 50) + ","
+            + (ui.getMovementZRSlider().getArrayValue()[1] - 50) + ","
+            + (ui.getMovementZRSlider().getArrayValue()[0] - 50));
+
+        port.write("$C"
+            + (ui.getMovementXYSlider().getArrayValue()[0] - 50) + ","
+            + (ui.getMovementXYSlider().getArrayValue()[1] - 50) + ","
+            + (ui.getMovementZRSlider().getArrayValue()[1] - 50) + ","
+            + (ui.getMovementZRSlider().getArrayValue()[0] - 50) + "\n");
+    }
+
     private void updatePositions() {
         if (deltaTime == -1) return;
 
@@ -214,5 +233,6 @@ public class Drone {
         }
 
         sendTelemetry();
+        moveToDesiredPosition();
     }
 }

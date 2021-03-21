@@ -6,7 +6,7 @@
 class Altimeter : public Component
 {
 private:
-    float z;
+    float z, previousZ;
     float rateZ;
 
     unsigned long timer;
@@ -21,6 +21,7 @@ public:
     float getRateZ() { return rateZ; }
 
     void forceSetZ(float z);
+    void computeRateZ();
 };
 
 #endif /* ALTIMETER_H */

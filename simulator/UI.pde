@@ -2,6 +2,7 @@ public class UI {
     ControlP5 ui;
     
     Knob motorA, motorB, motorC, motorD;
+    Slider2D movementXYSlider, movementZRSlider;
     
     public UI(ControlP5 ui) {
         this.ui = ui;
@@ -99,14 +100,13 @@ public class UI {
             "PID Angle X",
             "PID Angle Y",
             "PID Angle Z",
-            "PID Altitude",
             "PID Angle Rate X",
             "PID Angle Rate Y",
             "PID Angle Rate Z",
-            "PID Altitude Rate",
+            "PID Altitude",
         };
 
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < 7; ++i) {
             ui.addTextfield("pid" + i + "kp")
             .setCaptionLabel(pids[i] + " (KP)")
             .setPosition(20, i * 40)
@@ -125,6 +125,32 @@ public class UI {
             .setSize(100, 20)
             .setGroup(pidTuning);
         }
+
+        ui.addButton("liftOff")
+            .setPosition(width - 120, 20)
+            .setSize(100, 26)
+            .setCaptionLabel("Lift Off")
+            .setGroup(sidebar);
+            
+        ui.addButton("enableManualMove")
+            .setPosition(width - 120, 47)
+            .setSize(100, 26)
+            .setCaptionLabel("Enable Manual Move")
+            .setGroup(sidebar);
+
+        movementXYSlider = ui.addSlider2D("movementXY")
+            .setLabelVisible(false)
+            .setPosition(width - 120, 60)
+            .setSize(100, 100)
+            .setCaptionLabel("Movement X and Y")
+            .setArrayValue(new float[] {50, 50});
+
+        movementZRSlider = ui.addSlider2D("movementZR")
+            .setLabelVisible(false)
+            .setPosition(width - 120, 180)
+            .setSize(100, 100)
+            .setCaptionLabel("Movement Z and R")
+            .setArrayValue(new float[] {50, 50});
     }
 
     public Knob getMotorView(int motorID) {
@@ -141,6 +167,9 @@ public class UI {
     public Knob getMotorBView() { return motorB; }
     public Knob getMotorCView() { return motorC; }
     public Knob getMotorDView() { return motorD; }
+
+    public Slider2D getMovementXYSlider() { return movementXYSlider; }
+    public Slider2D getMovementZRSlider() { return movementZRSlider; }
 }
 
 void enableSimMode() {
@@ -193,6 +222,5 @@ void pid6kp(String value) { drone.getPort().write("$P6P" + value + "\n"); }
 void pid6ki(String value) { drone.getPort().write("$P6I" + value + "\n"); }
 void pid6kd(String value) { drone.getPort().write("$P6D" + value + "\n"); }
 
-void pid7kp(String value) { drone.getPort().write("$P7P" + value + "\n"); }
-void pid7ki(String value) { drone.getPort().write("$P7I" + value + "\n"); }
-void pid7kd(String value) { drone.getPort().write("$P7D" + value + "\n"); }
+void liftOff() { drone.getPort().write("$D2\n"); }
+void enableManualMove() { drone.enableManualMove = true; }

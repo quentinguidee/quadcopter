@@ -6,24 +6,21 @@ Allows to communicate between the computer and the drone. The messages are horri
 
 ### Movement
 
-- X axis (0 to 99)
-- Y axis (0 to 99)
-- Z axis (0 to 99)
-- Rotation (0 to 99)
+- X,Y,Z = Desired position
+- R = Desired rotation
 
-Format: `CXXYYZZRR`
+Format: `CXYZR`
 
 ### Commands
 
 #### Drone
 
-| Status | Format | Name             |
-| ------ | ------ | ---------------- |
-| DONE   | D0     | Turn off         |
-| DONE   | D1     | Turn on          |
-| TODO   | D2     | Lift off         |
-| TODO   | D2X    | Lift off of X cm |
-| TODO   | D3     | Land             |
+| Status | Format | Name     |
+| ------ | ------ | -------- |
+| DONE   | D0     | Turn off |
+| DONE   | D1     | Turn on  |
+| DONE   | D2     | Lift off |
+| TODO   | D3     | Land     |
 
 #### Wifi
 

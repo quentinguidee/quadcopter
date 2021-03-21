@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 Altimeter::Altimeter() :
-    z(0),
+    z(0), previousZ(0),
     rateZ(0),
     timer(millis())
 {
@@ -20,11 +20,17 @@ void Altimeter::tick()
         rateZ = 0;
     }
 
+    computeRateZ();
     timer = millis();
 }
 
 void Altimeter::forceSetZ(float z)
 {
-    rateZ = (z - this->z) / (millis() - timer);
+    this->previousZ = this->z;
     this->z = z;
+}
+
+void Altimeter::computeRateZ()
+{
+    rateZ = (z - previousZ) / (millis() - timer);
 }

@@ -14,11 +14,18 @@ void Interface::execute(String code)
     char category = code[1];
     if (category == 'C')
     {
-        Interface::move(
-            code.substring(2, 2).toInt(),
-            code.substring(4, 2).toInt(),
-            code.substring(6, 2).toInt(),
-            code.substring(8, 2).toInt());
+        char codeChar[70];
+        code.remove(0, 2);
+        code.toCharArray(codeChar, 70);
+
+        float x = atof(strtok(codeChar, ","));
+        float y = atof(strtok(NULL, ","));
+        float z = atof(strtok(NULL, ","));
+        float r = atof(strtok(NULL, ","));
+
+        int result = sscanf(codeChar, "$C%f,%f,%f,%f", &x, &y, &z, &r);
+
+        Interface::move(x, y, z, r);
     }
     else if (category == 'D')
     {
@@ -100,11 +107,10 @@ void Interface::execute(String code)
             case '0': pid = &drone->getFlightController().getPIDAngleX(); break;
             case '1': pid = &drone->getFlightController().getPIDAngleY(); break;
             case '2': pid = &drone->getFlightController().getPIDAngleZ(); break;
-            case '3': pid = &drone->getFlightController().getPIDAltitude(); break;
-            case '4': pid = &drone->getFlightController().getPIDAngleRateX(); break;
-            case '5': pid = &drone->getFlightController().getPIDAngleRateY(); break;
-            case '6': pid = &drone->getFlightController().getPIDAngleRateZ(); break;
-            case '7': pid = &drone->getFlightController().getPIDAltitudeRate(); break;
+            case '3': pid = &drone->getFlightController().getPIDAngleRateX(); break;
+            case '4': pid = &drone->getFlightController().getPIDAngleRateY(); break;
+            case '5': pid = &drone->getFlightController().getPIDAngleRateZ(); break;
+            case '6': pid = &drone->getFlightController().getPIDAltitude(); break;
         }
 
         switch (pidConstantKey)
@@ -121,9 +127,13 @@ void Interface::setup(Drone* drone)
     Interface::drone = drone;
 }
 
-void Interface::move(int x, int y, int z, int r)
+void Interface::move(float x, float y, float z, float r)
 {
-    // TODO
+    FlightController& flightController = drone->getFlightController();
+    flightController.setDesiredX(x);
+    flightController.setDesiredY(y);
+    flightController.setDesiredZ(z);
+    flightController.setDesiredR(r);
 }
 
 void Interface::forceSetPositionSensor(
@@ -157,9 +167,9 @@ void Interface::turnOff()
     drone->getOnOffButton().off();
 }
 
-void Interface::liftOff(int height)
+void Interface::liftOff()
 {
-    // TODO
+    Interface::move(0, 0, 1.2, 0);
 }
 
 void Interface::land()
