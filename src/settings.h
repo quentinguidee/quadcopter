@@ -85,6 +85,15 @@ constexpr uint8_t LED_SIMULATOR_PIN = 51;
  */
 constexpr uint8_t POWER_TOGGLE_BUTTON_PIN = 52;
 
+///////////////////
+// === TESTS === //
+///////////////////
+
+/**
+ * Run tests on startup
+ */
+constexpr bool RUN_TESTS_ON_STARTUP = true;
+
 }  // namespace Settings
 
 #endif /* SETTINGS_H */
