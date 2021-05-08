@@ -21,7 +21,7 @@ Motor::~Motor()
 
 void Motor::setup()
 {
-    esc.attach(pin, MIN_ESC_PULSE_WIDTH, MAX_ESC_PULSE_WIDTH);
+    esc.attach(pin, Settings::MIN_ESC_PULSE_WIDTH, Settings::MAX_ESC_PULSE_WIDTH);
     esc.write(0);
     Log::info(String("MOTOR") + id, String("SETUP on pin ") + pin);
     setStatus(Status::off);

@@ -26,16 +26,16 @@ public:
 
 private:
     Motor motors[MOTORS_COUNT] = {
-        Motor(0, (uint8_t)ESC_MOTOR_A_PIN),
-        Motor(1, (uint8_t)ESC_MOTOR_B_PIN),
-        Motor(2, (uint8_t)ESC_MOTOR_C_PIN),
-        Motor(3, (uint8_t)ESC_MOTOR_D_PIN),
+        Motor(0, (uint8_t)Settings::ESC_MOTOR_A_PIN),
+        Motor(1, (uint8_t)Settings::ESC_MOTOR_B_PIN),
+        Motor(2, (uint8_t)Settings::ESC_MOTOR_C_PIN),
+        Motor(3, (uint8_t)Settings::ESC_MOTOR_D_PIN),
     };
     Led leds[MOTORS_COUNT] = {
-        Led((uint8_t)LED_MOTOR_A_PIN),
-        Led((uint8_t)LED_MOTOR_B_PIN),
-        Led((uint8_t)LED_MOTOR_C_PIN),
-        Led((uint8_t)LED_MOTOR_D_PIN),
+        Led((uint8_t)Settings::LED_MOTOR_A_PIN),
+        Led((uint8_t)Settings::LED_MOTOR_B_PIN),
+        Led((uint8_t)Settings::LED_MOTOR_C_PIN),
+        Led((uint8_t)Settings::LED_MOTOR_D_PIN),
     };
     Led simulatorLed;
     Accelerometer accelerometer;

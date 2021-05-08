@@ -1,6 +1,8 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+namespace Settings {
+
 /////////////////
 // === ESC === //
 /////////////////
@@ -82,5 +84,7 @@ constexpr uint8_t LED_SIMULATOR_PIN = 51;
  * Pin type: D
  */
 constexpr uint8_t POWER_TOGGLE_BUTTON_PIN = 52;
+
+}  // namespace Settings
 
 #endif /* SETTINGS_H */

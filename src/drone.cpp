@@ -7,7 +7,7 @@
 Drone::Drone() :
     accelerometer(Accelerometer()),
     altimeter(Altimeter()),
-    onOffButton(ToggleButton((uint8_t)POWER_TOGGLE_BUTTON_PIN)),
+    onOffButton(ToggleButton((uint8_t)Settings::POWER_TOGGLE_BUTTON_PIN)),
     position(Position(accelerometer)),
     flightController(FlightController()),
     status(Status::off),
@@ -15,7 +15,7 @@ Drone::Drone() :
     lastPingTimestamp(0),
     lastTrackingSending(0),
     timer(millis()),
-    simulatorLed(Led((uint8_t)LED_SIMULATOR_PIN))
+    simulatorLed(Led((uint8_t)Settings::LED_SIMULATOR_PIN))
 {
     Interface::setup(this);
 }
