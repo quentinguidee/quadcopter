@@ -209,9 +209,7 @@ bool Drone::onSerialRead(char character, String& buffer)
         buffer = "";
         return true;
     }
-    else
-    {
-        buffer += character;
-        return false;
-    }
+
+    buffer += character;
+    return false;
 }
