@@ -26,14 +26,13 @@ void Accelerometer::tick()
     if (isSimulated())
     {
         updateAnglesFromAccelerations();
+        return;
     }
-    else
-    {
-        updateAccelerations();
-        updateAngles();
-        updateAnglesFromAccelerations();
-        updateMagneticFields();
-    }
+
+    updateAccelerations();
+    updateAngles();
+    updateAnglesFromAccelerations();
+    updateMagneticFields();
 }
 
 void Accelerometer::updateAccelerations()
