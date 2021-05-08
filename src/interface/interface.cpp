@@ -184,12 +184,12 @@ void Interface::ping()
 
 void Interface::turnOnMotor(uint8_t motor)
 {
-    drone->getMotor(motor).startup();
+    drone->getMotors().get(motor).startup();
 }
 
 void Interface::turnOffMotor(uint8_t motor)
 {
-    drone->getMotor(motor).shutdown();
+    drone->getMotors().get(motor).shutdown();
 }
 
 void Interface::enableSimulatorMode()

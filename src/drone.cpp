@@ -5,6 +5,8 @@
 #include "utils/log.h"
 
 Drone::Drone() :
+    motors(Motors()),
+    leds(Leds()),
     accelerometer(Accelerometer()),
     altimeter(Altimeter()),
     onOffButton(ToggleButton((uint8_t)Settings::POWER_TOGGLE_BUTTON_PIN)),
@@ -31,12 +33,9 @@ void Drone::setup()
 
     setStatus(Status::off);
 
-    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
-    {
-        motors[i].setup();
-        leds[i].setup();
-        leds[i].on();
-    }
+    motors.setup();
+    leds.setup();
+
     Serial.println("START");
 }
 
@@ -44,10 +43,7 @@ void Drone::startup()
 {
     setStatus(Status::inStartup);
     accelerometer.startup();
-    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
-    {
-        motors[i].startup();
-    }
+    motors.startup();
     flightController.startup();
     timer = millis();
     setStatus(Status::on);
@@ -61,10 +57,7 @@ void Drone::startup()
 void Drone::shutdown()
 {
     setStatus(Status::inShutdown);
-    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
-    {
-        motors[i].shutdown();
-    }
+    motors.shutdown();
     setStatus(Status::off);
 }
 
@@ -149,18 +142,18 @@ void Drone::tick()
         float motorCSpeed = 119 + altitudeRate /* + angleRateX + angleRateY - angleRateZ */;
         float motorDSpeed = 119 + altitudeRate /* - angleRateX + angleRateY + angleRateZ */;
 
-        motors[0].setSpeed(motorASpeed < 30 ? 30 : motorASpeed);
-        motors[1].setSpeed(motorBSpeed < 30 ? 30 : motorBSpeed);
-        motors[2].setSpeed(motorCSpeed < 30 ? 30 : motorCSpeed);
-        motors[3].setSpeed(motorDSpeed < 30 ? 30 : motorDSpeed);
+        motors.get(0).setSpeed(motorASpeed < 30 ? 30 : motorASpeed);
+        motors.get(1).setSpeed(motorBSpeed < 30 ? 30 : motorBSpeed);
+        motors.get(2).setSpeed(motorCSpeed < 30 ? 30 : motorCSpeed);
+        motors.get(3).setSpeed(motorDSpeed < 30 ? 30 : motorDSpeed);
 
         if (isInSimMode)
         {
             Simulator::sendMotorSpeed(
-                motors[0].getSpeed(),
-                motors[1].getSpeed(),
-                motors[2].getSpeed(),
-                motors[3].getSpeed(),
+                motors.get(0).getSpeed(),
+                motors.get(1).getSpeed(),
+                motors.get(2).getSpeed(),
+                motors.get(3).getSpeed(),
                 millis() - timer);
         }
 
@@ -169,11 +162,7 @@ void Drone::tick()
     }
 
     onOffButton.tick();
-
-    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
-    {
-        motors[i].tick();
-    }
+    motors.tick();
 }
 
 void Drone::checkSecurity()
@@ -183,11 +172,6 @@ void Drone::checkSecurity()
 void Drone::ping()
 {
     lastPingTimestamp = millis();
-}
-
-Motor& Drone::getMotor(int8_t index)
-{
-    return motors[index];
 }
 
 void Drone::setStatus(Status status)
@@ -208,13 +192,8 @@ void Drone::enableSimulatorMode()
 
     accelerometer.enableSimMode();
     altimeter.enableSimMode();
-
-    for (uint8_t i = 0; i < MOTORS_COUNT; i++)
-    {
-        motors[i].enableSimMode();
-        leds[i].enableSimMode();
-        leds[i].on();
-    }
+    motors.enableSimMode();
+    leds.enableSimMode();
 
     Simulator::callbackSimModeEnabled();
 }
