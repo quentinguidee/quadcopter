@@ -32,7 +32,7 @@ public class Drone {
 
     float deltaTime = -1;
 
-    final float MASS = 2.0; // in kg
+    final float MASS = 1.25; // in kg
     final float GRAVITY = 9.81; // in m/s^2
     final float LENGTH_CENTER_TO_MOTOR = 0.35; // in m
 
