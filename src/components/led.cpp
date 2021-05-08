@@ -17,11 +17,10 @@ void Led::on()
     if (isSimulated())
     {
         Simulator::enableLed(pin);
+        return;
     }
-    else
-    {
-        digitalWrite(pin, HIGH);
-    }
+
+    digitalWrite(pin, HIGH);
 }
 
 void Led::off()
@@ -29,11 +28,10 @@ void Led::off()
     if (isSimulated())
     {
         Simulator::disableLed(pin);
+        return;
     }
-    else
-    {
-        digitalWrite(pin, LOW);
-    }
+
+    digitalWrite(pin, LOW);
 }
 
 void Led::willEnableSimMode()
