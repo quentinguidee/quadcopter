@@ -1,25 +1,21 @@
 #include "log.h"
 
+void Log::log(String type, String tag, String s)
+{
+    Serial.println((String) "[" + type + "|" + tag + "] " + s);
+}
+
 void Log::info(String tag, String s)
 {
-    Serial.print("[INFO|");
-    Serial.print(tag);
-    Serial.print("] ");
-    Serial.println(s);
+    Log::log("INFO", tag, s);
 }
 
 void Log::warning(String tag, String s)
 {
-    Serial.print("[WARNING|");
-    Serial.print(tag);
-    Serial.print("] ");
-    Serial.println(s);
+    Log::log("WARNING", tag, s);
 }
 
 void Log::error(String tag, String s)
 {
-    Serial.print("[ERROR|");
-    Serial.print(tag);
-    Serial.print("] ");
-    Serial.println(s);
+    Log::log("ERROR", tag, s);
 }
