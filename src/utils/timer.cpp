@@ -2,12 +2,12 @@
 
 #include <Arduino.h>
 
-void Timer::start()
+void Timer::reset()
 {
-    startTime = millis();
+    resetTime = millis();
 }
 
 bool Timer::exceeded(int delay)
 {
-    return millis() - startTime >= delay;
+    return millis() - resetTime >= delay;
 }

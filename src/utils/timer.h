@@ -4,13 +4,13 @@
 class Timer
 {
 private:
-    unsigned long startTime;
+    unsigned long resetTime;
 
 public:
     Timer() {}
     ~Timer() {}
 
-    void start();
+    void reset();
 
     bool exceeded(int delay);
 };
