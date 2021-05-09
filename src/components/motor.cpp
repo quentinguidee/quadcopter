@@ -39,7 +39,7 @@ void Motor::tick()
     if (!isSimulated())
     {
         esc.write(speed);
-        Log::info(String("MOTOR") + id, String(esc.read()) + " read on pin " + String(pin));
+        // Log::info(String("MOTOR") + id, String(esc.read()) + " read on pin " + String(pin));
     }
 }
 

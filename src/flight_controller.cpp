@@ -47,17 +47,17 @@ void FlightController::tick(
 
     float altitude)
 {
-    Log::info(String("FLIGHT_CONTROLLER"), String("Will try to reach: ") + desiredX + "/" + desiredY + "/" + desiredZ + "/" + desiredR);
+    // Log::info(String("FLIGHT_CONTROLLER"), String("Will try to reach: ") + desiredX + "/" + desiredY + "/" + desiredZ + "/" + desiredR);
 
     pidAngleX.tick(0, angleX);
     pidAngleY.tick(0, angleY);
     pidAngleZ.tick(0, angleZ);
-    Log::info(String("FLIGHT_CONTROLLER"), String("PID RAW: ") + pidAngleX.getOutput() + "/" + pidAngleY.getOutput() + "/" + pidAngleZ.getOutput());
+    // Log::info(String("FLIGHT_CONTROLLER"), String("PID RAW: ") + pidAngleX.getOutput() + "/" + pidAngleY.getOutput() + "/" + pidAngleZ.getOutput());
 
     pidAngleRateX.tick(pidAngleX.getOutput(), angleRateX);
     pidAngleRateY.tick(pidAngleY.getOutput(), angleRateY);
     pidAngleRateZ.tick(pidAngleZ.getOutput(), angleRateZ);
 
     pidAltitude.tick(desiredZ, altitude);
-    Log::info(String("FLIGHT_CONTROLLER"), String("PID RATES: ") + pidAltitude.getOutput() + "/" + pidAngleRateX.getOutput() + "/" + pidAngleRateY.getOutput() + "/" + pidAngleRateZ.getOutput());
+    // Log::info(String("FLIGHT_CONTROLLER"), String("PID RATES: ") + pidAltitude.getOutput() + "/" + pidAngleRateX.getOutput() + "/" + pidAngleRateY.getOutput() + "/" + pidAngleRateZ.getOutput());
 }

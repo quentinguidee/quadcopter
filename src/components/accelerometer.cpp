@@ -3,6 +3,8 @@
 #include <RunningMedian.h>
 #include <Wire.h>
 
+#include "../utils/log.h"
+
 void Accelerometer::startup()
 {
     if (isSimulated())
@@ -10,6 +12,8 @@ void Accelerometer::startup()
         delay(500);
         return;
     }
+
+    Log::info("ACCELEROMETER", "Startup");
 
     Wire.begin();
     sensor.setWire(&Wire);
@@ -72,6 +76,8 @@ void Accelerometer::updateMagneticFields()
 
 void Accelerometer::calibrate()
 {
+    Log::info("ACCELEROMETER", "Start calibration. May take a while.");
+
     uint16_t nExperiments = 100;
 
     RunningMedian accelerationsX = RunningMedian(nExperiments);
@@ -108,6 +114,8 @@ void Accelerometer::calibrate()
 
     // sensor.magXOffset = -(MAG_X_MAX + MAG_X_MIN) / 2;
     // sensor.magYOffset = -(MAG_Y_MAX + MAG_Y_MIN) / 2;
+
+    Log::info("ACCELEROMETER", "Calibration finished");
 }
 
 void Accelerometer::willEnableSimMode()

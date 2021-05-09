@@ -15,6 +15,7 @@ void ToggleButton::startup()
 {
     pinMode(pin, INPUT);
     timer.reset();
+    Log::info("TOGGLE_BUTTON", "Startup");
 }
 
 void ToggleButton::tick()
