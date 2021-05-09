@@ -18,7 +18,7 @@ public:
     ToggleButton(uint8_t pin);
     ~ToggleButton() {}
 
-    void setup();
+    void startup();
     void tick();
 
     bool isOn();

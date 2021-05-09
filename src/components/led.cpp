@@ -7,7 +7,7 @@ Led::Led(uint8_t pin) :
 {
 }
 
-void Led::setup()
+void Led::startup()
 {
     pinMode(pin, OUTPUT);
 }

@@ -20,6 +20,7 @@ public:
     {
         off,
         inStartup,
+        ready,
         on,
         inShutdown
     };
@@ -53,7 +54,8 @@ public:
     Drone();
     ~Drone();
 
-    void setup();
+    void armOnOffButton();
+
     void startup();
     void shutdown();
 

@@ -1,10 +1,5 @@
 #include "motors.h"
 
-void Motors::setup()
-{
-    for (Motor motor : motors) motor.setup();
-}
-
 void Motors::startup()
 {
     for (Motor motor : motors) motor.startup();

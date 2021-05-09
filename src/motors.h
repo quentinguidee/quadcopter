@@ -18,7 +18,6 @@ public:
     Motors() {}
     ~Motors() {}
 
-    void setup();
     void startup();
     void shutdown();
 

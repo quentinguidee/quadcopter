@@ -9,7 +9,7 @@ ToggleButton::ToggleButton(uint8_t pin) :
 {
 }
 
-void ToggleButton::setup()
+void ToggleButton::startup()
 {
     pinMode(pin, INPUT);
 }

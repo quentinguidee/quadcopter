@@ -19,26 +19,19 @@ Motor::~Motor()
 {
 }
 
-void Motor::setup()
+void Motor::startup()
 {
     esc.attach(pin, Settings::MIN_ESC_PULSE_WIDTH, Settings::MAX_ESC_PULSE_WIDTH);
     esc.write(0);
-    Log::info(String("MOTOR") + id, String("SETUP on pin ") + pin);
-    setStatus(Status::off);
-}
-
-void Motor::startup()
-{
-    setStatus(Status::on);
-    setSpeed(0);
     Log::info(String("MOTOR") + id, String("STARTUP on pin ") + pin);
+    setStatus(Status::ready);
 }
 
 void Motor::shutdown()
 {
-    setStatus(Status::off);
     setSpeed(0);
     Log::info(String("MOTOR") + id, String("SHUTDOWN on pin ") + pin);
+    setStatus(Status::off);
 }
 
 void Motor::tick()

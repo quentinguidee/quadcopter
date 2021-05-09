@@ -18,7 +18,7 @@ public:
     Leds() {}
     ~Leds() {}
 
-    void setup();
+    void startup();
 
     void enableSimMode();
 };

@@ -14,7 +14,7 @@ public:
     Led(uint8_t pin);
     ~Led() {}
 
-    void setup();
+    void startup();
 
     void on();
     void off();

@@ -26,27 +26,24 @@ Drone::~Drone()
 {
 }
 
-void Drone::setup()
+void Drone::armOnOffButton()
 {
-    onOffButton.setup();
-    simulatorLed.setup();
-
-    setStatus(Status::off);
-
-    motors.setup();
-    leds.setup();
-
-    Serial.println("START");
+    onOffButton.startup();
 }
 
 void Drone::startup()
 {
     setStatus(Status::inStartup);
-    accelerometer.startup();
+
+    simulatorLed.startup();
+    leds.startup();
     motors.startup();
+    accelerometer.startup();
     flightController.startup();
+
     timer = millis();
-    setStatus(Status::on);
+
+    setStatus(Status::ready);
 }
 
 void Drone::shutdown()

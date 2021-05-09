@@ -1,10 +1,10 @@
 #include "leds.h"
 
-void Leds::setup()
+void Leds::startup()
 {
     for (Led led : leds)
     {
-        led.setup();
+        led.startup();
         led.on();
     }
 }

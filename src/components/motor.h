@@ -12,10 +12,7 @@ public:
     enum Status
     {
         off,
-        inStartup,
-        on,
-        inShutdown,
-        failure
+        ready,
     };
 
 private:
@@ -30,7 +27,6 @@ public:
     Motor(uint8_t id, uint8_t pin);
     ~Motor();
 
-    void setup();
     void startup();
     void shutdown();
     void disarm();
