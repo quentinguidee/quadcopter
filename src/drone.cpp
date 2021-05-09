@@ -49,7 +49,10 @@ void Drone::startup()
 void Drone::shutdown()
 {
     setStatus(Status::inShutdown);
+
+    leds.shutdown();
     motors.shutdown();
+
     setStatus(Status::off);
 }
 

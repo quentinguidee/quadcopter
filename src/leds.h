@@ -19,6 +19,7 @@ public:
     ~Leds() {}
 
     void startup();
+    void shutdown();
 
     void enableSimMode();
 };

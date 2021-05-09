@@ -9,6 +9,14 @@ void Leds::startup()
     }
 }
 
+void Leds::shutdown()
+{
+    for (Led led : leds)
+    {
+        led.off();
+    }
+}
+
 void Leds::enableSimMode()
 {
     for (Led led : leds)
