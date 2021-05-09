@@ -21,6 +21,8 @@ public:
     void setup();
 
     void enableSimMode();
+
+    void test();
 };
 
 #endif /* LEDS_H */

@@ -17,3 +17,11 @@ void Leds::enableSimMode()
         led.on();
     }
 }
+
+void Leds::test()
+{
+    for (Led led : leds)
+    {
+        led.test();
+    }
+}

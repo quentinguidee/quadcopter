@@ -20,6 +20,8 @@ public:
     void off();
 
     void willEnableSimMode();
+
+    void test();
 };
 
 #endif /* LED_H */

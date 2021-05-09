@@ -63,6 +63,7 @@ void Drone::shutdown()
 
 void Drone::runTests()
 {
+    leds.test();
 }
 
 void Drone::tick()
