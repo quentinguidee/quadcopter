@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+#include "../utils/timer.h"
+
 class ToggleButton
 {
 private:
@@ -11,8 +13,8 @@ private:
     bool state;
     bool hasChanged;
 
-    unsigned long timer;
-    const int delay = 200;
+    Timer timer;
+    const int DELAY = 200;
 
 public:
     ToggleButton(uint8_t pin);
