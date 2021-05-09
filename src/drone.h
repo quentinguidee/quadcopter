@@ -57,8 +57,6 @@ public:
     void startup();
     void shutdown();
 
-    void runTests();
-
     void tick();
     void checkSecurity();
     void ping();

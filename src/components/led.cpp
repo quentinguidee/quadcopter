@@ -38,8 +38,3 @@ void Led::willEnableSimMode()
 {
     off();
 }
-
-void Led::test()
-{
-    // TODO: Test LED
-}

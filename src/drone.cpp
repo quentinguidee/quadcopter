@@ -47,11 +47,6 @@ void Drone::startup()
     flightController.startup();
     timer = millis();
     setStatus(Status::on);
-
-    if (Settings::RUN_TESTS_ON_STARTUP)
-    {
-        runTests();
-    }
 }
 
 void Drone::shutdown()
@@ -59,11 +54,6 @@ void Drone::shutdown()
     setStatus(Status::inShutdown);
     motors.shutdown();
     setStatus(Status::off);
-}
-
-void Drone::runTests()
-{
-    leds.test();
 }
 
 void Drone::tick()
