@@ -1,6 +1,7 @@
 #include "drone.h"
 
 #include "interface/interface.h"
+#include "interface/send.h"
 #include "interface/simulator.h"
 #include "utils/log.h"
 
@@ -44,6 +45,8 @@ void Drone::startup()
     timer = millis();
 
     setStatus(Status::ready);
+
+    Send::startupDone();
 }
 
 void Drone::shutdown()
@@ -54,6 +57,8 @@ void Drone::shutdown()
     motors.shutdown();
 
     setStatus(Status::off);
+
+    Send::shutdownDone();
 }
 
 void Drone::tick()

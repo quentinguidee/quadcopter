@@ -44,3 +44,6 @@ void Send::ledDisabled(uint8_t pin)
             break;
     }
 }
+
+void Send::shutdownDone() { message("D0"); }
+void Send::startupDone() { message("D1"); }
