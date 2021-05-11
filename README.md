@@ -40,4 +40,4 @@ make sim
 
 ## License
 
-This project is released under the [MIT license](https://github.com/quentinguidee/quadcopter/LICENSE.md).
+This project is released under the [MIT license](./LICENSE.md).
