@@ -1,5 +1,6 @@
 #include "led.h"
 
+#include "../interface/send.h"
 #include "../interface/simulator.h"
 #include "../utils/log.h"
 
@@ -23,7 +24,9 @@ void Led::on()
     }
 
     digitalWrite(pin, HIGH);
+
     Log::info(String("LED") + pin, "Turned on");
+    Send::ledEnabled(pin);
 }
 
 void Led::off()
@@ -35,7 +38,9 @@ void Led::off()
     }
 
     digitalWrite(pin, LOW);
+
     Log::info(String("LED") + pin, "Turned off");
+    Send::ledDisabled(pin);
 }
 
 void Led::willEnableSimMode()
