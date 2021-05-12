@@ -47,3 +47,18 @@ void Send::ledDisabled(uint8_t pin)
 
 void Send::shutdownDone() { message("D0"); }
 void Send::startupDone() { message("D1"); }
+
+void Send::motorStartup(uint8_t id)
+{
+    message("M" + String(id + 1) + "1");
+}
+
+void Send::motorShutdown(uint8_t id)
+{
+    message("M" + String(id + 1) + "0");
+}
+
+void Send::motorSpeedChanged(uint8_t id, uint16_t speed)
+{
+    message("M" + String(id + 1) + "S" + speed);
+}

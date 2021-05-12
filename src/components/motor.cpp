@@ -1,6 +1,7 @@
 #include "motor.h"
 
 #include "../drone.h"
+#include "../interface/send.h"
 #include "../interface/simulator.h"
 #include "../settings.h"
 #include "../utils/color.h"
@@ -23,14 +24,20 @@ void Motor::startup()
 {
     esc.attach(pin, Settings::MIN_ESC_PULSE_WIDTH, Settings::MAX_ESC_PULSE_WIDTH);
     esc.write(0);
+
     Log::info(String("MOTOR") + id, String("STARTUP on pin ") + pin);
+    Send::motorStartup(id);
+
     setStatus(Status::ready);
 }
 
 void Motor::shutdown()
 {
-    setSpeed(0);
     Log::info(String("MOTOR") + id, String("SHUTDOWN on pin ") + pin);
+    Send::motorShutdown(id);
+
+    setSpeed(0);
+
     setStatus(Status::off);
 }
 
@@ -48,18 +55,16 @@ void Motor::tick()
  */
 void Motor::setSpeed(uint16_t speed)
 {
+    uint16_t newSpeed = speed;
+
     if (speed < 0)
-    {
-        this->speed = 0;
-    }
+        newSpeed = 0;
     else if (speed > 180)
-    {
-        this->speed = 180;
-    }
-    else
-    {
-        this->speed = speed;
-    }
+        newSpeed = 180;
+
+    this->speed = newSpeed;
+
+    Send::motorSpeedChanged(id, newSpeed);
 }
 
 void Motor::setStatus(Status status)
