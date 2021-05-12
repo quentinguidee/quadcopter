@@ -23,7 +23,9 @@ Motor::~Motor()
 void Motor::startup()
 {
     esc.attach(pin, Settings::MIN_ESC_PULSE_WIDTH, Settings::MAX_ESC_PULSE_WIDTH);
-    esc.write(0);
+
+    setSpeed(25);
+    esc.write(speed);
 
     Log::info(String("MOTOR") + id, String("STARTUP on pin ") + pin);
     Send::motorStartup(id);
@@ -33,10 +35,11 @@ void Motor::startup()
 
 void Motor::shutdown()
 {
+    setSpeed(0);
+    esc.write(speed);
+
     Log::info(String("MOTOR") + id, String("SHUTDOWN on pin ") + pin);
     Send::motorShutdown(id);
-
-    setSpeed(0);
 
     setStatus(Status::off);
 }

@@ -119,39 +119,40 @@ void Drone::tick()
         accelerometer.tick();
         altimeter.tick();
         position.update();
-        flightController.tick(
-            position.getAngleX(),
-            position.getAngleY(),
-            position.getAngleZ(),
-            accelerometer.getAngleSpeedX(),
-            accelerometer.getAngleSpeedY(),
-            accelerometer.getAngleSpeedZ(),
-            altimeter.getZ());
 
-        float altitudeRate = flightController.getPIDAltitude().getOutput();
-        float angleRateX = flightController.getPIDAngleRateX().getOutput();
-        float angleRateY = flightController.getPIDAngleRateY().getOutput();
-        float angleRateZ = flightController.getPIDAngleRateZ().getOutput();
+        // flightController.tick(
+        //     position.getAngleX(),
+        //     position.getAngleY(),
+        //     position.getAngleZ(),
+        //     accelerometer.getAngleSpeedX(),
+        //     accelerometer.getAngleSpeedY(),
+        //     accelerometer.getAngleSpeedZ(),
+        //     altimeter.getZ());
 
-        float motorASpeed = 119 + altitudeRate /* + angleRateX - angleRateY + angleRateZ */;
-        float motorBSpeed = 119 + altitudeRate /* - angleRateX - angleRateY - angleRateZ */;
-        float motorCSpeed = 119 + altitudeRate /* + angleRateX + angleRateY - angleRateZ */;
-        float motorDSpeed = 119 + altitudeRate /* - angleRateX + angleRateY + angleRateZ */;
+        // float altitudeRate = flightController.getPIDAltitude().getOutput();
+        // float angleRateX = flightController.getPIDAngleRateX().getOutput();
+        // float angleRateY = flightController.getPIDAngleRateY().getOutput();
+        // float angleRateZ = flightController.getPIDAngleRateZ().getOutput();
 
-        motors.get(0).setSpeed(motorASpeed < 30 ? 30 : motorASpeed);
-        motors.get(1).setSpeed(motorBSpeed < 30 ? 30 : motorBSpeed);
-        motors.get(2).setSpeed(motorCSpeed < 30 ? 30 : motorCSpeed);
-        motors.get(3).setSpeed(motorDSpeed < 30 ? 30 : motorDSpeed);
+        // float motorASpeed = 119 + altitudeRate /* + angleRateX - angleRateY + angleRateZ */;
+        // float motorBSpeed = 119 + altitudeRate /* - angleRateX - angleRateY - angleRateZ */;
+        // float motorCSpeed = 119 + altitudeRate /* + angleRateX + angleRateY - angleRateZ */;
+        // float motorDSpeed = 119 + altitudeRate /* - angleRateX + angleRateY + angleRateZ */;
 
-        if (isInSimMode)
-        {
-            Simulator::sendMotorSpeed(
-                motors.get(0).getSpeed(),
-                motors.get(1).getSpeed(),
-                motors.get(2).getSpeed(),
-                motors.get(3).getSpeed(),
-                millis() - timer);
-        }
+        // motors.get(0).setSpeed(motorASpeed < 30 ? 30 : motorASpeed);
+        // motors.get(1).setSpeed(motorBSpeed < 30 ? 30 : motorBSpeed);
+        // motors.get(2).setSpeed(motorCSpeed < 30 ? 30 : motorCSpeed);
+        // motors.get(3).setSpeed(motorDSpeed < 30 ? 30 : motorDSpeed);
+
+        // if (isInSimMode)
+        // {
+        //     Simulator::sendMotorSpeed(
+        //         motors.get(0).getSpeed(),
+        //         motors.get(1).getSpeed(),
+        //         motors.get(2).getSpeed(),
+        //         motors.get(3).getSpeed(),
+        //         millis() - timer);
+        // }
 
         timer = millis();
         checkSecurity();
