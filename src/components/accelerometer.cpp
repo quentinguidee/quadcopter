@@ -3,6 +3,7 @@
 #include <RunningMedian.h>
 #include <Wire.h>
 
+#include "../interface/send.h"
 #include "../utils/log.h"
 
 void Accelerometer::startup()
@@ -14,6 +15,7 @@ void Accelerometer::startup()
     }
 
     Log::info("ACCELEROMETER", "Startup");
+    Send::accelerometerStartup();
 
     Wire.begin();
     sensor.setWire(&Wire);
@@ -116,6 +118,7 @@ void Accelerometer::calibrate()
     // sensor.magYOffset = -(MAG_Y_MAX + MAG_Y_MIN) / 2;
 
     Log::info("ACCELEROMETER", "Calibration finished");
+    Send::accelerometerCalibrated();
 }
 
 void Accelerometer::willEnableSimMode()

@@ -62,3 +62,13 @@ void Send::motorSpeedChanged(uint8_t id, uint16_t speed)
 {
     message("M" + String(id + 1) + "S" + speed);
 }
+
+void Send::accelerometerStartup()
+{
+    message("A1");
+}
+
+void Send::accelerometerCalibrated()
+{
+    message("A2");
+}

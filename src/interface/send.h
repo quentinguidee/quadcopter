@@ -17,6 +17,9 @@ void motorStartup(uint8_t id);
 void motorShutdown(uint8_t id);
 void motorSpeedChanged(uint8_t id, uint16_t speed);
 
+void accelerometerStartup();
+void accelerometerCalibrated();
+
 };  // namespace Send
 
 #endif /* SEND_H */
