@@ -1,10 +1,13 @@
 #include "position.h"
 
+#include "interface/send.h"
+
 Position::Position(Accelerometer& sensor) :
     sensor(sensor),
     angleX(0),
     angleY(0),
     angleZ(0),
+    x(0), y(0), z(0),
     timer(0)
 {
 }
@@ -20,4 +23,7 @@ void Position::update()
         angleZ += sensor.getAngleSpeedZ() * deltaTime;
     }
     timer = now;
+
+    Send::positionTelemetry(getX(), getY(), getZ());
+    Send::angleTelemetry(getAngleX(), getAngleY(), getAngleZ());
 }

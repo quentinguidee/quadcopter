@@ -20,6 +20,9 @@ void motorSpeedChanged(uint8_t id, uint16_t speed);
 void accelerometerStartup();
 void accelerometerCalibrated();
 
+void positionTelemetry(float x, float y, float z);
+void angleTelemetry(float x, float y, float z);
+
 };  // namespace Send
 
 #endif /* SEND_H */

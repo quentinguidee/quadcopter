@@ -72,3 +72,13 @@ void Send::accelerometerCalibrated()
 {
     message("A2");
 }
+
+void Send::positionTelemetry(float x, float y, float z)
+{
+    message((String) "APX" + x + "Y" + y + "Z" + z);
+}
+
+void Send::angleTelemetry(float x, float y, float z)
+{
+    message((String) "AAX" + x + "Y" + y + "Z" + z);
+}
