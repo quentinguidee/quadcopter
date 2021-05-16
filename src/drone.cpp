@@ -16,8 +16,7 @@ Drone::Drone() :
     status(Status::off),
     serialResponseBuffer(""),
     lastPingTimestamp(0),
-    lastTrackingSending(0),
-    simulatorLed(Led(Settings::LED_SIMULATOR_PIN))
+    lastTrackingSending(0)
 {
     Interface::setup(this);
 }
@@ -37,7 +36,6 @@ void Drone::startup()
 {
     setStatus(Status::inStartup);
 
-    simulatorLed.startup();
     leds.startup();
     motors.startup();
     flightController.startup();

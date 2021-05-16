@@ -69,12 +69,6 @@ constexpr uint8_t LED_MOTOR_C_PIN = 42;
  */
 constexpr uint8_t LED_MOTOR_D_PIN = 43;
 
-/**
- * LED Simulator mode Pin
- * Pin type: D
- */
-constexpr uint8_t LED_SIMULATOR_PIN = 51;
-
 ////////////////////
 // === BUTTON === //
 ////////////////////

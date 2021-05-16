@@ -29,7 +29,6 @@ private:
     Motors motors;
     Leds leds;
 
-    Led simulatorLed;
     Accelerometer accelerometer;
     Altimeter altimeter;
     ToggleButton onOffButton;
