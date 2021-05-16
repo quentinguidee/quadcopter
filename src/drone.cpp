@@ -61,7 +61,6 @@ void Drone::shutdown()
 
 void Drone::tick()
 {
-    // SAFE
     int readCount = 0;
     while (Serial.available())
     {
@@ -99,7 +98,6 @@ void Drone::tick()
     {
         onOffButton.isOn() ? startup() : shutdown();
     }
-    // END SAFE
 
     if (onOffButton.isOn())
     {
