@@ -11,15 +11,7 @@ Altimeter::Altimeter() :
 
 void Altimeter::tick()
 {
-    if (isSimulated())
-    {
-    }
-    else
-    {
-        z = 0;
-        rateZ = 0;
-    }
-
+    z = 0;
     computeRateZ();
     timer = millis();
 }

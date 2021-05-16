@@ -76,10 +76,6 @@ void Interface::execute(String code)
             Interface::ping();
         }
     }
-    else if (category == 'S')
-    {
-        Interface::enableSimulatorMode();
-    }
     else if (category == 'T')
     {
         char action = code[2];
@@ -198,11 +194,6 @@ void Interface::turnOnMotor(uint8_t motor)
 void Interface::turnOffMotor(uint8_t motor)
 {
     drone->getMotors().get(motor).shutdown();
-}
-
-void Interface::enableSimulatorMode()
-{
-    drone->enableSimulatorMode();
 }
 
 void Interface::startMotorsTest()

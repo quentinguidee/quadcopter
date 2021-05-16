@@ -33,16 +33,6 @@ make upload TARGET=esp8266
 
 ![flow](https://user-images.githubusercontent.com/12123721/117688496-1ab3f700-b1b9-11eb-81f0-71072ee6884c.png)
 
-## Simulator
-
-The simulator will simulate a 3D environment for the drone to move. The drone must be turned on and plugged in for the simulator to work, because he remains in charge of the calculations. The simulator takes care of the 3D environment and makes him believe that he's moving in this space while recovering his telemetry.
-
-To run the simulator, install `processing-java`. Then:
-
-```bash
-make sim
-```
-
 ## License
 
 This project is released under the [MIT license](./LICENSE.md).

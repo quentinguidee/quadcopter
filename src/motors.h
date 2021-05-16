@@ -25,8 +25,6 @@ public:
 
     void tick();
 
-    void enableSimMode();
-
     Motor& get(uint8_t i);
 };
 

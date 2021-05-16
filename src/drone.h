@@ -44,9 +44,6 @@ private:
 
     unsigned long lastPingTimestamp;
     unsigned long lastTrackingSending;
-    unsigned long timer;
-
-    bool isInSimMode = false;
 
     bool onSerialRead(char character, String& buffer);
 
@@ -77,8 +74,6 @@ public:
     bool isInStartup() { return status == Status::inStartup; }
     bool isOff() { return status == Status::off; }
     bool isShutdown() { return status == Status::inShutdown; }
-
-    void enableSimulatorMode();
 };
 
 #endif /* DRONE_H */

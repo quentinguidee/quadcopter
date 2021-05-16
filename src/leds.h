@@ -20,8 +20,6 @@ public:
 
     void startup();
     void shutdown();
-
-    void enableSimMode();
 };
 
 #endif /* LEDS_H */

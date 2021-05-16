@@ -1,7 +1,6 @@
 #include "led.h"
 
 #include "../interface/send.h"
-#include "../interface/simulator.h"
 #include "../utils/log.h"
 
 Led::Led(uint8_t pin) :
@@ -17,12 +16,6 @@ void Led::startup()
 
 void Led::on()
 {
-    if (isSimulated())
-    {
-        Simulator::enableLed(pin);
-        return;
-    }
-
     digitalWrite(pin, HIGH);
 
     Log::info(String("LED") + pin, "Turned on");
@@ -31,19 +24,8 @@ void Led::on()
 
 void Led::off()
 {
-    if (isSimulated())
-    {
-        Simulator::disableLed(pin);
-        return;
-    }
-
     digitalWrite(pin, LOW);
 
     Log::info(String("LED") + pin, "Turned off");
     Send::ledDisabled(pin);
-}
-
-void Led::willEnableSimMode()
-{
-    off();
 }

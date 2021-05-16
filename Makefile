@@ -35,6 +35,3 @@ install:
 
 upload:
 	${ARDUINO_CLI} -b ${BOARD} -p ${PORT} upload ${FILE}
-
-sim:
-	processing-java --sketch=$(PWD)/simulator --run

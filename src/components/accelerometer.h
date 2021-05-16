@@ -66,8 +66,6 @@ public:
     float getMagneticFieldZ() { return magneticFieldZ; }
     float getHorizonDirection() { return horizonDirection; }
 
-    void willEnableSimMode();
-
     void forceSetAccelerationX(float accelerationX) { this->accelerationX = accelerationX; }
     void forceSetAccelerationY(float accelerationY) { this->accelerationY = accelerationY; }
     void forceSetAccelerationZ(float accelerationZ) { this->accelerationZ = accelerationZ; }

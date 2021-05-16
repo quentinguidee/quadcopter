@@ -8,12 +8,6 @@
 
 void Accelerometer::startup()
 {
-    if (isSimulated())
-    {
-        delay(500);
-        return;
-    }
-
     Log::info("ACCELEROMETER", "Startup");
     Send::accelerometerStartup();
 
@@ -29,12 +23,6 @@ void Accelerometer::startup()
 
 void Accelerometer::tick()
 {
-    if (isSimulated())
-    {
-        updateAnglesFromAccelerations();
-        return;
-    }
-
     updateAccelerations();
     updateAngles();
     updateAnglesFromAccelerations();
@@ -119,23 +107,4 @@ void Accelerometer::calibrate()
 
     Log::info("ACCELEROMETER", "Calibration finished");
     Send::accelerometerCalibrated();
-}
-
-void Accelerometer::willEnableSimMode()
-{
-    accelerationX = 0;
-    accelerationY = 0;
-    accelerationZ = -1;
-
-    angleSpeedX = 0;
-    angleSpeedY = 0;
-    angleSpeedZ = 0;
-
-    accelerationXoffset = 0;
-    accelerationYoffset = 0;
-    accelerationZoffset = 1;
-
-    angleSpeedXoffset = 0;
-    angleSpeedYoffset = 0;
-    angleSpeedZoffset = 0;
 }

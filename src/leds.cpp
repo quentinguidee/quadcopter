@@ -16,12 +16,3 @@ void Leds::shutdown()
         led.off();
     }
 }
-
-void Leds::enableSimMode()
-{
-    for (Led led : leds)
-    {
-        led.enableSimMode();
-        led.on();
-    }
-}

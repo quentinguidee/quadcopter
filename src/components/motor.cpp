@@ -4,7 +4,6 @@
 
 #include "../drone.h"
 #include "../interface/send.h"
-#include "../interface/simulator.h"
 #include "../settings.h"
 #include "../utils/color.h"
 #include "../utils/log.h"
@@ -54,11 +53,8 @@ void Motor::shutdown()
 
 void Motor::tick()
 {
-    if (!isSimulated())
-    {
-        esc.write(speed);
-        // Log::info(String("MOTOR") + id, String(esc.readMicroseconds()) + " read on pin " + String(pin));
-    }
+    esc.write(speed);
+    // Log::info(String("MOTOR") + id, String(esc.readMicroseconds()) + " read on pin " + String(pin));
 }
 
 /**
@@ -81,12 +77,4 @@ void Motor::setSpeed(uint16_t speed)
 void Motor::setStatus(Status status)
 {
     this->status = status;
-}
-
-void Motor::willEnableSimMode()
-{
-    esc.write(0);
-    esc.detach();
-    Log::info(String("MOTOR") + id, String("Disarmed on pin ") + pin);
-    setStatus(Status::off);
 }

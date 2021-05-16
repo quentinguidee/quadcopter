@@ -2,7 +2,6 @@
 
 #include "interface/interface.h"
 #include "interface/send.h"
-#include "interface/simulator.h"
 #include "utils/log.h"
 #include "utils/vector4.h"
 
@@ -18,7 +17,6 @@ Drone::Drone() :
     serialResponseBuffer(""),
     lastPingTimestamp(0),
     lastTrackingSending(0),
-    timer(millis()),
     simulatorLed(Led(Settings::LED_SIMULATOR_PIN))
 {
     Interface::setup(this);
@@ -43,8 +41,6 @@ void Drone::startup()
     leds.startup();
     motors.startup();
     flightController.startup();
-
-    timer = millis();
 
     setStatus(Status::ready);
 
@@ -113,10 +109,6 @@ void Drone::tick()
         //     // D/E/F = anglesSpeed
         //     // G/H/I = angles
         //     Serial1.println(String("@A") + accelerometer.getAccelerationX() + "B" + accelerometer.getAccelerationY() + "C" + accelerometer.getAccelerationZ() + "D" + accelerometer.getAngleSpeedX() + "E" + accelerometer.getAngleSpeedY() + "F" + accelerometer.getAngleSpeedZ() + "G" + position.getAngleX() + "H" + position.getAngleY() + "I" + position.getAngleZ());
-        //     if (isInSimMode)
-        //     {
-        //         Simulator::send(String("#A") + accelerometer.getAccelerationX() + "B" + accelerometer.getAccelerationY() + "C" + accelerometer.getAccelerationZ() + "D" + accelerometer.getAngleSpeedX() + "E" + accelerometer.getAngleSpeedY() + "F" + accelerometer.getAngleSpeedZ() + "G" + position.getAngleX() + "H" + position.getAngleY() + "I" + position.getAngleZ());
-        //     }
         //     lastTrackingSending = millis();
         // }
 
@@ -138,17 +130,6 @@ void Drone::tick()
         motors.get(2).setSpeed(motorsSpeeds.c);
         motors.get(3).setSpeed(motorsSpeeds.d);
 
-        // if (isInSimMode)
-        // {
-        //     Simulator::sendMotorSpeed(
-        //         motors.get(0).getSpeed(),
-        //         motors.get(1).getSpeed(),
-        //         motors.get(2).getSpeed(),
-        //         motors.get(3).getSpeed(),
-        //         millis() - timer);
-        // }
-
-        timer = millis();
         checkSecurity();
         motors.tick();
     }
@@ -168,25 +149,6 @@ void Drone::ping()
 void Drone::setStatus(Status status)
 {
     this->status = status;
-}
-
-void Drone::enableSimulatorMode()
-{
-    if (status != off)
-    {
-        // Cannot enable sim mode during flight.
-        return;
-    }
-
-    isInSimMode = true;
-    simulatorLed.on();
-
-    accelerometer.enableSimMode();
-    altimeter.enableSimMode();
-    motors.enableSimMode();
-    leds.enableSimMode();
-
-    Simulator::callbackSimModeEnabled();
 }
 
 bool Drone::onSerialRead(char character, String& buffer)

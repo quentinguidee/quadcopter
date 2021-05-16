@@ -38,8 +38,6 @@ public:
 
     void setStatus(Status status);
     Status getStatus() { return status; }
-
-    void willEnableSimMode();
 };
 
 #endif /* MOTOR_H */

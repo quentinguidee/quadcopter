@@ -47,14 +47,6 @@ void Motors::tick()
     }
 }
 
-void Motors::enableSimMode()
-{
-    for (size_t i = 0; i < 4; i++)
-    {
-        motors[i].enableSimMode();
-    }
-}
-
 Motor& Motors::get(uint8_t i)
 {
     return motors[i];

@@ -36,8 +36,6 @@ public:
 
     static void turnOnMotor(uint8_t motor);
     static void turnOffMotor(uint8_t motor);
-
-    static void enableSimulatorMode();
 };
 
 #endif /* INTERFACE_H */
