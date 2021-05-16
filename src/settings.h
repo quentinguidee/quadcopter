@@ -34,12 +34,12 @@ constexpr uint8_t ESC_MOTOR_D_PIN = 5;
 /**
  * Pulse width corresponding to 0°
  */
-constexpr int16_t MIN_ESC_PULSE_WIDTH = 1000;
+constexpr uint16_t MIN_ESC_PULSE_WIDTH = 1000;
 
 /**
  * Pulse width corresponding to 180°
  */
-constexpr int16_t MAX_ESC_PULSE_WIDTH = 2000;
+constexpr uint16_t MAX_ESC_PULSE_WIDTH = 2000;
 
 /////////////////
 // === LED === //

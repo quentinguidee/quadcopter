@@ -8,10 +8,10 @@ class Leds
 {
 private:
     Led leds[4] = {
-        Led((uint8_t)Settings::LED_MOTOR_A_PIN),
-        Led((uint8_t)Settings::LED_MOTOR_B_PIN),
-        Led((uint8_t)Settings::LED_MOTOR_C_PIN),
-        Led((uint8_t)Settings::LED_MOTOR_D_PIN),
+        Led(Settings::LED_MOTOR_A_PIN),
+        Led(Settings::LED_MOTOR_B_PIN),
+        Led(Settings::LED_MOTOR_C_PIN),
+        Led(Settings::LED_MOTOR_D_PIN),
     };
 
 public:

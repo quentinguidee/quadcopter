@@ -3,21 +3,23 @@
 
 #include "components/motor.h"
 #include "settings.h"
+#include "utils/vector4.h"
 
 class Motors
 {
 private:
     Motor motors[4] = {
-        Motor(0, (uint8_t)Settings::ESC_MOTOR_A_PIN),
-        Motor(1, (uint8_t)Settings::ESC_MOTOR_B_PIN),
-        Motor(2, (uint8_t)Settings::ESC_MOTOR_C_PIN),
-        Motor(3, (uint8_t)Settings::ESC_MOTOR_D_PIN),
+        Motor(0, Settings::ESC_MOTOR_A_PIN),
+        Motor(1, Settings::ESC_MOTOR_B_PIN),
+        Motor(2, Settings::ESC_MOTOR_C_PIN),
+        Motor(3, Settings::ESC_MOTOR_D_PIN),
     };
 
 public:
     Motors() {}
     ~Motors() {}
 
+    void setup();
     void startup();
     void shutdown();
 

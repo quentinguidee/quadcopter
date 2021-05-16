@@ -29,6 +29,9 @@ public:
     static void turnOff();
     static void liftOff();
     static void land();
+    static void startMotorsTest();
+    static void stopMotorsTest();
+
     static void ping();
 
     static void turnOnMotor(uint8_t motor);

@@ -54,8 +54,7 @@ public:
     Drone();
     ~Drone();
 
-    void armOnOffButton();
-
+    void setup();
     void startup();
     void shutdown();
 

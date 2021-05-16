@@ -4,9 +4,18 @@
 #include <Arduino.h>
 
 #include "utils/pid.h"
+#include "utils/vector4.h"
 
 class FlightController
 {
+public:
+    enum FlightModel
+    {
+        disabled,
+        normal,
+        motorsTest,
+    };
+
 private:
     PID pidAngleX, pidAngleY, pidAngleZ;
     PID pidAngleRateX, pidAngleRateY, pidAngleRateZ;
@@ -15,12 +24,16 @@ private:
 
     float desiredX, desiredY, desiredZ, desiredR;
 
+    FlightModel flightModel;
+
 public:
     FlightController();
     ~FlightController() {}
 
     void startup();
-    void tick(
+
+    /// Returns the motors speeds
+    Vector4<uint16_t> tick(
         float angleX,
         float angleY,
         float angleZ,
@@ -35,6 +48,13 @@ public:
     void setDesiredY(float value) { desiredY = value; }
     void setDesiredZ(float value) { desiredZ = value; }
     void setDesiredR(float value) { desiredR = value; }
+
+    void emergencyStop();
+
+    void configureForNormalFlight();
+    void configureForMotorsTest();
+
+    void stopMotorsTest();
 
     PID& getPIDAngleX() { return pidAngleX; }
     PID& getPIDAngleY() { return pidAngleY; }

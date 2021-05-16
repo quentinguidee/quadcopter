@@ -1,5 +1,7 @@
 #include "motor.h"
 
+#include <Servo.h>
+
 #include "../drone.h"
 #include "../interface/send.h"
 #include "../interface/simulator.h"
@@ -20,11 +22,17 @@ Motor::~Motor()
 {
 }
 
+void Motor::setup()
+{
+    esc.attach(pin, 1000, 2000);
+    esc.write(0);
+
+    Log::info(String("MOTOR") + id, String("Setup on pin ") + pin);
+}
+
 void Motor::startup()
 {
-    esc.attach(pin, Settings::MIN_ESC_PULSE_WIDTH, Settings::MAX_ESC_PULSE_WIDTH);
-
-    setSpeed(25);
+    setSpeed(0);
     esc.write(speed);
 
     Log::info(String("MOTOR") + id, String("STARTUP on pin ") + pin);
@@ -49,7 +57,7 @@ void Motor::tick()
     if (!isSimulated())
     {
         esc.write(speed);
-        // Log::info(String("MOTOR") + id, String(esc.read()) + " read on pin " + String(pin));
+        // Log::info(String("MOTOR") + id, String(esc.readMicroseconds()) + " read on pin " + String(pin));
     }
 }
 

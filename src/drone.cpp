@@ -4,13 +4,14 @@
 #include "interface/send.h"
 #include "interface/simulator.h"
 #include "utils/log.h"
+#include "utils/vector4.h"
 
 Drone::Drone() :
     motors(Motors()),
     leds(Leds()),
     accelerometer(Accelerometer()),
     altimeter(Altimeter()),
-    onOffButton(ToggleButton((uint8_t)Settings::POWER_TOGGLE_BUTTON_PIN)),
+    onOffButton(ToggleButton(Settings::POWER_TOGGLE_BUTTON_PIN)),
     position(Position(accelerometer)),
     flightController(FlightController()),
     status(Status::off),
@@ -18,7 +19,7 @@ Drone::Drone() :
     lastPingTimestamp(0),
     lastTrackingSending(0),
     timer(millis()),
-    simulatorLed(Led((uint8_t)Settings::LED_SIMULATOR_PIN))
+    simulatorLed(Led(Settings::LED_SIMULATOR_PIN))
 {
     Interface::setup(this);
 }
@@ -27,8 +28,10 @@ Drone::~Drone()
 {
 }
 
-void Drone::armOnOffButton()
+void Drone::setup()
 {
+    accelerometer.startup();
+    motors.setup();
     onOffButton.startup();
 }
 
@@ -39,7 +42,6 @@ void Drone::startup()
     simulatorLed.startup();
     leds.startup();
     motors.startup();
-    accelerometer.startup();
     flightController.startup();
 
     timer = millis();
@@ -63,6 +65,7 @@ void Drone::shutdown()
 
 void Drone::tick()
 {
+    // SAFE
     int readCount = 0;
     while (Serial.available())
     {
@@ -100,49 +103,40 @@ void Drone::tick()
     {
         onOffButton.isOn() ? startup() : shutdown();
     }
+    // END SAFE
 
     if (onOffButton.isOn())
     {
-        if (millis() - lastTrackingSending > 200)
-        {
-            // A/B/C = accelerations
-            // D/E/F = anglesSpeed
-            // G/H/I = angles
-            Serial1.println(String("@A") + accelerometer.getAccelerationX() + "B" + accelerometer.getAccelerationY() + "C" + accelerometer.getAccelerationZ() + "D" + accelerometer.getAngleSpeedX() + "E" + accelerometer.getAngleSpeedY() + "F" + accelerometer.getAngleSpeedZ() + "G" + position.getAngleX() + "H" + position.getAngleY() + "I" + position.getAngleZ());
-            if (isInSimMode)
-            {
-                Simulator::send(String("#A") + accelerometer.getAccelerationX() + "B" + accelerometer.getAccelerationY() + "C" + accelerometer.getAccelerationZ() + "D" + accelerometer.getAngleSpeedX() + "E" + accelerometer.getAngleSpeedY() + "F" + accelerometer.getAngleSpeedZ() + "G" + position.getAngleX() + "H" + position.getAngleY() + "I" + position.getAngleZ());
-            }
-            lastTrackingSending = millis();
-        }
+        // if (millis() - lastTrackingSending > 200)
+        // {
+        //     // A/B/C = accelerations
+        //     // D/E/F = anglesSpeed
+        //     // G/H/I = angles
+        //     Serial1.println(String("@A") + accelerometer.getAccelerationX() + "B" + accelerometer.getAccelerationY() + "C" + accelerometer.getAccelerationZ() + "D" + accelerometer.getAngleSpeedX() + "E" + accelerometer.getAngleSpeedY() + "F" + accelerometer.getAngleSpeedZ() + "G" + position.getAngleX() + "H" + position.getAngleY() + "I" + position.getAngleZ());
+        //     if (isInSimMode)
+        //     {
+        //         Simulator::send(String("#A") + accelerometer.getAccelerationX() + "B" + accelerometer.getAccelerationY() + "C" + accelerometer.getAccelerationZ() + "D" + accelerometer.getAngleSpeedX() + "E" + accelerometer.getAngleSpeedY() + "F" + accelerometer.getAngleSpeedZ() + "G" + position.getAngleX() + "H" + position.getAngleY() + "I" + position.getAngleZ());
+        //     }
+        //     lastTrackingSending = millis();
+        // }
 
         accelerometer.tick();
         altimeter.tick();
         position.update();
 
-        // flightController.tick(
-        //     position.getAngleX(),
-        //     position.getAngleY(),
-        //     position.getAngleZ(),
-        //     accelerometer.getAngleSpeedX(),
-        //     accelerometer.getAngleSpeedY(),
-        //     accelerometer.getAngleSpeedZ(),
-        //     altimeter.getZ());
+        Vector4<uint16_t> motorsSpeeds = flightController.tick(
+            position.getAngleX(),
+            position.getAngleY(),
+            position.getAngleZ(),
+            accelerometer.getAngleSpeedX(),
+            accelerometer.getAngleSpeedY(),
+            accelerometer.getAngleSpeedZ(),
+            altimeter.getZ());
 
-        // float altitudeRate = flightController.getPIDAltitude().getOutput();
-        // float angleRateX = flightController.getPIDAngleRateX().getOutput();
-        // float angleRateY = flightController.getPIDAngleRateY().getOutput();
-        // float angleRateZ = flightController.getPIDAngleRateZ().getOutput();
-
-        // float motorASpeed = 119 + altitudeRate /* + angleRateX - angleRateY + angleRateZ */;
-        // float motorBSpeed = 119 + altitudeRate /* - angleRateX - angleRateY - angleRateZ */;
-        // float motorCSpeed = 119 + altitudeRate /* + angleRateX + angleRateY - angleRateZ */;
-        // float motorDSpeed = 119 + altitudeRate /* - angleRateX + angleRateY + angleRateZ */;
-
-        // motors.get(0).setSpeed(motorASpeed < 30 ? 30 : motorASpeed);
-        // motors.get(1).setSpeed(motorBSpeed < 30 ? 30 : motorBSpeed);
-        // motors.get(2).setSpeed(motorCSpeed < 30 ? 30 : motorCSpeed);
-        // motors.get(3).setSpeed(motorDSpeed < 30 ? 30 : motorDSpeed);
+        motors.get(0).setSpeed(motorsSpeeds.a);
+        motors.get(1).setSpeed(motorsSpeeds.b);
+        motors.get(2).setSpeed(motorsSpeeds.c);
+        motors.get(3).setSpeed(motorsSpeeds.d);
 
         // if (isInSimMode)
         // {
@@ -156,10 +150,10 @@ void Drone::tick()
 
         timer = millis();
         checkSecurity();
+        motors.tick();
     }
 
     onOffButton.tick();
-    motors.tick();
 }
 
 void Drone::checkSecurity()

@@ -48,6 +48,9 @@ void Send::ledDisabled(uint8_t pin)
 void Send::shutdownDone() { message("D0"); }
 void Send::startupDone() { message("D1"); }
 
+void Send::startTestMotors() { message("D4"); }
+void Send::stopTestMotors() { message("D5"); }
+
 void Send::motorStartup(uint8_t id)
 {
     message("M" + String(id + 1) + "1");

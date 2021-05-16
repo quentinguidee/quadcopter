@@ -46,6 +46,14 @@ void Interface::execute(String code)
         {
             Interface::land();
         }
+        else if (action == '4')
+        {
+            Interface::startMotorsTest();
+        }
+        else if (action == '5')
+        {
+            Interface::stopMotorsTest();
+        }
     }
     else if (category == 'M')
     {
@@ -195,4 +203,14 @@ void Interface::turnOffMotor(uint8_t motor)
 void Interface::enableSimulatorMode()
 {
     drone->enableSimulatorMode();
+}
+
+void Interface::startMotorsTest()
+{
+    drone->getFlightController().configureForMotorsTest();
+}
+
+void Interface::stopMotorsTest()
+{
+    drone->getFlightController().stopMotorsTest();
 }

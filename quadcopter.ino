@@ -10,7 +10,7 @@ void setup()
     Serial.begin(38400);
     Serial1.begin(38400);
 
-    drone->armOnOffButton();
+    drone->setup();
 }
 
 void loop()

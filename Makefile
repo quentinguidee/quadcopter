@@ -13,7 +13,7 @@ endif
 
 ifeq ($(TARGET), arduino)
 BOARD=arduino:avr:mega:cpu=atmega2560
-FILE=dronez.ino
+FILE=quadcopter.ino
 else
 BOARD=esp8266:esp8266:generic
 FILE=esp8266/esp8266.ino

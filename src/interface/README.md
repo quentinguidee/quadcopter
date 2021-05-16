@@ -15,12 +15,14 @@ Format: `CXYZR`
 
 #### Drone
 
-| Status | Format | Name     |
-| ------ | ------ | -------- |
-| DONE   | D0     | Turn off |
-| DONE   | D1     | Turn on  |
-| DONE   | D2     | Lift off |
-| TODO   | D3     | Land     |
+| Status | Format | Name                               |
+| ------ | ------ | ---------------------------------- |
+| DONE   | D0     | Turn off                           |
+| DONE   | D1     | Turn on                            |
+| DONE   | D2     | Lift off                           |
+| TODO   | D3     | Land                               |
+| DONE   | D4     | Start motors test (all, low speed) |
+| DONE   | D5     | Stop motors test                   |
 
 #### Wifi
 
