@@ -55,7 +55,10 @@ public:
     void shutdown();
 
     void tick();
+
+    void readSerials();
     void checkSecurity();
+    void handleOnOffButtonStateChanged();
     void ping();
 
     Motors& getMotors() { return motors; }

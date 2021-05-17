@@ -15,6 +15,7 @@ Drone::Drone() :
     flightController(FlightController()),
     status(Status::off),
     serialResponseBuffer(""),
+    serial1ResponseBuffer(""),
     lastPingTimestamp(0),
     lastTrackingSending(0)
 {
@@ -61,43 +62,9 @@ void Drone::shutdown()
 
 void Drone::tick()
 {
-    int readCount = 0;
-    while (Serial.available())
-    {
-        bool endOfCommand = onSerialRead(Serial.read(), serialResponseBuffer);
-        if (endOfCommand)
-        {
-            readCount++;
-            if (readCount > 10) break;
-        }
-    }
-
-    readCount = 0;
-    while (Serial1.available())
-    {
-        bool endOfCommand = onSerialRead(Serial1.read(), serial1ResponseBuffer);
-        if (endOfCommand)
-        {
-            readCount++;
-            if (readCount > 10) break;
-        };
-    }
-
-    /*
-    if (millis() - lastPingTimestamp > 2000)
-    {
-        // TODO: HANDLE WIFI DISCONNECTED - SECURITY MODE
-    }
-    else
-    {
-        // WIFI CONNECTED
-    }
-    */
-
-    if (onOffButton.getHasChanged())
-    {
-        onOffButton.isOn() ? startup() : shutdown();
-    }
+    readSerials();
+    checkSecurity();
+    handleOnOffButtonStateChanged();
 
     if (onOffButton.isOn())
     {
@@ -128,15 +95,53 @@ void Drone::tick()
         motors.get(2).setSpeed(motorsSpeeds.c);
         motors.get(3).setSpeed(motorsSpeeds.d);
 
-        checkSecurity();
         motors.tick();
     }
 
     onOffButton.tick();
 }
 
+void Drone::readSerials()
+{
+    int readCount = 0;
+    while (Serial.available())
+    {
+        bool endOfCommand = onSerialRead(Serial.read(), serialResponseBuffer);
+        if (endOfCommand)
+        {
+            readCount++;
+            if (readCount > 10) break;
+        }
+    }
+
+    readCount = 0;
+    while (Serial1.available())
+    {
+        bool endOfCommand = onSerialRead(Serial1.read(), serial1ResponseBuffer);
+        if (endOfCommand)
+        {
+            readCount++;
+            if (readCount > 10) break;
+        };
+    }
+}
+
 void Drone::checkSecurity()
 {
+    /*
+    if (millis() - lastPingTimestamp > 2000)
+    {
+        // TODO: HANDLE WIFI DISCONNECTED - SECURITY MODE
+    }
+    */
+}
+
+void Drone::handleOnOffButtonStateChanged()
+{
+    if (onOffButton.getHasChanged())
+    {
+        onOffButton.isOn() ? startup() : shutdown();
+    }
 }
 
 void Drone::ping()
