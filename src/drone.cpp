@@ -30,7 +30,16 @@ void Drone::setup()
 {
     accelerometer.startup();
     motors.setup();
+
+    if (!motors.healthy())
+    {
+        Send::failedToSetup();
+        return;
+    }
+
     onOffButton.startup();
+
+    Send::setupDone();
 }
 
 void Drone::startup()

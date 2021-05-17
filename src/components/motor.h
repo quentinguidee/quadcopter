@@ -28,8 +28,13 @@ public:
     ~Motor();
 
     void setup();
+
     void startup();
     void shutdown();
+
+    void detach();
+
+    bool healthy();
 
     void tick();
 

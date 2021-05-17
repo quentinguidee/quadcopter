@@ -9,15 +9,18 @@ void message(String message);
 
 void shutdownDone();
 void startupDone();
-
 void startTestMotors();
 void stopTestMotors();
+void failedToSetup();
+void setupDone();
 
 void ledEnabled(uint8_t pin);
 void ledDisabled(uint8_t pin);
 
+void motorSetup(uint8_t id);
 void motorStartup(uint8_t id);
 void motorShutdown(uint8_t id);
+void motorFailedToSetup(uint8_t id);
 void motorSpeedChanged(uint8_t id, uint16_t speed);
 
 void accelerometerStartup();

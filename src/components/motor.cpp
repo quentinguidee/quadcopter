@@ -26,6 +26,7 @@ void Motor::setup()
     esc.attach(pin, 1000, 2000);
     esc.write(0);
 
+    Send::motorSetup(id);
     Log::info(String("MOTOR") + id, String("Setup on pin ") + pin);
 }
 
@@ -49,6 +50,23 @@ void Motor::shutdown()
     Send::motorShutdown(id);
 
     setStatus(Status::off);
+}
+
+void Motor::detach()
+{
+    esc.detach();
+    Log::info(String("MOTOR") + id, "Motor detached");
+}
+
+bool Motor::healthy()
+{
+    if (esc.readMicroseconds() != 1000)
+    {
+        Send::motorFailedToSetup(id);
+        Log::info(String("MOTOR") + id, String("Motor failed to start on pin ") + pin);
+        return false;
+    }
+    return true;
 }
 
 void Motor::tick()

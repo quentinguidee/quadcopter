@@ -39,6 +39,25 @@ void Motors::shutdown()
     }
 }
 
+void Motors::detach()
+{
+    for (size_t i = 0; i < MOTORS_COUNT; i++)
+    {
+        motors[i].detach();
+    }
+}
+
+bool Motors::healthy()
+{
+    bool allHealthy = true;
+    for (size_t i = 0; i < MOTORS_COUNT; i++)
+    {
+        bool healthy = motors[i].healthy();
+        if (!healthy) allHealthy = false;
+    }
+    return allHealthy;
+}
+
 void Motors::tick()
 {
     for (size_t i = 0; i < MOTORS_COUNT; i++)

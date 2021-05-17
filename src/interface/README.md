@@ -32,10 +32,10 @@ Format: `CXYZR`
 
 #### Motors
 
-| Status | Format | Name                        |
-| ------ | ------ | --------------------------- |
-| DONE   | M0X    | Turn off motor X            |
-| DONE   | M1X    | Turn on motor X (low speed) |
+| Status | Format | Name             |
+| ------ | ------ | ---------------- |
+| DONE   | M0X    | Turn off motor X |
+| DONE   | M1X    | Turn on motor X  |
 
 ### Telemetry
 
