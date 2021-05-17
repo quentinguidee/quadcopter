@@ -30,50 +30,32 @@ void Interface::execute(String code)
     else if (category == 'D')
     {
         char action = code[2];
-        if (action == '0')
+        switch (action)
         {
-            Interface::turnOff();
-        }
-        else if (action == '1')
-        {
-            Interface::turnOn();
-        }
-        else if (action == '2')
-        {
-            Interface::liftOff();
-        }
-        else if (action == '3')
-        {
-            Interface::land();
-        }
-        else if (action == '4')
-        {
-            Interface::startMotorsTest();
-        }
-        else if (action == '5')
-        {
-            Interface::stopMotorsTest();
+            case '0': Interface::turnOff(); break;
+            case '1': Interface::turnOn(); break;
+            case '2': Interface::liftOff(); break;
+            case '3': Interface::land(); break;
+            case '4': Interface::startMotorsTest(); break;
+            case '5': Interface::stopMotorsTest(); break;
         }
     }
     else if (category == 'M')
     {
         char action = code[2];
         char motor = atoi(&code[3]);
-        if (action == '0')
+        switch (action)
         {
-            Interface::turnOffMotor(motor);
-        }
-        else if (action == '1')
-        {
-            Interface::turnOnMotor(motor);
+            case '0': Interface::turnOffMotor(motor); break;
+            case '1': Interface::turnOnMotor(motor); break;
         }
     }
     else if (category == 'W')
     {
         char action = code[2];
-        if (action == 'P')
+        switch (action)
         {
-            Interface::ping();
+            case 'P': Interface::ping(); break;
         }
     }
     else if (category == 'T')
