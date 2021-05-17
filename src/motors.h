@@ -5,10 +5,12 @@
 #include "settings.h"
 #include "utils/vector4.h"
 
+#define MOTORS_COUNT 4
+
 class Motors
 {
 private:
-    Motor motors[4] = {
+    Motor motors[MOTORS_COUNT] = {
         Motor(0, Settings::ESC_MOTOR_A_PIN),
         Motor(1, Settings::ESC_MOTOR_B_PIN),
         Motor(2, Settings::ESC_MOTOR_C_PIN),

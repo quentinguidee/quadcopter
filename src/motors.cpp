@@ -17,7 +17,7 @@ very curious...
 
 void Motors::setup()
 {
-    for (size_t i = 0; i < 4; i++)
+    for (size_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].setup();
     }
@@ -25,7 +25,7 @@ void Motors::setup()
 
 void Motors::startup()
 {
-    for (size_t i = 0; i < 4; i++)
+    for (size_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].startup();
     }
@@ -33,7 +33,7 @@ void Motors::startup()
 
 void Motors::shutdown()
 {
-    for (size_t i = 0; i < 4; i++)
+    for (size_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].shutdown();
     }
@@ -41,7 +41,7 @@ void Motors::shutdown()
 
 void Motors::tick()
 {
-    for (size_t i = 0; i < 4; i++)
+    for (size_t i = 0; i < MOTORS_COUNT; i++)
     {
         motors[i].tick();
     }
