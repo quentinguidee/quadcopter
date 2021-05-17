@@ -4,10 +4,12 @@
 #include "components/led.h"
 #include "settings.h"
 
+#define LEDS_COUNT 4
+
 class Leds
 {
 private:
-    Led leds[4] = {
+    Led leds[LEDS_COUNT] = {
         Led(Settings::LED_MOTOR_A_PIN),
         Led(Settings::LED_MOTOR_B_PIN),
         Led(Settings::LED_MOTOR_C_PIN),
@@ -20,6 +22,9 @@ public:
 
     void startup();
     void shutdown();
+
+    void on();
+    void off();
 };
 
 #endif /* LEDS_H */

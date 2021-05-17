@@ -2,17 +2,29 @@
 
 void Leds::startup()
 {
-    for (Led led : leds)
+    for (size_t i = 0; i < LEDS_COUNT; i++)
     {
-        led.startup();
-        led.on();
+        leds[i].startup();
     }
 }
 
 void Leds::shutdown()
 {
-    for (Led led : leds)
+    off();
+}
+
+void Leds::on()
+{
+    for (size_t i = 0; i < LEDS_COUNT; i++)
     {
-        led.off();
+        leds[i].on();
+    }
+}
+
+void Leds::off()
+{
+    for (size_t i = 0; i < LEDS_COUNT; i++)
+    {
+        leds[i].off();
     }
 }

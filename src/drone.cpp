@@ -37,6 +37,8 @@ void Drone::startup()
     setStatus(Status::inStartup);
 
     leds.startup();
+    leds.on();
+
     motors.startup();
     flightController.startup();
 
