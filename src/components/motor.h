@@ -11,8 +11,10 @@ class Motor : public Component
 public:
     enum Status
     {
+        setup,
+        on,
         off,
-        ready,
+        failedToSetup,
     };
 
 private:
@@ -22,6 +24,8 @@ private:
     Servo esc;
 
     Status status;
+
+    void setStatus(Status status);
 
 public:
     Motor(uint8_t id, uint8_t pin);
@@ -41,7 +45,6 @@ public:
     void setSpeed(uint16_t speed);
     uint16_t getSpeed() { return speed; }
 
-    void setStatus(Status status);
     Status getStatus() { return status; }
 };
 

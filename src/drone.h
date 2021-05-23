@@ -18,11 +18,11 @@ class Drone
 public:
     enum Status
     {
-        off,
-        inStartup,
-        ready,
         on,
-        inShutdown
+        off,
+        inSetup,
+        setupDone,
+        failedToSetup
     };
 
 private:
@@ -72,10 +72,8 @@ public:
     // Status
     void setStatus(Status status);
     Status getStatus() { return status; }
+
     bool isOn() { return status == Status::on; }
-    bool isInStartup() { return status == Status::inStartup; }
-    bool isOff() { return status == Status::off; }
-    bool isShutdown() { return status == Status::inShutdown; }
 };
 
 #endif /* DRONE_H */

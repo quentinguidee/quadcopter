@@ -11,21 +11,35 @@ Led::Led(uint8_t pin) :
 void Led::startup()
 {
     pinMode(pin, OUTPUT);
-    Log::info(String("LED") + pin, "Startup");
+    setStatus(Status::startup);
 }
 
 void Led::on()
 {
     digitalWrite(pin, HIGH);
-
-    Log::info(String("LED") + pin, "Turned on");
-    Send::ledEnabled(pin);
+    setStatus(Status::on);
 }
 
 void Led::off()
 {
     digitalWrite(pin, LOW);
+    setStatus(Status::off);
+}
 
-    Log::info(String("LED") + pin, "Turned off");
-    Send::ledDisabled(pin);
+void Led::setStatus(Status status)
+{
+    switch (status)
+    {
+        case Status::startup:
+            Log::info(String("LED") + pin, "Startup");
+            break;
+        case Status::on:
+            Send::ledEnabled(pin);
+            Log::info(String("LED") + pin, "Turned on");
+            break;
+        case Status::off:
+            Send::ledDisabled(pin);
+            Log::info(String("LED") + pin, "Turned off");
+            break;
+    }
 }

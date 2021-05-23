@@ -13,7 +13,7 @@ Drone::Drone() :
     onOffButton(ToggleButton(Settings::POWER_TOGGLE_BUTTON_PIN)),
     position(Position(accelerometer)),
     flightController(FlightController()),
-    status(Status::off),
+    status(Status::inSetup),
     serialResponseBuffer(""),
     serial1ResponseBuffer(""),
     lastPingTimestamp(0),
@@ -33,40 +33,32 @@ void Drone::setup()
 
     if (!motors.healthy())
     {
-        Send::failedToSetup();
+        setStatus(failedToSetup);
         return;
     }
 
     onOffButton.startup();
 
-    Send::setupDone();
+    setStatus(off);
 }
 
 void Drone::startup()
 {
-    setStatus(Status::inStartup);
-
     leds.startup();
     leds.on();
 
     motors.startup();
     flightController.startup();
 
-    setStatus(Status::ready);
-
-    Send::startupDone();
+    setStatus(Status::on);
 }
 
 void Drone::shutdown()
 {
-    setStatus(Status::inShutdown);
-
     leds.shutdown();
     motors.shutdown();
 
     setStatus(Status::off);
-
-    Send::shutdownDone();
 }
 
 void Drone::tick()
@@ -161,6 +153,14 @@ void Drone::ping()
 void Drone::setStatus(Status status)
 {
     this->status = status;
+
+    switch (status)
+    {
+        case on: Send::startupDone(); break;
+        case off: Send::shutdownDone(); break;
+        case setupDone: Send::setupDone(); break;
+        case failedToSetup: Send::failedToSetup(); break;
+    }
 }
 
 bool Drone::onSerialRead(char character, String& buffer)

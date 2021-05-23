@@ -7,8 +7,19 @@
 
 class Led : public Component
 {
+public:
+    enum Status
+    {
+        startup,
+        on,
+        off
+    };
+
 private:
     uint8_t pin;
+
+    Status status;
+    void setStatus(Status status);
 
 public:
     Led(uint8_t pin);
@@ -18,6 +29,8 @@ public:
 
     void on();
     void off();
+
+    Status getStatus() { return status; }
 };
 
 #endif /* LED_H */
