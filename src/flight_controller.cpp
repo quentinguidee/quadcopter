@@ -76,10 +76,16 @@ Vector4<uint16_t> FlightController::tick(
         float angleRateY = pidAngleRateY.getOutput();
         float angleRateZ = pidAngleRateZ.getOutput();
 
-        float motorASpeed = 119 + altitudeRate /* + angleRateX - angleRateY + angleRateZ */;
-        float motorBSpeed = 119 + altitudeRate /* - angleRateX - angleRateY - angleRateZ */;
-        float motorCSpeed = 119 + altitudeRate /* + angleRateX + angleRateY - angleRateZ */;
-        float motorDSpeed = 119 + altitudeRate /* - angleRateX + angleRateY + angleRateZ */;
+        float motorASpeed = 25 + altitudeRate /* + angleRateX - angleRateY + angleRateZ */;
+        float motorBSpeed = 25 + altitudeRate /* - angleRateX - angleRateY - angleRateZ */;
+        float motorCSpeed = 25 + altitudeRate /* + angleRateX + angleRateY - angleRateZ */;
+        float motorDSpeed = 25 + altitudeRate /* - angleRateX + angleRateY + angleRateZ */;
+
+        if (motorASpeed >= 50 || motorBSpeed >= 50 || motorCSpeed >= 50 || motorDSpeed >= 50)
+        {
+            emergencyStop();
+            return Vector4<uint16_t>(0, 0, 0, 0);
+        }
 
         return Vector4<uint16_t>(motorASpeed, motorBSpeed, motorCSpeed, motorDSpeed);
     }
@@ -95,9 +101,14 @@ void FlightController::emergencyStop()
     flightModel = FlightModel::disabled;
 }
 
-void FlightController::configureForNormalFlight()
+void FlightController::liftoff()
 {
     flightModel = FlightModel::normal;
+}
+
+void FlightController::landing()
+{
+    flightModel = FlightModel::disabled;
 }
 
 void FlightController::configureForMotorsTest()

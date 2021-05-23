@@ -2,11 +2,13 @@
 #define POSITION_H
 
 #include "components/accelerometer.h"
+#include "components/altimeter.h"
 
 class Position
 {
 private:
-    Accelerometer& sensor;
+    Accelerometer& accelerometer;
+    Altimeter& altimeter;
 
     float x, y, z;
     float angleX, angleY, angleZ;
@@ -14,7 +16,7 @@ private:
     unsigned long timer;
 
 public:
-    Position(Accelerometer& sensor);
+    Position(Accelerometer& accelerometer, Altimeter& altimeter);
     ~Position() {}
 
     void update();

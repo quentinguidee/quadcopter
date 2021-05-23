@@ -51,7 +51,9 @@ public:
 
     void emergencyStop();
 
-    void configureForNormalFlight();
+    void liftoff();
+    void landing();
+
     void configureForMotorsTest();
 
     void stopMotorsTest();

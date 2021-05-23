@@ -35,7 +35,7 @@ void Interface::execute(String code)
             case '0': Interface::turnOff(); break;
             case '1': Interface::turnOn(); break;
             case '2': Interface::liftOff(); break;
-            case '3': Interface::land(); break;
+            case '3': Interface::landing(); break;
             case '4': Interface::startMotorsTest(); break;
             case '5': Interface::stopMotorsTest(); break;
         }
@@ -155,12 +155,13 @@ void Interface::turnOff()
 
 void Interface::liftOff()
 {
-    Interface::move(0, 0, 1.2, 0);
+    //Interface::move(0, 0, 1.2, 0);
+    drone->getFlightController().liftoff();
 }
 
-void Interface::land()
+void Interface::landing()
 {
-    // TODO
+    drone->getFlightController().landing();
 }
 
 void Interface::ping()

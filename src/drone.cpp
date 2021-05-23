@@ -11,7 +11,7 @@ Drone::Drone() :
     accelerometer(Accelerometer()),
     altimeter(Altimeter()),
     onOffButton(ToggleButton(Settings::POWER_TOGGLE_BUTTON_PIN)),
-    position(Position(accelerometer)),
+    position(Position(accelerometer, altimeter)),
     flightController(FlightController()),
     status(Status::inSetup),
     serialResponseBuffer(""),

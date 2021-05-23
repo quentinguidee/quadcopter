@@ -28,7 +28,7 @@ public:
     static void turnOn();
     static void turnOff();
     static void liftOff();
-    static void land();
+    static void landing();
     static void startMotorsTest();
     static void stopMotorsTest();
 

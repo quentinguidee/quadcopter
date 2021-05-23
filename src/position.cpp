@@ -2,8 +2,10 @@
 
 #include "interface/send.h"
 
-Position::Position(Accelerometer& sensor) :
-    sensor(sensor),
+Position::Position(Accelerometer& accelerometer, Altimeter& altimeter) :
+    accelerometer(accelerometer),
+    altimeter(altimeter),
+
     angleX(0),
     angleY(0),
     angleZ(0),
@@ -18,9 +20,11 @@ void Position::update()
     if (timer != 0)
     {
         float deltaTime = (now - timer) / 1000000.0;
-        angleX = 0.995 * (angleX + (sensor.getAngleSpeedX() * deltaTime)) + (0.005 * sensor.getAccelerationAngleX());
-        angleY = 0.995 * (angleY + (sensor.getAngleSpeedY() * deltaTime)) + (0.005 * sensor.getAccelerationAngleY());
-        angleZ += sensor.getAngleSpeedZ() * deltaTime;
+        angleX = 0.995 * (angleX + (accelerometer.getAngleSpeedX() * deltaTime)) + (0.005 * accelerometer.getAccelerationAngleX());
+        angleY = 0.995 * (angleY + (accelerometer.getAngleSpeedY() * deltaTime)) + (0.005 * accelerometer.getAccelerationAngleY());
+        angleZ += accelerometer.getAngleSpeedZ() * deltaTime;
+
+        z = altimeter.getZ();
     }
     timer = now;
 
