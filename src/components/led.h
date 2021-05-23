@@ -10,16 +10,17 @@ class Led : public Component
 public:
     enum Status
     {
-        startup,
-        on,
-        off
+        none,
+        isStarted,
+        isOn,
+        isOff
     };
 
 private:
     uint8_t pin;
 
     Status status;
-    void setStatus(Status status);
+    void setStatus(Led::Status status);
 
 public:
     Led(uint8_t pin);

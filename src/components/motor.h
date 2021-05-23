@@ -11,10 +11,11 @@ class Motor : public Component
 public:
     enum Status
     {
-        setup,
-        on,
-        off,
-        failedToSetup,
+        none,
+        isSetup,
+        isOn,
+        isOff,
+        hasFailedToSetup,
     };
 
 private:

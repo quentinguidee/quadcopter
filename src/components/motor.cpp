@@ -13,7 +13,7 @@ Motor::Motor(uint8_t id, uint8_t pin) :
     pin(pin),
     speed(0),
     esc(Servo()),
-    status(Status::off)
+    status(none)
 {
 }
 
@@ -26,7 +26,7 @@ void Motor::setup()
     esc.attach(pin, 1000, 2000);
     esc.write(0);
 
-    setStatus(Status::setup);
+    setStatus(isSetup);
 }
 
 void Motor::startup()
@@ -34,7 +34,7 @@ void Motor::startup()
     setSpeed(0);
     esc.write(speed);
 
-    setStatus(Status::on);
+    setStatus(isOn);
 }
 
 void Motor::shutdown()
@@ -42,7 +42,7 @@ void Motor::shutdown()
     setSpeed(0);
     esc.write(speed);
 
-    setStatus(Status::off);
+    setStatus(isOff);
 }
 
 void Motor::detach()
@@ -55,7 +55,7 @@ bool Motor::healthy()
 {
     if (esc.readMicroseconds() != 1000)
     {
-        setStatus(failedToSetup);
+        setStatus(hasFailedToSetup);
         return false;
     }
     return true;
@@ -90,19 +90,19 @@ void Motor::setStatus(Status status)
 
     switch (status)
     {
-        case Status::setup:
+        case isSetup:
             Send::motorSetup(id);
             Log::info(String("MOTOR") + id, String("Setup on pin ") + pin);
             break;
-        case Status::on:
+        case isOn:
             Send::motorStartup(id);
             Log::info(String("MOTOR") + id, String("STARTUP on pin ") + pin);
             break;
-        case Status::off:
+        case isOff:
             Send::motorShutdown(id);
             Log::info(String("MOTOR") + id, String("SHUTDOWN on pin ") + pin);
             break;
-        case Status::failedToSetup:
+        case hasFailedToSetup:
             Send::motorFailedToSetup(id);
             Log::info(String("MOTOR") + id, String("Motor failed to start on pin ") + pin);
             break;

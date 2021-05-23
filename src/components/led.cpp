@@ -4,40 +4,41 @@
 #include "../utils/log.h"
 
 Led::Led(uint8_t pin) :
-    pin(pin)
+    pin(pin),
+    status(none)
 {
 }
 
 void Led::startup()
 {
     pinMode(pin, OUTPUT);
-    setStatus(Status::startup);
+    setStatus(isStarted);
 }
 
 void Led::on()
 {
     digitalWrite(pin, HIGH);
-    setStatus(Status::on);
+    setStatus(isOn);
 }
 
 void Led::off()
 {
     digitalWrite(pin, LOW);
-    setStatus(Status::off);
+    setStatus(isOff);
 }
 
 void Led::setStatus(Status status)
 {
     switch (status)
     {
-        case Status::startup:
+        case isStarted:
             Log::info(String("LED") + pin, "Startup");
             break;
-        case Status::on:
+        case isOn:
             Send::ledEnabled(pin);
             Log::info(String("LED") + pin, "Turned on");
             break;
-        case Status::off:
+        case isOff:
             Send::ledDisabled(pin);
             Log::info(String("LED") + pin, "Turned off");
             break;
