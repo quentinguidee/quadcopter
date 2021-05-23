@@ -5,13 +5,13 @@
 
 // TODO: Tune values
 FlightController::FlightController() :
-    pidAngleX(PID(1, 0, 0, -90, 90)),
-    pidAngleY(PID(1, 0, 0, -90, 90)),
-    pidAngleZ(PID(1, 0, 0, -90, 90)),
+    pidAngleX(PID(0.4, 0.3, 0.3, -90, 90)),
+    pidAngleY(PID(0.4, 0.3, 0.3, -90, 90)),
+    pidAngleZ(PID(0, 0, 0, -90, 90)),
 
-    pidAngleRateX(PID(1, 0, 0, -180, 180)),
-    pidAngleRateY(PID(1, 0, 0, -180, 180)),
-    pidAngleRateZ(PID(1, 0, 0, -180, 180)),
+    // pidAngleRateX(PID(0.7, 0, 0, -180, 180)),
+    // pidAngleRateY(PID(0.7, 0, 0, -180, 180)),
+    // pidAngleRateZ(PID(0.7, 0, 0, -180, 180)),
 
     pidAltitude(PID(3, 0.3, 12, -50, 50)),
 
@@ -27,9 +27,9 @@ void FlightController::startup()
     pidAngleY.startup();
     pidAngleZ.startup();
 
-    pidAngleRateX.startup();
-    pidAngleRateY.startup();
-    pidAngleRateZ.startup();
+    // pidAngleRateX.startup();
+    // pidAngleRateY.startup();
+    // pidAngleRateZ.startup();
 
     pidAltitude.startup();
 
@@ -64,24 +64,27 @@ Vector4<uint16_t> FlightController::tick(
         pidAngleZ.tick(0, angleZ);
         // Log::info(String("FLIGHT_CONTROLLER"), String("PID RAW: ") + pidAngleX.getOutput() + "/" + pidAngleY.getOutput() + "/" + pidAngleZ.getOutput());
 
-        pidAngleRateX.tick(pidAngleX.getOutput(), angleRateX);
-        pidAngleRateY.tick(pidAngleY.getOutput(), angleRateY);
-        pidAngleRateZ.tick(pidAngleZ.getOutput(), angleRateZ);
+        // pidAngleRateX.tick(pidAngleX.getOutput(), angleRateX);
+        // pidAngleRateY.tick(pidAngleY.getOutput(), angleRateY);
+        // pidAngleRateZ.tick(pidAngleZ.getOutput(), angleRateZ);
 
         pidAltitude.tick(desiredZ, altitude);
         // Log::info(String("FLIGHT_CONTROLLER"), String("PID RATES: ") + pidAltitude.getOutput() + "/" + pidAngleRateX.getOutput() + "/" + pidAngleRateY.getOutput() + "/" + pidAngleRateZ.getOutput());
 
         float altitudeRate = pidAltitude.getOutput();
-        float angleRateX = pidAngleRateX.getOutput();
-        float angleRateY = pidAngleRateY.getOutput();
-        float angleRateZ = pidAngleRateZ.getOutput();
+        // float angleRateX = pidAngleRateX.getOutput();
+        float angleRateX = pidAngleX.getOutput();
+        // float angleRateY = pidAngleRateY.getOutput();
+        float angleRateY = pidAngleY.getOutput();
+        // float angleRateZ = pidAngleRateZ.getOutput();
+        float angleRateZ = pidAngleZ.getOutput();
 
-        float motorASpeed = 25 + altitudeRate /* + angleRateX - angleRateY + angleRateZ */;
-        float motorBSpeed = 25 + altitudeRate /* - angleRateX - angleRateY - angleRateZ */;
-        float motorCSpeed = 25 + altitudeRate /* + angleRateX + angleRateY - angleRateZ */;
-        float motorDSpeed = 25 + altitudeRate /* - angleRateX + angleRateY + angleRateZ */;
+        float motorASpeed = 45 + altitudeRate /* - angleRateX */ - angleRateY /* + angleRateZ */;
+        float motorBSpeed = 45 + altitudeRate /* - angleRateX */ + angleRateY /* - angleRateZ */;
+        float motorCSpeed = 45 + altitudeRate /* + angleRateX */ - angleRateY /* - angleRateZ */;
+        float motorDSpeed = 45 + altitudeRate /* + angleRateX */ + angleRateY /* + angleRateZ */;
 
-        if (motorASpeed >= 50 || motorBSpeed >= 50 || motorCSpeed >= 50 || motorDSpeed >= 50)
+        if (motorASpeed >= 65 || motorBSpeed >= 65 || motorCSpeed >= 65 || motorDSpeed >= 65)
         {
             emergencyStop();
             return Vector4<uint16_t>(0, 0, 0, 0);

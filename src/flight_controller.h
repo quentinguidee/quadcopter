@@ -18,7 +18,7 @@ public:
 
 private:
     PID pidAngleX, pidAngleY, pidAngleZ;
-    PID pidAngleRateX, pidAngleRateY, pidAngleRateZ;
+    // PID pidAngleRateX, pidAngleRateY, pidAngleRateZ;
 
     PID pidAltitude;
 
@@ -62,9 +62,9 @@ public:
     PID& getPIDAngleY() { return pidAngleY; }
     PID& getPIDAngleZ() { return pidAngleZ; }
 
-    PID& getPIDAngleRateX() { return pidAngleRateX; }
-    PID& getPIDAngleRateY() { return pidAngleRateY; }
-    PID& getPIDAngleRateZ() { return pidAngleRateZ; }
+    // PID& getPIDAngleRateX() { return pidAngleRateX; }
+    // PID& getPIDAngleRateY() { return pidAngleRateY; }
+    // PID& getPIDAngleRateZ() { return pidAngleRateZ; }
 
     PID& getPIDAltitude() { return pidAltitude; }
 };

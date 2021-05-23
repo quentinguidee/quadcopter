@@ -93,9 +93,9 @@ void Interface::execute(String code)
             case '0': pid = &drone->getFlightController().getPIDAngleX(); break;
             case '1': pid = &drone->getFlightController().getPIDAngleY(); break;
             case '2': pid = &drone->getFlightController().getPIDAngleZ(); break;
-            case '3': pid = &drone->getFlightController().getPIDAngleRateX(); break;
-            case '4': pid = &drone->getFlightController().getPIDAngleRateY(); break;
-            case '5': pid = &drone->getFlightController().getPIDAngleRateZ(); break;
+            // case '3': pid = &drone->getFlightController().getPIDAngleRateX(); break;
+            // case '4': pid = &drone->getFlightController().getPIDAngleRateY(); break;
+            // case '5': pid = &drone->getFlightController().getPIDAngleRateZ(); break;
             case '6': pid = &drone->getFlightController().getPIDAltitude(); break;
         }
 
