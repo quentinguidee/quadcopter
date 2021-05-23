@@ -89,7 +89,7 @@ void Drone::tick()
             accelerometer.getAngleSpeedX(),
             accelerometer.getAngleSpeedY(),
             accelerometer.getAngleSpeedZ(),
-            altimeter.getZ());
+            position.getZ());
 
         motors.get(0).setSpeed(motorsSpeeds.a);
         motors.get(1).setSpeed(motorsSpeeds.b);
